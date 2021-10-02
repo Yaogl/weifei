@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "type": "computer",
+    "label": "个人计算机",
+    "icon": "",
+    "isSymbol": 0,
+    "options": {
+      "system": {
+        "require": 1
+      },
+      "vendor": {
+        "require": 1,
+        "linked": {
+          "model": {
+            "require": 1
+          }
+        }
+      },
+      "model": {
+        "require": 1
+      },
+      "net": {
+        "require": 1
+      },
+      "firmware": {
+        "require": 0
+      }
+    }
+  }
+]

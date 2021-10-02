@@ -1,0 +1,55 @@
+/**定义字体大小变量 */
+$font-base: 14px; // 基础文字、辅助文字
+$font-md: 16px; // tab导航、二级标题
+$font-lg: 18px; // 一级标题
+$font-big: 20px;
+
+/**定义颜色变量 */
+$color-primary: #1875f0; // 主色，link色
+$color-success: #02bb50; // 绿
+$color-danger: #ff0000; // 警示图标、线条的颜色、重要数据的颜色
+$color-light: #ffffff; // 深色背景字体反白
+$color-disable: #cbd2da; // disable态颜色
+$color-text-primary: #202020; // 正文主字体颜色
+$color-text-secondry: #7b8ea2; // 正文辅助字体颜色
+$color-bg-base: #f4f4f4; // 页面主背景色
+$color-bg-card: #ffffff; //卡片背景
+$color-line: #ebebeb; // 1px线颜色
+$color-bg-card-header: #e2e7ef; // 卡片标题背景
+
+.page {
+  width: 100%;
+  color: $color-text-primary;
+}
+#app {
+  .el-button--success {
+    background-color: #02bb50;
+    border-color: #02bb50;
+  }
+  .el-table th,
+  .el-table {
+    background: #f9f9f9;
+  }
+  .el-table--enable-row-hover .el-table__body tr:hover > td {
+    background: #f5f9f9;
+  }
+  .el-table .el-table__row:hover {
+    box-shadow: none;
+    transform: none;
+  }
+}
+.cell span {
+  cursor: pointer;
+}
+
+.color-success {
+  color: $color-success;
+}
+
+.el-radio-group {
+  width: 100%;
+
+  .is-checked {
+    background-color: #f2fbf5;
+  }
+}

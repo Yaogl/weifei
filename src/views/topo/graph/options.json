@@ -1,0 +1,52 @@
+[
+  {
+    "name": "model",
+    "type": 1,
+    "options": {
+      "regular": "number"
+    }
+  },
+  {
+    "name": "vendor",
+    "type": 2,
+    "options": {
+      "dataForm": "vendors",
+      "canInput": true
+    }
+  },
+  {
+    "name": "system",
+    "type": 2,
+    "options": {
+      "data": ["Win7", "Win10", "Centos", "Mac OS X"],
+      "canInput": true
+    }
+  },
+  {
+    "name": "lan",
+    "type": 3,
+    "options": [
+      {
+        "name": "ip",
+        "type": 1,
+        "options": {
+          "regular": "ipv4"
+        }
+      },
+      {
+        "name": "gateway",
+        "type": 1,
+        "options": {
+          "regular": "ipv4"
+        }
+      },
+      {
+        "name": "mac",
+        "type": 1,
+        "options": {
+          "regular": "string"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,406 @@
+{
+  "status": 0,
+  "nodes": [
+    {
+      "id": "0",
+      "type": "firewall",
+      "entry": false,
+      "target": false,
+      "label": "防火墙",
+      "data": {
+        "system": "linux",
+        "vendor": "360",
+        "model": "S2626-PWR",
+        "firmware": "1.2.4"
+      },
+      "parent_node": "-1",
+      "child_nodes": [
+        {
+          "id": "1",
+          "direction": "up",
+          "connector": "2",
+          "style": "1"
+        }
+      ],
+      "net": [
+        {
+          "ip": "",
+          "mac": "",
+          "gateway": ""
+        }
+      ],
+      "position": {
+        "x": 110,
+        "y": 545
+      }
+    },
+    {
+      "id": "1",
+      "type": "router",
+      "entry": true,
+      "target": false,
+      "label": "路由器",
+      "data": {
+        "net": [
+          {
+            "ip": "10.19.110.24",
+            "mac": "2C:61:04:3E:17:BC",
+            "gateway": "11.2.2.12.2"
+          }
+        ],
+        "system": "linux",
+        "vendor": "H3C",
+        "lan": [
+          {
+            "ip": "192.168.10.1",
+            "mac": "2C:61:04:3E:17:BA",
+            "netmask": "255.255.255.0"
+          },
+          {
+            "ip": "192.168.20.1",
+            "mac": "2C:61:04:3E:17:BA",
+            "netmask": "255.255.255.0"
+          },
+          {
+            "ip": "192.168.30.1",
+            "mac": "2C:61:04:3E:17:BA",
+            "netmask": "255.255.255.0"
+          }
+        ],
+        "model": "S2626-PWR",
+        "firmware": "1.2.4"
+      },
+      "parent_node": "0",
+      "child_nodes": [
+        {
+          "id": "2",
+          "direction": "up",
+          "connector": "2",
+          "style": "1"
+        }
+      ],
+      "net": [
+        {
+          "ip": "10.19.110.24",
+          "mac": "2C:61:04:3E:17:BC",
+          "gateway": "11.2.2.12.2"
+        }
+      ],
+      "options": {
+        "system": {
+          "options": {
+            "data": ["Win7", "Win10", "Centos", "Mac OS X"],
+            "canInput": true
+          },
+          "require": 1,
+          "label": "操作系统",
+          "type": 2
+        },
+        "vendor": {
+          "options": {
+            "dataForm": "vendors/all",
+            "canInput": true
+          },
+          "require": 1,
+          "label": "厂商",
+          "type": 2,
+          "child": "model"
+        },
+        "lan": {
+          "options": [
+            {
+              "name": "ip",
+              "label": "ip地址",
+              "type": 1
+            },
+            {
+              "name": "mac",
+              "label": "mac地址",
+              "type": 1
+            },
+            {
+              "name": "netmask",
+              "label": "子网掩码",
+              "type": 1
+            }
+          ],
+          "require": 1,
+          "label": "lan",
+          "type": 3
+        },
+        "model": {
+          "parent": "vendor",
+          "options": {
+            "dataForm": "devices/all?vendor=",
+            "canInput": true
+          },
+          "require": 1,
+          "label": "设备型号",
+          "type": 2,
+          "child": "firmware"
+        },
+        "firmware": {
+          "parent": "model",
+          "options": {
+            "dataForm": "firmwares/all?productName=",
+            "canInput": true
+          },
+          "require": 1,
+          "label": "固件版本",
+          "type": 2
+        }
+      },
+      "position": {
+        "x": 420,
+        "y": 545
+      }
+    },
+    {
+      "id": "2",
+      "type": "switch",
+      "entry": false,
+      "target": false,
+      "label": "三层交换机",
+      "data": {
+        "vendor": "H3C",
+        "model": "S2626-PWR",
+        "firmware": "1.2.4",
+        "vlan": [
+          {
+            "ip": "192.168.10.1",
+            "netmask": "255.255.255.0"
+          },
+          {
+            "ip": "192.168.20.1",
+            "netmask": "255.255.255.0"
+          },
+          {
+            "ip": "192.168.30.1",
+            "netmask": "255.255.255.0"
+          }
+        ]
+      },
+      "parent_node": "1",
+      "child_nodes": [
+        {
+          "id": "5",
+          "direction": "down",
+          "connector": "2",
+          "style": "1"
+        }
+      ],
+      "net": [
+        {
+          "ip": "",
+          "mac": "",
+          "gateway": ""
+        }
+      ],
+      "position": {
+        "x": 730,
+        "y": 545
+      }
+    },
+    {
+      "id": "5",
+      "type": "switch",
+      "entry": false,
+      "target": false,
+      "label": "二层交换机",
+      "data": {
+        "net": [
+          {
+            "ip": "",
+            "mac": "",
+            "gateway": ""
+          }
+        ],
+        "vlan": [
+          {
+            "ip": "192.168.30.1",
+            "netmask": "255.255.255.0"
+          }
+        ],
+        "vendor": "H3C",
+        "model": "S5120-52SC-HI",
+        "firmware": "1.2.4"
+      },
+      "parent_node": "2",
+      "child_nodes": [
+        {
+          "id": "20",
+          "direction": "down",
+          "connector": "2",
+          "style": "1"
+        },
+        {
+          "id": "21",
+          "direction": "up",
+          "connector": "2",
+          "style": "1"
+        },
+        {
+          "id": "22",
+          "direction": "up",
+          "connector": "2",
+          "style": "2"
+        }
+      ],
+      "net": [
+        {
+          "ip": "",
+          "mac": "",
+          "gateway": ""
+        }
+      ],
+      "options": {
+        "vlan": {
+          "options": [
+            {
+              "name": "ip",
+              "label": "ip地址",
+              "type": 1
+            },
+            {
+              "name": "netmask",
+              "label": "子网掩码",
+              "type": 1
+            }
+          ],
+          "require": 1,
+          "label": "lan",
+          "type": 3
+        },
+        "vendor": {
+          "options": {
+            "dataForm": "vendors/all",
+            "canInput": true
+          },
+          "require": 1,
+          "label": "厂商",
+          "type": 2,
+          "child": "model"
+        },
+        "model": {
+          "parent": "vendor",
+          "options": {
+            "dataForm": "devices/all?vendor=",
+            "canInput": true
+          },
+          "require": 1,
+          "label": "设备型号",
+          "type": 2,
+          "child": "firmware"
+        },
+        "firmware": {
+          "options": {
+            "dataForm": "firmwares/all?productName=",
+            "canInput": true
+          },
+          "require": 1,
+          "label": "固件版本",
+          "type": 2
+        }
+      },
+      "position": {
+        "x": 1090,
+        "y": 545
+      }
+    },
+    {
+      "id": "20",
+      "type": "computer",
+      "entry": false,
+      "target": false,
+      "label": "工程师站",
+      "data": {
+        "system": "win10",
+        "vendor": "DELL",
+        "model": "XPS13-7391",
+        "services": [
+          {
+            "name": "ssh",
+            "version": "2.2"
+          },
+          {
+            "name": "ftp",
+            "version": "1.1"
+          }
+        ]
+      },
+      "parent_node": "5",
+      "child_nodes": [],
+      "net": [
+        {
+          "ip": "192.168.30.2",
+          "mac": "2C:61:04:3E:17:CD",
+          "gateway": "192.168.30.1"
+        }
+      ],
+      "position": {
+        "x": 1385,
+        "y": 545
+      }
+    },
+    {
+      "id": "21",
+      "type": "computer",
+      "entry": false,
+      "target": false,
+      "label": "HMI",
+      "data": {
+        "system": "linux",
+        "vendor": "DELL",
+        "model": "XPS13-7391",
+        "services": [
+          {
+            "name": "ssh",
+            "version": "2.2"
+          },
+          {
+            "name": "ftp",
+            "version": "1.1"
+          }
+        ]
+      },
+      "parent_node": "5",
+      "child_nodes": [],
+      "net": [
+        {
+          "ip": "192.168.30.3",
+          "mac": "2C:61:04:3E:17:CD",
+          "gateway": "192.168.30.1"
+        }
+      ],
+      "position": {
+        "x": 1380,
+        "y": 650
+      }
+    },
+    {
+      "id": "22",
+      "type": "plc",
+      "entry": false,
+      "target": true,
+      "label": "PLC",
+      "data": {
+        "vendor": "Siemens",
+        "model": "SIMATIC S7-300",
+        "firmware": "1.0.2"
+      },
+      "parent_node": "5",
+      "child_nodes": [],
+      "net": [
+        {
+          "ip": "192.168.30.5",
+          "mac": "2C:61:04:3E:17:FD",
+          "gateway": "192.168.30.1"
+        }
+      ],
+      "position": {
+        "x": 1380,
+        "y": 750
+      }
+    }
+  ]
+}
