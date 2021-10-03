@@ -48,7 +48,7 @@ export default {
         { title: 'Nodes Management', path: '/nodes' },
         { title: 'ES Management', path: '/es' },
         { title: 'Files Management ', path: '' },
-        { title: 'Operation Management', path: '' }
+        { title: 'Operation Management', path: '/operate' }
       ]
     }
   },

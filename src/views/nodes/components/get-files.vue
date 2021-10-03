@@ -7,7 +7,7 @@
       :append-to-body="true"
       :before-close="handleClose"
     >
-      <div slot="title" style="font-family: Helvetica;font-size: 16px;color: #333333;;">
+      <div slot="title" style="font-family: Helvetica;font-size: 16px;color: #333333;">
 				Get node’s file
       </div>
       <div class="get-files-container">

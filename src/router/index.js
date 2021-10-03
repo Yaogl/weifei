@@ -60,6 +60,19 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/',
+    component: BaseView,
+    redirect: '/operate',
+    children: [
+      {
+        path: 'operate',
+        name: 'operate',
+        component: () => import('@/views/operate/index'),
+        meta: { title: 'operate mangement' }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

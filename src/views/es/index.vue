@@ -99,7 +99,7 @@
 				<p style="font-size: 12px;color: #333;line-height: 18px"> _source</p>
 
 				<div style="position: absolute; right: 0;top: 10px" class="more">
-					<el-button>Delete Item</el-button>
+					<el-button @click="deleteEs">Delete Item</el-button>
 				</div>
 			</div>
 			<div class="source-item">
@@ -133,15 +133,20 @@
 				</div>
 			</div>
 		</el-card>
+		<DeleteEs ref="deleteEs" />
   </div>
 </template>
 
 <script>
 import List from '@/components/List'
+import DeleteEs from './components/delete-es.vue'
 
 export default {
-  name: 'Nodes',
+  name: 'Es',
 	extends: List,
+	components: {
+		DeleteEs
+	},
   data() {
     return {
 			query: {
@@ -159,12 +164,15 @@ export default {
     }
   },
   methods: {
+		deleteEs () {
+			this.$refs.deleteEs.showModal()
+		}
   }
 }
 </script>
 <style lang="scss">
 .es-container{
-	.el-form-item__label{
+	.mb-20 .el-form-item__label{
 		display: block;
 		width: 100%;
 		text-align: left;
