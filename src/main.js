@@ -14,8 +14,8 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-import '@/views/topo/graph/shape' // 注册常用图形
 import Bread from '@/layout/components/Bread'
+import '@/utils/rem'
 
 import service from '@/utils/request'
 

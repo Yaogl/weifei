@@ -15,12 +15,20 @@ export default {
         { name: '张三1', value: 18 },
         { name: '张三2', value: 21 },
         { name: '张三3', value: 18 },
-        { name: '张三4', value: 18 }
+        { name: '张三4', value: 18 },
+        { name: '张三5', value: 18 },
+        { name: '张三6', value: 18 },
+        { name: '张三7', value: 18 },
+        { name: '张三8', value: 18 },
+        { name: '张三9', value: 18 },
+        { name: '张三10', value: 18 },
+        { name: '张三11', value: 18 },
+        { name: '张三12', value: 18 },
+        { name: '张三14', value: 18 },
+        { name: '张三15', value: 18 },
+        { name: '张三16', value: 18 },
+        { name: '张三17', value: 18 }
       ]
-    },
-    title: {
-      type: [String, Object],
-      default: ''
     }
   },
   mounted () {
@@ -49,35 +57,58 @@ export default {
     },
     getChartOption(chartData) {
       return {
+        // itemGap: 20,
+        //     left: 'center',
+        //     top: '56%'
+        title: [{
+          text: '19823',
+          x: '50%',
+          y: '50%',
+          textAlign: 'center',
+          textStyle: {
+            color: '#fff',
+            fontSize: 26,
+            textAlign: 'center',
+          },
+        }, {
+          text: 'Brand Model',
+          left: '50%',
+          top: '40%',
+          textAlign: 'center',
+          textStyle: {
+            fontSize: 14,
+            color: '#fff',
+            textAlign: 'center'
+          }
+        }],
         tooltip: {},
         color: [
-          '#20D78F',
-          '#3BC2D7',
-          '#E8E8E8',
-          '#F7D301',
-          '#FF8B00',
-          '#AE49F6',
-          '#64EF2D',
-          '#2A83EF'
+          '#B32727',
+          '#FF4141',
+          '#D5511C',
+          '#FF7837',
+          '#FF9E33',
+          '#E7981B',
+          '#FFB933',
+          '#FFD233',
+          '#FFE633',
+          '#C8EF2C',
+          '#64EF2C',
+          '#37D055',
+          '#37D095',
+          '#2FACDE',
+          '#2077C5',
+          '#4370DB',
+          '#312DC3',
+          '#7D4DF3',
+          '#B34DF3',
+          '#777888'
         ],
-        legend: {
-          orient: 'vertical',
-          right: '2%',
-          top: '15%',
-          icon: 'pin',
-          textStyle: {
-            color: '#fff'
-          },
-          itemStyle: {
-            borderColor: '#fff',
-            borderWidth: 0
-          }
-        },
         series: [
           {
             type: 'pie',
-            radius: ['45%', '55%'],
-            center: ['35%', '44%'],
+            radius: ['45%', '70%'],
+            center: ['50%', '50%'],
             label: {
               show: false
             },
