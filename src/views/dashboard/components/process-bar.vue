@@ -41,6 +41,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .process-components{
+  font-size: 0.16rem;
   color: #fff;
   .bar{
     height: 0.02rem;

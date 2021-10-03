@@ -25,6 +25,7 @@
     "element-china-area-data": "^5.0.2",
     "element-ui": "2.13.2",
     "file-saver": "^2.0.5",
+    "highlight.js": "^11.2.0",
     "html2canvas": "^1.0.0-rc.7",
     "js-cookie": "2.2.0",
     "jspdf": "^2.3.1",

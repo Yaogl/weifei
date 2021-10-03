@@ -45,7 +45,7 @@ export default {
     return {
       menu: [
         { title: 'Home', path: '/dashboard' },
-        { title: 'Nodes Management', path: '' },
+        { title: 'Nodes Management', path: '/nodes' },
         { title: 'ES Management', path: '' },
         { title: 'Files Management ', path: '' },
         { title: 'Operation Management', path: '' }

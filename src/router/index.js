@@ -29,6 +29,25 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/',
+    component: BaseView,
+    redirect: '/nodes',
+    children: [
+      {
+        path: 'nodes',
+        name: 'nodes',
+        component: () => import('@/views/nodes/index'),
+        meta: { title: 'nodes mangement' }
+      },
+      {
+        path: '/operation-record',
+        name: 'OperationRecord',
+        component: () => import('@/views/nodes/operation-record'),
+        meta: { title: '/operation-record' }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

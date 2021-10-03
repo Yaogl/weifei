@@ -12,12 +12,11 @@
       <sidebar class="sidebar-container" />
       <app-main />
     </div>
-    <GlobalFooter />
   </div>
 </template>
 
 <script>
-import { AppMain, GlobalFooter, Navbar, Sidebar } from './components'
+import { AppMain, Navbar, Sidebar } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -25,8 +24,7 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    AppMain,
-    GlobalFooter
+    AppMain
   },
   mixins: [ResizeMixin],
   computed: {

@@ -5,7 +5,7 @@ export default {
       uniqueName: '',
       loading: false, // 查询loading状态，页面删除等操作loading不能共用
       tableList: [], // 列表数据
-      total: '', // 数据总数
+      total: 0, // 数据总数
       cacheQuery: false, // 是否缓存搜索条件
       query: {}, // 搜索条件
       createdSearch: true, // 是否在页面创建时立刻搜索

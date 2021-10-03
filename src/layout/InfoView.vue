@@ -11,12 +11,11 @@
     <div class="main-container">
       <app-main />
     </div>
-    <GlobalFooter />
   </div>
 </template>
 
 <script>
-import { Navbar, AppMain, GlobalFooter } from './components'
+import { Navbar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapActions } from 'vuex'
 
@@ -24,8 +23,7 @@ export default {
   name: 'Layout',
   components: {
     Navbar,
-    AppMain,
-    GlobalFooter
+    AppMain
   },
   mixins: [ResizeMixin],
   computed: {

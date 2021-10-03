@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, GlobalFooter } from './components'
+import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -23,8 +23,7 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    AppMain,
-    GlobalFooter
+    AppMain
   },
   mixins: [ResizeMixin],
   computed: {
