@@ -56,9 +56,7 @@ module.exports = {
     },
     proxy: {
       '/dev-api': {
-        // target: 'http://localhost:8080/', // 你要代理的域名和端口号，要加上http
         target: 'http://39.105.145.144:8080/', // 你要代理的域名和端口号，要加上http
-        // target: 'http://topo360.vaiwan.com', // 你要代理的域名和端口号，要加上http
         changeOrigin: true, // 跨域
         pathRewrite: {
           '^/dev-api': '/api/v1'
@@ -70,11 +68,6 @@ module.exports = {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
-    externals: {
-      'vue': 'Vue',
-      'vue-router': 'VueRouter',
-      'element-ui': 'ELEMENT'
-    },
     resolve: {
       alias: {
         '@': resolve('src'),

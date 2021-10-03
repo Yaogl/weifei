@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 /* Layout */
-import InfoView from '@/layout/InfoView'
 import BaseView from '@/layout/baseView'
 
 Vue.use(Router)
@@ -45,6 +44,19 @@ export const constantRoutes = [
         name: 'OperationRecord',
         component: () => import('@/views/nodes/operation-record'),
         meta: { title: '/operation-record' }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: BaseView,
+    redirect: '/es',
+    children: [
+      {
+        path: 'es',
+        name: 'es',
+        component: () => import('@/views/es/index'),
+        meta: { title: 'es mangement' }
       }
     ]
   },
