@@ -5,7 +5,6 @@
 </template>
 <script>
 import * as echarts from 'echarts'
-import { getHomeDevices } from '@/api/topo'
 
 export default {
   props: {

@@ -27,7 +27,68 @@
         </el-row>
       </div>
     </div>
-    <div class="center">1111</div>
+    <div class="center">
+      <div class="map-search" style="position: relative;">
+        <div class="mb-20" style="position: relative;z-index: 2;">
+          <el-input v-model="country" placeholder="Enter Country/ Region" @focus="showmore = true" @blur="blurinput">
+            <i
+              class="el-icon-search"
+              slot="suffix"
+              @click="handleIconClick">
+            </i>
+            <span slot="prefix">
+              World
+            </span>
+          </el-input>
+          <div v-show="showmore" style="position: absolute;z-index: 3; width: 4.4rem;background: #212631;padding: 0.15rem;">
+            <p style="font-family: PingFangSC-Regular;font-size: 0.14rem;color: #777777;line-height: 24px;">
+              Top searchedCountries
+            </p>
+            <div style="flex-wrap: wrap;display: flex;">
+              <span class="country-name" @click="setQuery('U.S.A')">U.S.A</span>
+              <span class="country-name" @click="setQuery('U.S.A')">U.S.A</span>
+            </div>
+          </div>
+        </div>
+        <el-row style="position: relative;z-index: 2;">
+          <el-col :span="14">
+            <h2 style="font-family: Helvetica-Bold;font-size: 0.32rem;color: #4BFC48;line-height: 0.7rem;font-weight: 700;">
+              ACTIVE NODES 2,090,023
+            </h2>
+            <h3 style="font-family: Helvetica-Bold;font-size: 0.24rem;color: #CCC;line-height: 0.6rem;font-weight: 700;">ALL NODES 2,090,023</h3>
+          </el-col>
+          <el-col :span="10" align="right">
+            <el-row class="level">
+              <el-col :span="12" class="circle-before high" align="center" style="color: #DC3939">
+                High density
+              </el-col>
+              <el-col :span="12" class="circle-before low" align="center" style="color: #DC3939;">
+                Low density
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+        <div style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;z-index: 1">
+          <WorldMap />
+        </div>
+      </div>
+      <div class="center-chart">
+        <el-row type="flex" align="middle">
+          <el-col :span="8" class="chart-title">
+            Active nodes
+          </el-col>
+          <el-col :span="16" align="right" class="chart-btn">
+            <el-radio-group v-model="radio">
+              <el-radio-button label="1 months"></el-radio-button>
+              <el-radio-button label="3 months"></el-radio-button>
+              <el-radio-button label="6 months"></el-radio-button>
+              <el-radio-button label="12 months"></el-radio-button>
+            </el-radio-group>
+          </el-col>
+        </el-row>
+        <NodesLine style="height: 2rem;"/>
+      </div>
+    </div>
     <div class="right">
       <div class="top">
         <h3 class="title">Top 10 of domainame across</h3>
@@ -58,15 +119,22 @@
 <script>
 import SpeadChart from './components/spead-chart'
 import ProcessBar from './components/process-bar.vue'
+import NodesLine from './components/nodes-line.vue'
+import WorldMap from './components/world-map.vue'
 
 export default {
   name: 'Dashboard',
   components: {
     SpeadChart,
-    ProcessBar
+    ProcessBar,
+    NodesLine,
+    WorldMap
   },
   data() {
     return {
+      radio: '1 months',
+      country: '',
+      showmore: false,
       globlList: [
         { name: '美国', status: 1, radio: '15%' },
         { name: '美国', status: 2, radio: '15%' },
@@ -82,20 +150,157 @@ export default {
     }
   },
   methods: {
+    handleIconClick(ev) {
+      console.log(ev);
+    },
+    querySearch(queryString, cb) {
+      console.log(queryString)
+      cb([{}])
+    },
+    setQuery(item) {
+      this.country = item
+    },
+    blurinput (a) {
+      setTimeout(() => {
+        this.showmore = false
+      }, 300)
+    }
   }
 }
 </script>
-
+<style lang="scss">
+.dashboard-container {
+  .map-search{
+    .el-input__prefix, .el-input__suffix{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 6px;
+      font-size: 0.18rem;
+    }
+    input::-webkit-input-placeholder {
+      color: #333;
+    }
+    input::-moz-input-placeholder {
+      color: #333;
+    }
+    input::-ms-input-placeholder {
+      color: #333;
+    }
+    .el-input{
+      width: 4.4rem;
+      border: none;
+    }
+    .el-input__inner{
+      padding-left: 60px;
+      background: #4BFC48;
+      height: 0.48rem;
+      width: 4.4rem;
+    }
+    .el-input__suffix-inner{
+      .el-icon-search{
+        font-size: 0.18rem;
+        font-weight: 700;
+      }
+    }
+    .el-input__prefix, .el-input__suffix-inner{
+      color: #333;
+    }
+  }
+  .country-name{
+    margin-right: 0.2rem;
+    font-size: 0.14rem;
+    color: #FFFFFF;
+    line-height: 0.24rem;
+    cursor: pointer;
+  }
+  .chart-btn{
+    .el-radio-button__inner{
+      background: #2E3442;
+      border-radius: 2px;
+      color: #CCCCCC;
+      font-size: 0.16rem;
+      border-color: #15181F;
+    }
+    .is-active{
+     .el-radio-button__inner{
+        background: #fff;
+        border-radius: 2px;
+        color: #000;
+        border-color: #15181F;
+      } 
+    }
+  }
+}
+</style>
 <style lang="scss" scoped>
 .dashboard-container {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
-  display: flex;
-  color: #fff;
-  justify-content: space-between;
   background: #15181F;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
   .center{
     flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .map-search{
+      flex: 1;
+      width: 8.94rem;
+      margin-top: 0.2rem;
+    }
+    .center-chart{
+      width: 8.94rem;
+      height: 2.65rem;
+      background: #212631;
+      border-radius: 0.04rem;
+      margin-bottom: 0.1rem;
+      padding: 0.2rem;
+    }
+    .chart-title{
+      font-family: Helvetica;
+      font-size: 0.24rem;
+      color: #4BFC48;
+    }
+    .level{
+      display: inline-block;
+      margin-top: 0.2rem;
+      width: 2.62rem;
+      height: 0.32rem;
+      background: rgba(255,255,255,0.15);
+      border-radius: 0.16rem;
+      .circle-before {
+        font-size: 0.14rem;
+        line-height: 0.32rem;
+        &:before {
+          display: inline-block;
+          content: "";
+          width: 0.14rem;
+          height: 0.14rem;
+          border-radius: 50%;
+          margin-right: 0.04rem;
+          vertical-align: middle;
+        }
+        &.high {
+          &:before {
+            background: #FF4141;
+          }
+        }
+        &.low {
+          &:before {
+            background: #4F1718;
+          }
+        }
+      }
+    }
+    .chart-btn{
+      .el-radio-button__inner{
+        background: #2E3442;
+        border-radius: 2px;
+      }
+    }
   }
   .title{
     font-family: Helvetica-Bold;

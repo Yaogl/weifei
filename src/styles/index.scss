@@ -22,7 +22,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 body {
-  height: 100%;
+  min-height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -36,12 +36,12 @@ label {
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
   box-sizing: border-box;
 }
 
 #app {
-  height: 100%;
+  min-height: 100%;
 }
 
 *,
