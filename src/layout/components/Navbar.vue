@@ -16,16 +16,56 @@
 
       <div class="right-menu">
         <div class="right-login">
-          <div v-if="name">
-            {{ name }}
-            <span
-              style="margin-left: 8px;cursor: pointer"
-              @click="logout"
-            >退出</span>
-          </div>
-          <span v-else @click="login">登录</span>
+          <el-dropdown  @command="moreCommand">
+						<span class="el-dropdown-link">
+              <div v-if="name">
+                {{ name }}
+                <span
+                  style="margin-left: 8px;cursor: pointer"
+                  @click="logout"
+                >退出</span>
+              </div>
+              <span v-else @click="login">登录</span>
+						</span>
+						<el-dropdown-menu slot="dropdown">
+							<el-dropdown-item command="setting">Account Settings</el-dropdown-item>
+							<el-dropdown-item command="logout">Sign Out</el-dropdown-item>
+						</el-dropdown-menu>
+					</el-dropdown>
         </div>
       </div>
+
+      <el-dialog
+        :visible="visible"
+        width="600px"
+        custom-class="packets-capture"
+        :append-to-body="true"
+        :before-close="handleClose"
+      >
+        <div slot="title" style="font-family: Helvetica;font-size: 16px;color: #333333;;">
+          Change Password
+        </div>
+        <div class="packets-capture-container">
+          <el-form ref="form" :model="formData" :rules="rules" label-width="180px">
+            <el-form-item label="Original password" prop="newpass">
+              <el-input placeholder="Please enter the original password" v-model.trim="formData.newpass" />
+            </el-form-item>
+            <el-form-item label="New password" prop="newpass">
+              <el-input placeholder="Please enter a new password" v-model.trim="formData.newpass" />
+              <p style="font-family: Helvetica;font-size: 12px;color: #999999;line-height: 18px;">
+                The length is 8-16 characters, excluding spaces and special symbols
+              </p>
+            </el-form-item>
+            <el-form-item label="Enter again" prop="newpass">
+              <el-input placeholder="Enter the password again" v-model.trim="formData.newpass" />
+            </el-form-item>
+          </el-form>
+        </div>
+        <div slot="footer">
+          <el-button @click="handleClose">Cancel</el-button>
+          <el-button type="primary" @click="submitFile">Submit</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -43,11 +83,22 @@ export default {
   },
   data () {
     return {
+      visible: false,
+      formData: {
+        originpass: '',
+        newpass: '',
+        againpass: ''
+      },
+      rules: {
+        newpass: [
+          { required: true, message: 'Please enter the original password', trigger: 'blur' }
+        ]
+      },
       menu: [
         { title: 'Home', path: '/dashboard' },
         { title: 'Nodes Management', path: '/nodes' },
         { title: 'ES Management', path: '/es' },
-        { title: 'Files Management ', path: '' },
+        { title: 'Files Management ', path: '/files' },
         { title: 'Operation Management', path: '/operate' }
       ]
     }
@@ -59,6 +110,18 @@ export default {
     }
   },
   methods: {
+    moreCommand (name) {
+      if (name === 'setting') {
+        this.showModal()
+      }
+    },
+    handleClose() {
+			this.$refs.form.resetFields()
+			this.visible = false
+    },
+    showModal () {
+			this.visible = true
+		},
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
@@ -108,6 +171,9 @@ export default {
   padding: 0 26px 0 10px;
   .is-active{
     background: #2C2F35;
+  }
+  .el-dropdown-link{
+    cursor: pointer;
   }
   font-family: Helvetica;
   .el-menu-top {

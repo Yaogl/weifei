@@ -44,32 +44,24 @@ export const constantRoutes = [
         name: 'OperationRecord',
         component: () => import('@/views/nodes/operation-record'),
         meta: { title: '/operation-record' }
-      }
-    ]
-  },
-  {
-    path: '/',
-    component: BaseView,
-    redirect: '/es',
-    children: [
+      },
       {
-        path: 'es',
+        path: '/es',
         name: 'es',
         component: () => import('@/views/es/index'),
         meta: { title: 'es mangement' }
-      }
-    ]
-  },
-  {
-    path: '/',
-    component: BaseView,
-    redirect: '/operate',
-    children: [
+      },
       {
-        path: 'operate',
+        path: '/operate',
         name: 'operate',
         component: () => import('@/views/operate/index'),
         meta: { title: 'operate mangement' }
+      },
+      {
+        path: '/files',
+        name: 'files',
+        component: () => import('@/views/files/index'),
+        meta: { title: 'files mangement' }
       }
     ]
   },

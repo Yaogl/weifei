@@ -8,7 +8,7 @@
       :before-close="handleClose"
     >
       <div slot="title" style="font-family: Helvetica;font-size: 16px;color: #333333;;">
-				Get node’s file
+				Packets-capture configuration
       </div>
       <div class="packets-capture-container">
 				<el-form ref="form" :model="formData" :rules="rules" label-width="180px" size="medium">

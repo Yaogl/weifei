@@ -68,6 +68,10 @@ module.exports = {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
+    externals: {
+      'vue': 'Vue',
+      'vue-router': 'VueRouter'
+    },
     resolve: {
       alias: {
         '@': resolve('src'),
