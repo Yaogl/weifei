@@ -9,6 +9,7 @@
 import * as echarts from 'echarts'
 import world from "../../../assets/mapData/world.json"
 import china from "../../../assets/mapData/china.json"
+
 export default {
   data() {
     return {
