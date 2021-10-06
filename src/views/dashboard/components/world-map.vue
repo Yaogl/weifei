@@ -1,5 +1,8 @@
 <template>
-  <div class="hello">
+  <div class="world-map">
+    <span v-show="value !== 'world'" class="back" @click="backToWorld">
+      <i class="el-icon-back"></i>
+    </span>
     <div id="map"></div>
   </div>
 </template>
@@ -8,7 +11,8 @@
 //
 import * as echarts from 'echarts'
 import world from "../../../assets/mapData/world.json"
-import china from "../../../assets/mapData/china.json"
+import allMap from '../../../assets/mapData/index'
+import worldJsonMap from './world-mapping.json'
 
 export default {
   data() {
@@ -17,8 +21,7 @@ export default {
       myChart: null,
       //   注册地图json
       jsonMap: {
-        world: world,
-        中国: china
+        world: world
       },
       // 全球数据
       worldData: [
@@ -335,6 +338,11 @@ export default {
   },
   created() {
     //   循环注册地图
+    for (let name in worldJsonMap) {
+      if (allMap[worldJsonMap[name].mapFileName]) {
+        this.jsonMap[worldJsonMap[name].cn] = allMap[worldJsonMap[name].mapFileName]
+      }
+    }
     for (let index in this.jsonMap) {
       echarts.registerMap(index, this.jsonMap[index]);
     }
@@ -346,6 +354,7 @@ export default {
   // 更新数据
   watch: {
     value(newVal) {
+      if (!this.jsonMap[newVal]) return
       this.myChart.dispose();
       this.chinaConfigure(this.value);
     }
@@ -358,6 +367,9 @@ export default {
     this.myChart = null;
   },
   methods: {
+    backToWorld () {
+      this.value = 'world'
+    },
     chinaConfigure(area) {
       this.myChart = echarts.init(document.getElementById("map")); //这里是为了获得容器所在位置
       window.onresize = this.myChart.resize;
@@ -366,18 +378,32 @@ export default {
         backgroundColor: "#15181F",
         tooltip: {}, // 鼠标移到图里面的浮动提示框
         visualMap: {
-          // max: 110,
-          calculable: true,
-          inRange: {
-            color: [
-              "#3F1829",
-              '#2A293A',
-              '#281326',
-              '#15181F',
-              '#F74941',
-              '#361020'
-            ]
-          }
+          show: false,
+          pieces: [{
+            min: 0,
+            max: 10,
+            color: '#3F1829'
+          }, {
+            min: 10,
+            max: 20,
+            color: '#2A293A'
+          }, {
+            min: 20,
+            max: 40,
+            color: '#281326'
+          }, {
+            min: 40,
+            max: 70,
+            color: '#15181F'
+          }, {
+            min: 70,
+            max: 140,
+            color: '#F74941'
+          }, {
+            min: 140,
+            //max: 1000,
+            color: '#361020'
+          }]
         },
         series: [
           {
@@ -406,16 +432,19 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.hello {
+<style scoped lang="scss">
+.world-map {
   position: relative;
   width: 100%;
   height: 100%;
-}
->>> .el-select {
-  position: absolute;
-  left: 20px;
-  top: 20px;
+  .back{
+    position: absolute;
+    cursor: pointer;
+    right: 0.1rem;
+    top: 0.4rem;
+    color: #fff;
+    z-index: 3;
+  }
 }
 #map {
   position: absolute;

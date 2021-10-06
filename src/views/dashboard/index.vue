@@ -29,7 +29,7 @@
     </div>
     <div class="center">
       <div class="map-search" style="position: relative;">
-        <div class="mb-20" style="position: relative;z-index: 2;">
+        <div class="mb-20" style="position: relative;z-index: 4;">
           <el-input v-model="country" placeholder="Enter Country/ Region" @focus="showmore = true" @blur="blurinput">
             <i
               class="el-icon-search"
@@ -50,7 +50,7 @@
             </div>
           </div>
         </div>
-        <el-row style="position: relative;z-index: 2;">
+        <el-row style="position: relative;z-index: 2;pointer-events: none;">
           <el-col :span="14">
             <h2 style="font-family: Helvetica-Bold;font-size: 0.32rem;color: #4BFC48;line-height: 0.7rem;font-weight: 700;">
               ACTIVE NODES 2,090,023
