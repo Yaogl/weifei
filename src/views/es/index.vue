@@ -5,30 +5,27 @@
 				<div style="display: flex;">
 					<div class="flex-item">
 						<el-form-item label="Source IP">
-							<el-input v-model="query.ip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.sourceIp" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="Source Port">
-							<el-input v-model="query.ip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.sourcePort" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="Destination IP">
-							<el-input v-model="query.ip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.toIp" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="端口">
-							<el-select v-model="query.country" placeholder="Please Select" style="width: 100%;">
-								<el-option label="中国" value="shanghai"></el-option>
-								<el-option label="俄罗斯" value="beijing"></el-option>
-							</el-select>
+							<el-input v-model.trim="query.toPort" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="协议">
-							<el-select v-model="query.country" placeholder="Please Select" style="width: 100%;">
+							<el-select v-model="query.protocal" placeholder="Please Select" style="width: 100%;">
 								<el-option label="中国" value="shanghai"></el-option>
 								<el-option label="俄罗斯" value="beijing"></el-option>
 							</el-select>
@@ -38,29 +35,29 @@
 				<div style="display: flex;">
 					<div class="flex-item">
 						<el-form-item label="Domain Name">
-							<el-input v-model="query.ip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.domain" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="MAC Address">
-							<el-input v-model="query.ip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.macAddress" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 				</div>
 				<div style="display: flex;">
 					<div class="flex-item">
 						<el-form-item label="Keyword">
-							<el-input v-model="query.ip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.keyword" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="e-mail">
-							<el-input v-model="query.ip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.email" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="WAN IP">
-							<el-input v-model="query.ip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.wanip" placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
@@ -77,7 +74,7 @@
 				<div style="display: flex;">
 					<div class="flex-item">
 						<el-form-item label="自定义">
-							<el-input v-model="query.ip" placeholder="Please Enter">
+							<el-input v-model="query.kql" placeholder="Please Enter">
 								<template slot="append">KQL</template>
 							</el-input>
 						</el-form-item>
@@ -150,14 +147,23 @@ export default {
   data() {
     return {
 			query: {
-				date: [],
-				page: 1,
-				size: 10
+				sourceIp: '',
+				sourcePort: '',
+				toIp: '', // 目的ip
+				toPort: '', // 目的端口
+				protocal: '', // 协议
+				domain:	'',	// 域名
+				macAddress:	'', // mac地址
+				keyword: '', // 关键字
+				email: '', // 邮箱账户
+				wanip: '', // 邮箱账户
+				date: [], // 结构成开始结束时间
+				fromTime:	'', // 开始时间
+				toTime:	'', // 结束时间
+				kql: '' // 结束时间
 			},
 			// 列表选中项
 			tableList: [
-				{},
-				{},
 				{},
 				{}
 			]
@@ -179,7 +185,7 @@ export default {
 		color: #707070;
 		font-size: 0.12rem;
 	}
-	.el-form-item{
+	.mb-20 .el-form-item{
 		margin-bottom: 10px;
 	}
 }

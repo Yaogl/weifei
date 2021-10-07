@@ -5,7 +5,6 @@
 </template>
 <script>
 import * as echarts from 'echarts'
-import { getHomeDevices } from '@/api/topo'
 
 export default {
   props: {
@@ -14,10 +13,12 @@ export default {
       default: () => []
     }
   },
-  mounted () {
-    this.initCharts(this.chartData)
+  watch: {
+    chartData (newVal) {
+      this.initCharts(newVal)
+    }
   },
-  data() {
+  data () {
     return {
       instance: ''
     }
@@ -26,7 +27,7 @@ export default {
     this.instance && this.instance.dispose()
   },
   methods: {
-    initCharts(data) {
+    initCharts (data) {
       this.instance && this.instance.dispose()
       this.instance = echarts.init(this.$el.querySelector('[name="chart"]'))
       const option = this.getChartOption(data)
@@ -39,7 +40,36 @@ export default {
       this.instance.setOption(option)
     },
     getChartOption(chartData) {
+      const xAxis = []
+      const data = []
+      chartData.forEach(it => {
+        xAxis.push(it.date)
+        data.push(it.num)
+      })
       return {
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: 'rgba(255,255,255,0.15)',
+          borderColor: 'rgba(255,255,255,0.15)',
+          textStyle: {
+            color: '#CFD1D5'
+          },
+          axisPointer: {
+            lineStyle: {
+              type: 'solid',
+              color: '#131820'
+            }
+          },
+          // 重置 圆点样式
+          formatter: function(params) {
+        　　var result = ''
+        　　var dotHtml = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:12px;height:12px;background-color:#02E475;border: 3px solid #071122;"></span>'
+        　　params.forEach(function (item) {
+        　　　result += item.axisValue + "</br>" + dotHtml + item.data
+        　　})
+        　　return result
+          }
+        },
         grid: {
           top: '18%',
           bottom: '20%',
@@ -54,7 +84,7 @@ export default {
               color: '#A9AEB1'
             }
           },
-          data: ['1', '3', '5', '7', '9', '11', '13', '15', '17', '19', '21', '23', '25', '27']
+          data: xAxis
         },
         yAxis: {
           type: 'value',
@@ -81,7 +111,7 @@ export default {
         },
         series: [
           {
-            data: [1, 1.5, 1.4, 1.7, 3, 2.3, 1.3, 1, 1.5, 1.4, 1.7, 3, 2.3, 1.3],
+            data,
             type: 'line',
             showSymbol: false,
             lineStyle: {

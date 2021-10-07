@@ -1,24 +1,28 @@
 import request from '@/utils/request'
-
-export function login(data) {
+// { uname, pwd }  登录
+export function login (params) {
   return request({
-    url: '/auth/login',
-    method: 'post',
-    data
-  })
-}
-
-export function getInfo() {
-  return request({
-    url: '/auth/user-info',
+    url: '/home/login',
     method: 'get',
-    params: {}
+    params
   })
 }
-
-export function logout() {
+// 修改密码
+// uname		NO	
+// pwd		NO	
+// newPwd		NO	
+// confirmPwd		NO
+export function changepwd (params) {
   return request({
-    url: '/auth/logout',
-    method: 'post'
+    url: '/home/changepwd',
+    method: 'get',
+    params
+  })
+}
+// 推出登录
+export function logout () {
+  return request({
+    url: '/home/logout',
+    method: 'get'
   })
 }

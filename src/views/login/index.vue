@@ -12,12 +12,12 @@
           <h3 class="title">SIGN IN</h3>
         </div>
 
-        <el-form-item prop="username">
+        <el-form-item prop="uname">
           <el-input
-            v-model="loginForm.username"
-            ref="username"
+            v-model="loginForm.uname"
+            ref="uname"
             placeholder="Account"
-            name="username"
+            name="uname"
             type="text"
             tabindex="1"
             auto-complete="on"
@@ -28,14 +28,14 @@
           </el-input>
         </el-form-item>
 
-        <el-form-item prop="password">
+        <el-form-item prop="pwd">
           <el-input
-            v-model="loginForm.password"
+            v-model="loginForm.pwd"
             :key="passwordType"
-            ref="password"
+            ref="pwd"
             :type="passwordType"
             placeholder="Password"
-            name="password"
+            name="pwd"
             tabindex="2"
             auto-complete="on"
             @keyup.enter.native="handleLogin"
@@ -82,14 +82,14 @@ export default {
     }
     return {
       loginForm: {
-        username: 'user',
-        password: '123456'
+        uname: 'user',
+        pwd: '123456'
       },
       loginRules: {
-        username: [
+        uname: [
           { required: true, trigger: 'blur', validator: validateUsername }
         ],
-        password: [
+        pwd: [
           { required: true, trigger: 'blur', validator: validatePassword }
         ]
       },
@@ -114,7 +114,7 @@ export default {
         this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
+        this.$refs.pwd.focus()
       })
     },
     handleLogin() {

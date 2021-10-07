@@ -1,10 +1,11 @@
 <template>
-  <div class="spead-charts-container">
+  <div class="spead-charts-container" v-loading="loading">
     <div class="chart" name="chart" />
   </div>
 </template>
 <script>
 import * as echarts from 'echarts'
+// import { brandTop } from '@/api/home'
 
 export default {
   props: {
@@ -35,13 +36,29 @@ export default {
   },
   data() {
     return {
-      instance: ''
+      instance: '',
+      loading: false
     }
   },
   beforeDestroy() {
     this.instance && this.instance.dispose()
   },
   methods: {
+    getBrandInfo (country) {
+      this.loading = true
+      const params = country ? { country } : {}
+      brandTop(params).then(res => {
+        if (res.code === 200) {
+          this.list = res.result
+        } else {
+          this.$message.error(res.message || '查询失败，请稍后重试')
+        }
+        this.loading = false
+      }).catch(err => {
+        console.log(err)
+        this.loading = false
+      })
+    },
     initCharts(data) {
       this.instance && this.instance.dispose()
       this.instance = echarts.init(this.$el.querySelector('[name="chart"]'))

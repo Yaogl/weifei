@@ -1,5 +1,5 @@
 <template>
-  <div class="world-map">
+  <div class="world-map" v-loading="loading">
     <span v-show="value !== 'world'" class="back" @click="backToWorld">
       <i class="el-icon-back"></i>
     </span>
@@ -13,21 +13,23 @@ import * as echarts from 'echarts'
 import world from "../../../assets/mapData/world.json"
 import allMap from '../../../assets/mapData/index'
 import worldJsonMap from './world-mapping.json'
+// import { countryStatic } from '@/api/home'
 
 export default {
   data() {
     return {
       value: "world",
       myChart: null,
+      loading: false,
       //   注册地图json
       jsonMap: {
         world: world
       },
       // 全球数据
       worldData: [
-        { name: "美国", gold: 46, silver: 29, copper: 29, value: 104 },
-        { name: "中国", gold: 38, silver: 27, copper: 23, value: 88 },
-        { name: "英国", gold: 29, silver: 17, copper: 19, value: 65 },
+        { name: "美国", value: 104 },
+        { name: "中国", value: 88 },
+        { name: "英国", value: 65 },
         { name: "俄罗斯", gold: 24, silver: 25, copper: 33, value: 82 },
         { name: "韩国", gold: 13, silver: 8, copper: 7, value: 28 },
         { name: "德国", gold: 11, silver: 19, copper: 14, value: 44 },
@@ -370,12 +372,26 @@ export default {
     backToWorld () {
       this.value = 'world'
     },
+    getWorldData () {
+      this.loading = true
+      countryStatic().then(res => {
+        if (res.code === 200) {
+          this.worldData = res.result
+        } else {
+          this.$message.error(res.message || '查询失败，请稍后重试')
+        }
+        this.loading = false
+      }).catch(err => {
+        console.log(err)
+        this.loading = false
+      })
+    },
     chinaConfigure(area) {
-      this.myChart = echarts.init(document.getElementById("map")); //这里是为了获得容器所在位置
+      this.myChart = echarts.init(document.getElementById('map')) //这里是为了获得容器所在位置
       window.onresize = this.myChart.resize;
       let option = {
         // 进行相关配置
-        backgroundColor: "#15181F",
+        backgroundColor: '#15181F',
         tooltip: {}, // 鼠标移到图里面的浮动提示框
         visualMap: {
           show: false,
@@ -407,21 +423,21 @@ export default {
         },
         series: [
           {
-            type: "map",
+            type: 'map',
             map: area,
             roam: true,
             data:
-              area == "world"
+              area == 'world'
                 ? this.worldData
-                : area == "中国"
+                : area == '中国'
                 ? this.chinaData
                 : [],
-            nameMap: area == "world" ? this.nameMap : {}
+            nameMap: area == 'world' ? this.nameMap : {}
           }
         ]
       };
       this.myChart.setOption(option, true);
-      this.myChart.on("click", params => {
+      this.myChart.on('click', params => {
         // 点击函数
         this.value = params.name;
         this.myChart.setOption(option, true);

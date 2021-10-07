@@ -12,29 +12,29 @@
       </div>
       <div class="packets-capture-container">
 				<el-form ref="form" :model="formData" :rules="rules" label-width="180px" size="medium">
-					<el-form-item label="Capture filter" prop="path">
-						<el-input placeholder="Please Enter" v-model.trim="formData.name" />
+					<el-form-item label="Capture filter" prop="captureFilter">
+						<el-input placeholder="Please Enter" v-model.trim="formData.captureFilter" />
 					</el-form-item>
-					<el-form-item label="Display filter" prop="path">
-						<el-input placeholder="Please Enter" v-model.trim="formData.name" />
+					<el-form-item label="Display filter" prop="showFilter">
+						<el-input placeholder="Please Enter" v-model.trim="formData.showFilter" />
 					</el-form-item>
-					<el-form-item label="Field upload" prop="path">
-						<el-input placeholder="Please Enter" v-model.trim="formData.name" />
+					<el-form-item label="Field upload" prop="uploadField">
+						<el-input placeholder="Please Enter" v-model.trim="formData.uploadField" />
 					</el-form-item>
-					<el-form-item label="Length" prop="path">
-						<el-input placeholder="Please Enter" v-model.trim="formData.name" />
+					<el-form-item label="Length" prop="scrawPackageLength">
+						<el-input placeholder="Please Enter" v-model.trim="formData.scrawPackageLength" />
 					</el-form-item>
-					<el-form-item label="Buffer size" prop="path">
-						<el-input placeholder="Please Enter" v-model.trim="formData.name" />
+					<el-form-item label="Buffer size" prop="scrawCache">
+						<el-input placeholder="Please Enter" v-model.trim="formData.scrawCache" />
 					</el-form-item>
-					<el-form-item label="ES Authentication" prop="path">
-						<el-input placeholder="Please Enter" v-model.trim="formData.name" />
+					<el-form-item label="ES Authentication" prop="esAuth">
+						<el-input placeholder="Please Enter" v-model.trim="formData.esAuth" />
 					</el-form-item>
-					<el-form-item label="ES address" prop="path">
-						<el-input placeholder="Please Enter" v-model.trim="formData.name" />
+					<el-form-item label="ES address" prop="esAddress">
+						<el-input placeholder="Please Enter" v-model.trim="formData.esAddress" />
 					</el-form-item>
-					<el-form-item label="Enable" prop="path">
-						<ElSwitch v-model="formData.flag"></ElSwitch>
+					<el-form-item label="Enable">
+						<ElSwitch v-model="formData.scrawSwitch"></ElSwitch>
 					</el-form-item>
 				</el-form>
       </div>
@@ -57,8 +57,14 @@ export default {
 				]
 			},
 			formData: {
-				path: '',
-				flag: false
+				captureFilter: '',
+				showFilter: '',
+				uploadField: '',
+				scrawPackageLength: '',
+				scrawCache: '',
+				esAuth: '',
+				esAddress: '',
+				scrawSwitch: false
 			}
     }
   },

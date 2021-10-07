@@ -3,9 +3,9 @@
     <div class="left">
       <div class="protocol-distribution">
         <h3 class="title">Protocol distribution</h3>
-        <ProcessBar />
+        <ProcessBar ref="protocal" />
       </div>
-      <div class="global-distribution">
+      <div class="global-distribution" v-loading="globalLoading">
         <h3 class="title">Global distribution</h3>
         <el-row :gutter="10" style="margin-bottom: 0.2rem;">
           <el-col :span="15" offset="4" style="color: #A8AAAF;">Countries/Regions</el-col>
@@ -69,7 +69,7 @@
           </el-col>
         </el-row>
         <div style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;z-index: 1">
-          <WorldMap />
+          <WorldMap ref="worldMap" />
         </div>
       </div>
       <div class="center-chart">
@@ -78,7 +78,7 @@
             Active nodes
           </el-col>
           <el-col :span="16" align="right" class="chart-btn">
-            <el-radio-group v-model="radio">
+            <el-radio-group v-model="month">
               <el-radio-button label="1 months"></el-radio-button>
               <el-radio-button label="3 months"></el-radio-button>
               <el-radio-button label="6 months"></el-radio-button>
@@ -86,11 +86,11 @@
             </el-radio-group>
           </el-col>
         </el-row>
-        <NodesLine style="height: 2rem;"/>
+        <NodesLine style="height: 2rem;" v-loading="activeLoading" :chartData="activeList" />
       </div>
     </div>
     <div class="right">
-      <div class="top">
+      <div class="top" v-loading="topTenLoading">
         <h3 class="title">Top 10 of domainame across</h3>
         <el-row style="margin-bottom: 0.2rem;">
           <el-col :span="15" style="color: #A8AAAF;">Domain name</el-col>
@@ -110,7 +110,7 @@
       </div>
       <div class="brand-spreading">
         <h3 class="title">Brand spreading</h3>
-        <SpeadChart :chartData="devicesData" class="chart" />
+        <SpeadChart class="chart" ref="brand" />
       </div>
     </div>
   </div>
@@ -121,6 +121,7 @@ import SpeadChart from './components/spead-chart'
 import ProcessBar from './components/process-bar.vue'
 import NodesLine from './components/nodes-line.vue'
 import WorldMap from './components/world-map.vue'
+// import { globalStatic, activeStatic, domainTop } from '@/api/home'
 
 export default {
   name: 'Dashboard',
@@ -130,11 +131,19 @@ export default {
     NodesLine,
     WorldMap
   },
+  created () {
+    this.init()
+  },
   data() {
     return {
-      radio: '1 months',
+      month: '1 months',
       country: '',
       showmore: false,
+      globalLoading: false,
+      activeLoading: false,
+      topTenLoading: false,
+      activeList: [],
+      topTenList: [],
       globlList: [
         { name: '美国', status: 1, radio: '15%' },
         { name: '美国', status: 2, radio: '15%' },
@@ -150,12 +159,81 @@ export default {
     }
   },
   methods: {
+    init () {
+      // 协议统计页面获取方法 传入国家参数
+      // this.$refs.protocal.getListInfo(this.country)
+      // 获取世界地图数据
+      // this.$refs.worldMap.getWorldData(this.country)
+      // this.initGlobal() // 获取全球统计信息
+      this.initActive() // 获取活跃统计
+      // this.initTopTen() // 获取域名统计 top10
+      // 品牌统计 top20+其他
+      // this.$refs.brand.getBrandInfo(this.country)
+    },
+    initTopTen () {
+      // this.topTenLoading = true
+      // const params = country ? { country } : {}
+      // topTenLoading(params).then(res => {
+      //   if (res.code === 200) {
+      //     this.topTenList = res.result
+      //   } else {
+      //     this.$message.error(res.message || '查询失败，请稍后重试')
+      //   }
+      //   this.topTenLoading = false
+      // }).catch(err => {
+      //   console.log(err)
+      //   this.topTenLoading = false
+      // })
+    },
+    initActive () {
+      this.activeLoading = true
+      setTimeout(() => {
+        this.activeLoading = false
+        this.activeList = [
+          { date: '2021', num: 10 },
+          { date: '2020', num: 15 },
+          { date: '2019', num: 4 },
+          { date: '2018', num: 6 },
+          { date: '2017', num: 20 },
+          { date: '2016', num: 9 },
+          { date: '2015', num: 8 },
+          { date: '2014', num: 1 },
+          { date: '2013', num: 3 },
+          { date: '2012', num: 21 },
+          { date: '2011', num: 16 }
+        ]
+      }, 1000)
+      // const { country, month } = this
+      // const params = { country, month }
+      // activeStatic(params).then(res => {
+      //   if (res.code === 200) {
+      //     this.list = res.result
+      //   } else {
+      //     this.$message.error(res.message || '查询失败，请稍后重试')
+      //   }
+      //   this.activeLoading = false
+      // }).catch(err => {
+      //   console.log(err)
+      //   this.activeLoading = false
+      // })
+    },
+    initGlobal () {
+      // this.globalLoading = true
+      // const params = country ? { country } : {}
+      // globalStatic(params).then(res => {
+      //   if (res.code === 200) {
+      //     this.list = res.result
+      //   } else {
+      //     this.$message.error(res.message || '查询失败，请稍后重试')
+      //   }
+      //   this.globalLoading = false
+      // }).catch(err => {
+      //   console.log(err)
+      //   this.globalLoading = false
+      // })
+    },
     handleIconClick(ev) {
       console.log(ev);
-    },
-    querySearch(queryString, cb) {
-      console.log(queryString)
-      cb([{}])
     },
     setQuery(item) {
       this.country = item

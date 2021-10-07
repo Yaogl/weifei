@@ -9,14 +9,20 @@
       <div slot="title" style="font-family: Helvetica;font-size: 16px;color: #333333;;">
         Delete data
       </div>
-			<el-form ref="form" :model="formData" label-width="130px">
-				<el-form-item label="Starting Date" prop="path">
-					<el-input placeholder="Enter absolute path" v-model.trim="formData.name">
-					</el-input>
+			<el-form ref="form" :model="formData" :rules="rules" label-width="130px">
+				<el-form-item label="Starting Date" prop="startTime">
+          <el-date-picker
+            v-model="formData.startTime"
+            type="date"
+            placeholder="Please Select">
+          </el-date-picker>
 				</el-form-item>
-				<el-form-item label="End Date" prop="path">
-					<el-input placeholder="Enter absolute path" v-model.trim="formData.name">
-					</el-input>
+				<el-form-item label="End Date" prop="deleteTime">
+          <el-date-picker
+            v-model="formData.deleteTime"
+            type="date"
+            placeholder="Please Select">
+          </el-date-picker>
 				</el-form-item>
 			</el-form>
       <span slot="footer" class="dialog-footer">
@@ -25,6 +31,7 @@
 					size="medium"
           type="primary"
           class="red"
+          :loading="loading"
           @click="removeNode"
         >Submit</el-button>
       </span>
@@ -33,11 +40,25 @@
 </template>
 
 <script>
+import { esDel } from '@/api/es'
+
 export default {
   data () {
     return {
       visible: false,
-			formData: {}
+      loading: false,
+			formData: {
+        startTime: '',
+        deleteTime: ''
+      },
+      rules: {
+        startTime: [
+          { required: true, message: 'Please Select Starting Date', trigger: 'change' }
+        ],
+        deleteTime: [
+          { required: true, message: 'Please Select End Date', trigger: 'change' }
+        ]
+      }
     }
   },
   methods: {
@@ -48,7 +69,23 @@ export default {
 			this.visible = true
 		},
 		removeNode () {
-			this.$emit('remove')
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          // 删除列表当前行
+          this.$confirm('删除该时间段内的数据后，将无法恢复，请谨慎操作。', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          })
+            .then(() => {
+              esDel()
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
+      })
 		}
   }
 }

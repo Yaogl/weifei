@@ -5,12 +5,12 @@
 				<el-row :gutter="5">
 					<el-col :span="3">
 						<el-form-item label="IP">
-							<el-input v-model="query.ip" placeholder="IP"></el-input>
+							<el-input v-model.trim="query.ip" placeholder="IP"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="3">
 						<el-form-item label="Country">
-							<el-select v-model="query.country" placeholder="Please Select" style="width: 100%;">
+							<el-select v-model="query.country" clearable placeholder="Please Select" style="width: 100%;">
 								<el-option label="中国" value="shanghai"></el-option>
 								<el-option label="俄罗斯" value="beijing"></el-option>
 							</el-select>
@@ -18,7 +18,7 @@
 					</el-col>
 					<el-col :span="3">
 						<el-form-item label="Firmware version">
-							<el-select v-model="query.country" placeholder="Please Select" style="width: 100%;">
+							<el-select v-model="query.firmware" clearable placeholder="Please Select" style="width: 100%;">
 								<el-option label="中国" value="shanghai"></el-option>
 								<el-option label="俄罗斯" value="beijing"></el-option>
 							</el-select>
@@ -26,7 +26,7 @@
 					</el-col>
 					<el-col :span="3">
 						<el-form-item label="Processor architecture">
-							<el-select v-model="query.country" placeholder="Please Select" style="width: 100%;">
+							<el-select v-model="query.cpu" clearable placeholder="Please Select" style="width: 100%;">
 								<el-option label="中国" value="shanghai"></el-option>
 								<el-option label="俄罗斯" value="beijing"></el-option>
 							</el-select>
@@ -34,7 +34,7 @@
 					</el-col>
 					<el-col :span="3">
 						<el-form-item label="Brand">
-							<el-select v-model="query.country" placeholder="Please Select" style="width: 100%;">
+							<el-select v-model="query.brand" clearable placeholder="Please Select" style="width: 100%;">
 								<el-option label="中国" value="shanghai"></el-option>
 								<el-option label="俄罗斯" value="beijing"></el-option>
 							</el-select>
@@ -42,7 +42,7 @@
 					</el-col>
 					<el-col :span="3">
 						<el-form-item label="Model">
-							<el-select v-model="query.country" placeholder="Please Select" style="width: 100%;">
+							<el-select v-model="query.model" clearable placeholder="Please Select" style="width: 100%;">
 								<el-option label="中国" value="shanghai"></el-option>
 								<el-option label="俄罗斯" value="beijing"></el-option>
 							</el-select>
@@ -50,9 +50,10 @@
 					</el-col>
 					<el-col :span="3">
 						<el-form-item label="Status">
-							<el-select v-model="query.country" placeholder="Please Select" style="width: 100%;">
-								<el-option label="中国" value="shanghai"></el-option>
-								<el-option label="俄罗斯" value="beijing"></el-option>
+							<el-select v-model="query.status" placeholder="Please Select" style="width: 100%;">
+								<el-option label="全部" :value="0"></el-option>
+								<el-option label="在线" :value="1"></el-option>
+								<el-option label="离线" :value="2"></el-option>
 							</el-select>
 						</el-form-item>
 					</el-col>
@@ -80,7 +81,7 @@
 						<el-button size="medium" icon="el-icon-download">Download</el-button>
 					</el-button-group>
 					
-					<el-button size="medium" class="mr-5">Code execution</el-button>
+					<el-button size="medium" class="mr-5" @click="codeExecution">Code execution</el-button>
 					<el-button size="medium" class="mr-5">Packets-capture configuration</el-button>
 					<el-dropdown  @command="moreCommand">
 						<span class="el-dropdown-link">
@@ -102,27 +103,32 @@
 				<el-table-column type="selection" width="55" />
 				<el-table-column label="IP" min-width="160">
 					<template slot-scope="scope">
-						<span style="color: #00B64B;">{{ scope.row.date }}</span>
+						<span style="color: #00B64B;">{{ scope.row.ip }}</span>
 					</template>
 				</el-table-column>
 				<el-table-column label="Country" min-width="140">
 					<template slot-scope="scope">
-						<span style="color: #00B64B;">{{ scope.row.date }}</span>
+						<span style="color: #00B64B;">{{ scope.row.country }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="Model" label="Model" show-overflow-tooltip  min-width="140"/>
-				<el-table-column prop="Firmware version" label="Firmware version" show-overflow-tooltip  min-width="180" />
-				<el-table-column prop="Date" label="Date" show-overflow-tooltip  min-width="180"/>
-				<el-table-column prop="Processor architecture" label="Processor architecture" show-overflow-tooltip  min-width="180"/>
-				<el-table-column prop="Memory" label="Memory" show-overflow-tooltip  min-width="150"/>
+				<el-table-column prop="model" label="Model" show-overflow-tooltip  min-width="140"/>
+				<el-table-column prop="firmware" label="Firmware version" show-overflow-tooltip  min-width="180" />
+				<el-table-column prop="createtime" label="Date" show-overflow-tooltip  min-width="180"/>
+				<el-table-column prop="cpu" label="Processor architecture" show-overflow-tooltip  min-width="180"/>
+				<el-table-column prop="Memory" label="Memory" show-overflow-tooltip  min-width="150">
+					<template slot-scope="scope">
+						<span>{{ scope.row.memoryUsed }} / {{ scope.row.memoryTotal }}</span>
+					</template>
+				</el-table-column>
 				<el-table-column label="Status" min-width="150">
 					<template slot-scope="scope">
-						<span class="circle-before red">{{ scope.row.date }}</span>
+						<span :class="scope.row.status === 1 ? 'circle-before green' : 'circle-before green'">{{ scope.row.status === 1 ? 'Active' : 'Offline' }}</span>
 					</template>
 				</el-table-column>
 				<el-table-column label="Command execution status" min-width="220">
 					<template slot-scope="scope">
 						<span class="command-status wrong">
+							{{ scope.row.exeStatus }}
 							done
 						</span>
 						<span class="command-status ok">
@@ -182,7 +188,7 @@
 		<CodeExecution ref="codeexecution" />
 		<UploadDialog ref="uploadDialog" />
 		<PacketsCapture ref="packetsCapture" />
-		<DeleteDialog ref="deleteDialog" />
+		<DeleteDialog ref="deleteDialog" @remove="deleteNode" />
   </div>
 </template>
 
@@ -207,28 +213,41 @@ export default {
   data() {
     return {
 			query: {
-				page: 1,
-				size: 10
+				ip: '',
+				country: '', //	国家
+				firmware: '', // 固件版本
+				cpu: '', //	cpu框架
+				brand: '', // 品牌
+				model: '', //	型号
+				status: 0, // 当前状态 0全部 1在线 2离线
+				curPage: 1,
+				pageSize: 10
 			},
 			// 列表选中项
 			multipleSelection: [],
 			tableList: [
-				{},
-				{},
-				{},
 				{}
 			]
     }
   },
   methods: {
+		codeExecution () {
+			if (!this.multipleSelection.length) {
+				return this.$message.warning('please select one')
+			}
+		},
 		moreCommand (name) {
 			if (name === 'delete') {
 				// 如果是删除按钮
+				if (!this.multipleSelection.length) {
+					return this.$message.warning('please select one')
+				}
 				this.$refs.deleteDialog.showModal()
 			} else {
 				this.$router.push('/operation-record')
 			}
 		},
+		deleteNode () {},
 		handleCommand (arg, name) {
 			console.log(arg, name)
 			if (arg[0] === 'getFile') {

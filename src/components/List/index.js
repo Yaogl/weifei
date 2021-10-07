@@ -32,26 +32,26 @@ export default {
       }
       Object.assign(this.query, data.query)
     },
-    currentChange(page) {
-      this.query.page = page
+    currentChange(curPage) {
+      this.query.curPage = curPage
       // el-pagination组件 current-change
-      this.fetchByPage(page)
+      this.fetchByPage(curPage)
     },
-    changePages(page) {
+    changePages(pageSize) {
       // el-pagination组件  size-change
-      this.query['per-page'] = page
+      this.query.pageSize = pageSize
       this.fetchByPage(1)
     },
     search() {
       this.beforeSearch()
       this.fetchByPage(1)
     },
-    fetchByPage(page = this.query.page) {
+    fetchByPage(curPage = this.query.curPage) {
       if (this.loading) {
         this.$message.warning('正在加载，请勿重复操作')
         return
       }
-      this.query.page = page
+      this.query.curPage = curPage
       if (this.cacheQuery) {
         // window.scrollTo(0, 0)
         sessionStorage.setItem(

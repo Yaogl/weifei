@@ -35,10 +35,10 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { uname, pwd } = userInfo
     return new Promise((resolve) => {
-      setToken(username + password)
-      commit('SET_TOKEN', username + password)
+      setToken(uname + pwd)
+      commit('SET_TOKEN', uname + pwd)
       resolve()
       // login({ username: username.trim(), password: password })
       //   .then(response => {
@@ -63,7 +63,6 @@ const actions = {
           if (!data) {
             return reject('Verification failed, please Login again.')
           }
-
           const {
             username,
             avatar,
