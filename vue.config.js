@@ -56,10 +56,10 @@ module.exports = {
     },
     proxy: {
       '/dev-api': {
-        target: 'http://39.105.145.144:8080/', // 你要代理的域名和端口号，要加上http
+        target: process.env.VUE_APP_IMAGE_URL, // 你要代理的域名和端口号，要加上http
         changeOrigin: true, // 跨域
         pathRewrite: {
-          '^/dev-api': '/api/v1'
+          '^/dev-api': ''
         }
       }
     }

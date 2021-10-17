@@ -14,7 +14,7 @@
 
         <el-form-item prop="uname">
           <el-input
-            v-model="loginForm.uname"
+            v-model.trim="loginForm.uname"
             ref="uname"
             placeholder="Account"
             name="uname"
@@ -30,7 +30,7 @@
 
         <el-form-item prop="pwd">
           <el-input
-            v-model="loginForm.pwd"
+            v-model.trim="loginForm.pwd"
             :key="passwordType"
             ref="pwd"
             :type="passwordType"
@@ -82,8 +82,8 @@ export default {
     }
     return {
       loginForm: {
-        uname: 'user',
-        pwd: '123456'
+        uname: 'admin',
+        pwd: '123457'
       },
       loginRules: {
         uname: [

@@ -18,8 +18,8 @@
         <div class="right-login">
           <el-dropdown  @command="moreCommand">
 						<span class="el-dropdown-link">
-              <div v-if="name">
-                {{ name }}
+              <div v-if="userName">
+                {{ userName }}
                 <span
                   style="margin-left: 8px;cursor: pointer"
                   @click="logout"
@@ -47,23 +47,23 @@
         </div>
         <div class="packets-capture-container">
           <el-form ref="form" :model="formData" :rules="rules" label-width="180px">
-            <el-form-item label="Original password" prop="newpass">
-              <el-input placeholder="Please enter the original password" v-model.trim="formData.newpass" />
+            <el-form-item label="Original password" prop="pwd">
+              <el-input placeholder="Please enter the original password" v-model.trim="formData.pwd" />
             </el-form-item>
-            <el-form-item label="New password" prop="newpass">
-              <el-input placeholder="Please enter a new password" v-model.trim="formData.newpass" />
+            <el-form-item label="New password" prop="newPwd">
+              <el-input placeholder="Please enter a new password" v-model.trim="formData.newPwd" />
               <p style="font-family: Helvetica;font-size: 12px;color: #999999;line-height: 18px;">
                 The length is 8-16 characters, excluding spaces and special symbols
               </p>
             </el-form-item>
-            <el-form-item label="Enter again" prop="newpass">
-              <el-input placeholder="Enter the password again" v-model.trim="formData.newpass" />
+            <el-form-item label="Enter again" prop="confirmPwd">
+              <el-input placeholder="Enter the password again" v-model.trim="formData.confirmPwd" />
             </el-form-item>
           </el-form>
         </div>
         <div slot="footer">
-          <el-button @click="handleClose">Cancel</el-button>
-          <el-button type="primary" @click="submitFile">Submit</el-button>
+          <el-button @click="handleClose" :disabled="pwdLoading">Cancel</el-button>
+          <el-button type="primary" :loading="pwdLoading" @click="submitPass">Submit</el-button>
         </div>
       </el-dialog>
     </div>
@@ -72,6 +72,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { changepwd } from '@/api/user'
 
 export default {
   components: {},
@@ -85,13 +86,21 @@ export default {
     return {
       visible: false,
       formData: {
-        originpass: '',
-        newpass: '',
-        againpass: ''
+        uname: '',
+        pwd: '',
+        newPwd: '',
+        confirmPwd: ''
       },
+      pwdLoading: false,
       rules: {
-        newpass: [
+        newPwd: [
           { required: true, message: 'Please enter the original password', trigger: 'blur' }
+        ],
+        pwd: [
+          { required: true, message: 'Please enter the new password', trigger: 'blur' }
+        ],
+        confirmPwd: [
+          { required: true, message: 'Please enter the new password again', trigger: 'blur' }
         ]
       },
       menu: [
@@ -104,7 +113,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'showNavBar', 'name', 'permissions']),
+    ...mapGetters(['sidebar', 'avatar', 'showNavBar', 'userName']),
     activeIndex() {
       return this.$route.path
     }
@@ -113,6 +122,9 @@ export default {
     moreCommand (name) {
       if (name === 'setting') {
         this.showModal()
+      }
+      if (name === 'logout') {
+        this.logout()
       }
     },
     handleClose() {
@@ -127,26 +139,25 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login`)
     },
     clickMenu(path) {
       if (this.$route.path !== path) this.$router.push(path)
     },
+    submitPass() {
+      this.pwdLoading = true
+      this.formData.uname = this.userName
+      changepwd(this.formData).then(res => {
+        if (res) {
+          this.logout()
+          this.$message.success('Operation succeeded')
+        } else {
+          this.$message.warning('operation failed')
+        }
+      })
+    },
     login() {
-      const data = {
-        username: 'user',
-        password: '123456'
-      }
-
-      this.$store
-        .dispatch('user/login', data)
-        .then(() => {
-          this.$router.push({ path: this.redirect || '/' })
-          this.loading = false
-        })
-        .catch(() => {
-          this.loading = false
-        })
+      this.$router.push(`/login`)
     }
   }
 }

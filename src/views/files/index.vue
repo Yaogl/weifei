@@ -2,28 +2,35 @@
   <div class="files-container">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Send node’s file management" name="first">
-        Send node’s file management
+        <DownList />
       </el-tab-pane>
       <el-tab-pane label="Get node’s file management" name="second">
-        Get node’s file management
+        <GetList />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        activeName: 'second'
-      };
-    },
-    methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
-      }
+import GetList from './components/get-list.vue'
+import DownList from './components/down-list.vue'
+
+export default {
+  components: {
+    GetList,
+    DownList
+  },
+  data() {
+    return {
+      activeName: 'second'
+    };
+  },
+  methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
     }
   }
+}
 </script>
 <style lang="scss" scoped>
 .files-container{

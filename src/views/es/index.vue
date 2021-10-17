@@ -26,10 +26,20 @@
 					<div class="flex-item">
 						<el-form-item label="协议">
 							<el-select v-model="query.protocal" placeholder="Please Select" style="width: 100%;">
-								<el-option label="中国" value="shanghai"></el-option>
-								<el-option label="俄罗斯" value="beijing"></el-option>
+								<el-option label="dns" value="dns"></el-option>
+								<el-option label="telnet" value="telnet"></el-option>
+								<el-option label="dhcp" value="dhcp"></el-option>
+								<el-option label="smtp" value="smtp"></el-option>
+								<el-option label="pop3" value="pop3"></el-option>
+								<el-option label="https" value="https"></el-option>
+								<el-option label="ftp" value="ftp"></el-option>
+								<el-option label="http" value="http"></el-option>
 							</el-select>
 						</el-form-item>
+						<!-- 根据“协议”输入框的内容 来显示过滤条件，
+						上面截图是必须显示的 ，当协议选择 “dns” 时 ，
+						显示“域名” 输入框，当协议选择“smtp”或 “pop3” 时，
+						显示  “邮箱账户”输入框， “协议”为空或其他协议 只显示必选的那几个输入框 -->
 					</div>
 				</div>
 				<div style="display: flex;">
@@ -137,6 +147,7 @@
 <script>
 import List from '@/components/List'
 import DeleteEs from './components/delete-es.vue'
+import { esSearch } from '@/api/es'
 
 export default {
   name: 'Es',
@@ -170,6 +181,7 @@ export default {
     }
   },
   methods: {
+		fetchApi: esSearch,
 		deleteEs () {
 			this.$refs.deleteEs.showModal()
 		}

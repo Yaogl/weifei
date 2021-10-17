@@ -13,7 +13,7 @@ import * as echarts from 'echarts'
 import world from "../../../assets/mapData/world.json"
 import allMap from '../../../assets/mapData/index'
 import worldJsonMap from './world-mapping.json'
-// import { countryStatic } from '@/api/home'
+import { countryStatic } from '@/api/home'
 
 export default {
   data() {
@@ -26,93 +26,7 @@ export default {
         world: world
       },
       // 全球数据
-      worldData: [
-        { name: "美国", value: 104 },
-        { name: "中国", value: 88 },
-        { name: "英国", value: 65 },
-        { name: "俄罗斯", gold: 24, silver: 25, copper: 33, value: 82 },
-        { name: "韩国", gold: 13, silver: 8, copper: 7, value: 28 },
-        { name: "德国", gold: 11, silver: 19, copper: 14, value: 44 },
-        { name: "法国", gold: 11, silver: 11, copper: 12, value: 34 },
-        { name: "意大利", gold: 8, silver: 9, copper: 11, value: 28 },
-        { name: "匈牙利", gold: 8, silver: 4, copper: 5, value: 17 },
-        { name: "澳大利亚", gold: 7, silver: 16, copper: 12, value: 35 },
-        { name: "日本", gold: 7, silver: 14, copper: 17, value: 38 },
-        { name: "哈萨克斯坦", gold: 7, silver: 1, copper: 5, value: 13 },
-        { name: "荷兰", gold: 6, silver: 6, copper: 8, value: 20 },
-        { name: "乌克兰", gold: 6, silver: 5, copper: 9, value: 20 },
-        { name: "古巴", gold: 5, silver: 3, copper: 6, value: 14 },
-        { name: "新西兰", gold: 5, silver: 3, copper: 5, value: 13 },
-        { name: "伊朗", gold: 4, silver: 5, copper: 3, value: 12 },
-        { name: "牙买加", gold: 4, silver: 4, copper: 4, value: 12 },
-        { name: "捷克", gold: 4, silver: 3, copper: 3, value: 10 },
-        { name: "朝鲜", gold: 4, silver: 0, copper: 2, value: 6 },
-        { name: "西班牙", gold: 3, silver: 10, copper: 4, value: 17 },
-        { name: "巴西", gold: 3, silver: 5, copper: 9, value: 17 },
-        { name: "白俄罗斯", gold: 3, silver: 5, copper: 5, value: 13 },
-        { name: "南非", gold: 3, silver: 2, copper: 1, value: 6 },
-        { name: "埃塞俄比亚", gold: 3, silver: 1, copper: 3, value: 7 },
-        { name: "克罗地亚", gold: 3, silver: 1, copper: 2, value: 6 },
-        { name: "罗马尼亚", gold: 2, silver: 5, copper: 2, value: 9 },
-        { name: "肯尼亚", gold: 2, silver: 4, copper: 5, value: 11 },
-        { name: "丹麦", gold: 2, silver: 4, copper: 3, value: 9 },
-        { name: "波兰", gold: 2, silver: 2, copper: 6, value: 10 },
-        { name: "阿塞拜疆", gold: 2, silver: 2, copper: 6, value: 10 },
-        { name: "土耳其", gold: 2, silver: 2, copper: 1, value: 5 },
-        { name: "瑞士", gold: 2, silver: 2, copper: 0, value: 4 },
-        { name: "立陶宛", gold: 2, silver: 1, copper: 2, value: 5 },
-        { name: "挪威", gold: 2, silver: 1, copper: 1, value: 4 },
-        { name: "加拿大", gold: 1, silver: 5, copper: 12, value: 18 },
-        { name: "瑞典", gold: 1, silver: 4, copper: 3, value: 8 },
-        { name: "哥伦比亚", gold: 1, silver: 3, copper: 4, value: 8 },
-        { name: "格鲁吉亚", gold: 1, silver: 3, copper: 3, value: 7 },
-        { name: "墨西哥", gold: 1, silver: 3, copper: 3, value: 7 },
-        { name: "爱尔兰", gold: 1, silver: 1, copper: 3, value: 5 },
-        { name: "塞尔维亚", gold: 1, silver: 1, copper: 2, value: 4 },
-        { name: "斯洛文尼亚", gold: 1, silver: 1, copper: 2, value: 4 },
-        { name: "阿根廷", gold: 1, silver: 1, copper: 2, value: 4 },
-        { name: "突尼斯", gold: 1, silver: 1, copper: 1, value: 3 },
-        { name: "多米尼加", gold: 1, silver: 1, copper: 0, value: 2 },
-        { name: "乌兹别克斯坦", gold: 1, silver: 0, copper: 3, value: 4 },
-        { name: "特立尼达和多巴哥", gold: 1, silver: 0, copper: 3, value: 4 },
-        { name: "拉脱维亚", gold: 1, silver: 0, copper: 1, value: 2 },
-        { name: "格林纳达", gold: 1, silver: 0, copper: 0, value: 1 },
-        { name: "巴哈马", gold: 1, silver: 0, copper: 0, value: 1 },
-        { name: "乌干达", gold: 1, silver: 0, copper: 0, value: 1 },
-        { name: "委内瑞拉", gold: 1, silver: 0, copper: 0, value: 1 },
-        { name: "阿尔及利亚", gold: 1, silver: 0, copper: 0, value: 1 },
-        { name: "印度", gold: 0, silver: 2, copper: 4, value: 6 },
-        { name: "蒙古", gold: 0, silver: 2, copper: 3, value: 5 },
-        { name: "泰国", gold: 0, silver: 2, copper: 1, value: 3 },
-        { name: "埃及", gold: 0, silver: 2, copper: 0, value: 2 },
-        { name: "斯洛伐克", gold: 0, silver: 1, copper: 3, value: 4 },
-        { name: "比利时", gold: 0, silver: 1, copper: 2, value: 3 },
-        { name: "芬兰", gold: 0, silver: 1, copper: 2, value: 3 },
-        { name: "亚美尼亚", gold: 0, silver: 1, copper: 2, value: 3 },
-        { name: "马来西亚", gold: 0, silver: 1, copper: 1, value: 2 },
-        { name: "中华台北", gold: 0, silver: 1, copper: 1, value: 2 },
-        { name: "爱沙尼亚", gold: 0, silver: 1, copper: 1, value: 2 },
-        { name: "保加利亚", gold: 0, silver: 1, copper: 1, value: 2 },
-        { name: "印度尼西亚", gold: 0, silver: 1, copper: 1, value: 2 },
-        { name: "波多黎各", gold: 0, silver: 1, copper: 1, value: 2 },
-        { name: "黑山", gold: 0, silver: 1, copper: 0, value: 1 },
-        { name: "博茨瓦纳", gold: 0, silver: 1, copper: 0, value: 1 },
-        { name: "塞浦路斯", gold: 0, silver: 1, copper: 0, value: 1 },
-        { name: "葡萄牙", gold: 0, silver: 1, copper: 0, value: 1 },
-        { name: "加蓬", gold: 0, silver: 1, copper: 0, value: 1 },
-        { name: "危地马拉", gold: 0, silver: 1, copper: 0, value: 1 },
-        { name: "卡塔尔", gold: 0, silver: 0, copper: 2, value: 2 },
-        { name: "新加坡", gold: 0, silver: 0, copper: 2, value: 2 },
-        { name: "希腊", gold: 0, silver: 0, copper: 2, value: 2 },
-        { name: "摩尔多瓦", gold: 0, silver: 0, copper: 2, value: 2 },
-        { name: "巴林", gold: 0, silver: 0, copper: 1, value: 1 },
-        { name: "塔吉克斯坦", gold: 0, silver: 0, copper: 1, value: 1 },
-        { name: "中国香港", gold: 0, silver: 0, copper: 1, value: 1 },
-        { name: "摩洛哥", gold: 0, silver: 0, copper: 1, value: 1 },
-        { name: "沙特阿拉伯", gold: 0, silver: 0, copper: 1, value: 1 },
-        { name: "科威特", gold: 0, silver: 0, copper: 1, value: 1 },
-        { name: "阿富汗", gold: 0, silver: 0, copper: 1, value: 1 }
-      ],
+      worldData: [],
       // 全球地域中文映射
       nameMap: {
         Afghanistan: "阿富汗",
@@ -349,10 +263,6 @@ export default {
       echarts.registerMap(index, this.jsonMap[index]);
     }
   },
-  mounted() {
-    // 初始化地图
-    this.chinaConfigure(this.value);
-  },
   // 更新数据
   watch: {
     value(newVal) {
@@ -372,14 +282,18 @@ export default {
     backToWorld () {
       this.value = 'world'
     },
-    getWorldData () {
+    getWorldData (country) {
       this.loading = true
-      countryStatic().then(res => {
-        if (res.code === 200) {
-          this.worldData = res.result
-        } else {
-          this.$message.error(res.message || '查询失败，请稍后重试')
+      const params = country ? { country } : {}
+      countryStatic(params).then(res => {
+        if (res && res.length) {
+          res.map(item => {
+            item.name = item.country
+            item.value = item.historyActiveNum
+          })
         }
+        this.worldData = res
+        this.chinaConfigure(this.value)
         this.loading = false
       }).catch(err => {
         console.log(err)
@@ -392,7 +306,16 @@ export default {
       let option = {
         // 进行相关配置
         backgroundColor: '#15181F',
-        tooltip: {}, // 鼠标移到图里面的浮动提示框
+        tooltip: {
+          trigger: 'item',
+          formatter: function (params) {
+            const value = params.value
+            if(!value){
+              return
+            }
+            return params.name + ': ' + value
+          }
+        },
         visualMap: {
           show: false,
           pieces: [{
@@ -432,7 +355,7 @@ export default {
                 : area == '中国'
                 ? this.chinaData
                 : [],
-            nameMap: area == 'world' ? this.nameMap : {}
+            // nameMap: area == 'world' ? this.nameMap : {}
           }
         ]
       };

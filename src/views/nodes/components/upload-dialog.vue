@@ -15,8 +15,10 @@
           <el-upload
             :show-file-list="false"
             class="upload-demo"
+						:http-request="uploadFile"
             drag
-						:on-change="handleChange"
+						:on-progress="uploadProcess"
+						:before-upload="beforeUpload"
           >
             <!-- :http-request="uploadJson" -->
             <div>
@@ -88,6 +90,8 @@
 </template>
 
 <script>
+import { uploadFileGet } from '@/api/machineinspect'
+
 export default {
   data() {
     return {
@@ -100,23 +104,28 @@ export default {
     handleClose() {
       this.visible = false
     },
-		showModal () {
-			this.visible = true
-		},
-		handleChange(file, fileList) {
-			this.fileList = fileList
-		},
-    uploadJson(params) {
-      const maxSize = 1024 * 1024 * 200
+		beforeUpload(file) {
+			const maxSize = 1024 * 1024 * 200
       try {
-        if (params.file.size > maxSize) {
+        if (file.size > maxSize) {
           return this.$message.warning('文件大小超出限制')
         }
       } catch (error) {
         this.loading = false
         this.$message.error('上传失败，请检查文件格式')
       }
-    }
+		},
+		uploadFile(params) {
+			const form = new FormData()
+			form.append('file', params.file)
+			uploadFileGet(form)
+		},
+		uploadProcess(event, file, fileList) {
+			file.percent = Math.floor(event.percent);
+		},
+		showModal () {
+			this.visible = true
+		}
   }
 }
 </script>

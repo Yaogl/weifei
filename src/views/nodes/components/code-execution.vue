@@ -12,33 +12,36 @@
       </div>
       <div class="code-execution-container">
 				<!-- 可以使用自动检测 -->
-				<div id="codeView" v-highlight>
+				<!-- <div id="codeView" v-highlight>
 					<pre><code v-html="aaa"></code></pre>
-				</div>
+				</div> -->
+				<el-input
+					type="textarea"
+					:rows="10"
+					placeholder="请输入内容"
+					v-model="formData.cmd">
+				</el-input>
       </div>
       <div slot="footer" class="dialog-footer">
-				<el-button size="medium" @click="handleClose">Cancel</el-button>
-				<el-button size="medium" type="primary" @click="submitFile">Submit</el-button>
+				<el-button size="medium" :disabled="loading" @click="handleClose">Cancel</el-button>
+				<el-button size="medium" :loading="loading" type="primary" @click="submitFile">Submit</el-button>
 			</div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { nodeExecmd } from '@/api/node'
+
 export default {
   data () {
     return {
       visible: false,
-			aaa: `handleClose() {
-					this.visible = false
-				},
-				showModal () {
-					this.visible = true
-				},
-				submitFile () {
-					alert(1)
-				}
-			`
+			loading: false,
+			formData: {
+				cmd: '',
+				nodeIds: ''
+			}
     }
   },
   methods: {
@@ -46,10 +49,20 @@ export default {
 			this.visible = false
     },
     showModal () {
+			const ids = Array.isArray(id) ? id : [id]
+			this.formData.nodeIds = ids.join(',')
 			this.visible = true
 		},
 		submitFile () {
-			alert(1)
+			if (!this.formData.cmd.trim()) {
+				return this.$message.warning('please enter')
+			}
+			this.loading = true
+			nodeExecmd(this.formData).then(res => {
+				this.loading = false
+			}).catch(() => {
+				this.loading = false
+			})
 		}
   }
 }

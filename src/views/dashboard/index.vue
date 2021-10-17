@@ -8,22 +8,22 @@
       <div class="global-distribution" v-loading="globalLoading">
         <h3 class="title">Global distribution</h3>
         <el-row :gutter="10" style="margin-bottom: 0.2rem;">
-          <el-col :span="15" offset="4" style="color: #A8AAAF;">Countries/Regions</el-col>
-          <el-col :span="5" style="color: #A8AAAF;">Ratio</el-col>
+          <el-col :span="15" offset="3" style="color: #A8AAAF;">Countries/Regions</el-col>
+          <el-col :span="6" style="color: #A8AAAF;">Ratio</el-col>
         </el-row>
         <el-row :gutter="10" v-for="(item, index) in globlList" :key="index" class="global-item">
-          <el-col :span="4">{{ index + 1 }}</el-col>
+          <el-col :span="3">{{ index + 1 }}</el-col>
           <el-col :span="15" class="center-flex">
             <div class="img">
-              <img src="../../assets/img/up.png" alt="" v-if="item.status === 1">
-              <img src="../../assets/img/down.png" alt="" v-if="item.status === 2">
-              <img src="../../assets/img/unchanged.png" alt="" v-if="item.status === 3">
+              <img src="../../assets/img/up.png" alt="" v-if="item.rise === 1">
+              <img src="../../assets/img/down.png" alt="" v-if="item.rise === -1">
+              <img src="../../assets/img/unchanged.png" alt="" v-if="item.rise === 0">
             </div>
             <div class="name">
-              {{ item.name }}
+              {{ item.country }}
             </div>
           </el-col>
-          <el-col :span="5" style="color: #FF4141;font-weight: 900;">{{ item.radio }}</el-col>
+          <el-col :span="6" style="color: #FF4141;font-weight: 900;">{{ item.percent }}%</el-col>
         </el-row>
       </div>
     </div>
@@ -78,11 +78,11 @@
             Active nodes
           </el-col>
           <el-col :span="16" align="right" class="chart-btn">
-            <el-radio-group v-model="month">
-              <el-radio-button label="1 months"></el-radio-button>
-              <el-radio-button label="3 months"></el-radio-button>
-              <el-radio-button label="6 months"></el-radio-button>
-              <el-radio-button label="12 months"></el-radio-button>
+            <el-radio-group v-model="month" @change="changeMonth" :disabled="activeLoading">
+              <el-radio-button label="1">1 months</el-radio-button>
+              <el-radio-button label="3">3 months</el-radio-button>
+              <el-radio-button label="6">6 months</el-radio-button>
+              <el-radio-button label="12">12 months</el-radio-button>
             </el-radio-group>
           </el-col>
         </el-row>
@@ -96,15 +96,15 @@
           <el-col :span="15" style="color: #A8AAAF;">Domain name</el-col>
           <el-col :span="9" style="color: #A8AAAF;" align="right">Visit number</el-col>
         </el-row>
-        <div class="top-flex" v-for="i in 8" :key="i">
+        <div class="top-flex" v-for="item in topTenList" :key="item.name">
           <div class="top-left">
             <img src="../../assets/img/inter.png" alt="">
             <div class="url">
-              http://baidu.comhttp://baidu.comhttp://baidu.com
+              {{ item.name }}
             </div>
           </div>
           <div class="top-right">
-            38382991
+            {{ item.cnt }}
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@ import SpeadChart from './components/spead-chart'
 import ProcessBar from './components/process-bar.vue'
 import NodesLine from './components/nodes-line.vue'
 import WorldMap from './components/world-map.vue'
-// import { globalStatic, activeStatic, domainTop } from '@/api/home'
+import { domainTop, globalStatic, activeStatic } from '@/api/home'
 
 export default {
   name: 'Dashboard',
@@ -131,12 +131,12 @@ export default {
     NodesLine,
     WorldMap
   },
-  created () {
+  mounted () {
     this.init()
   },
   data() {
     return {
-      month: '1 months',
+      month: '1',
       country: '',
       showmore: false,
       globalLoading: false,
@@ -144,78 +144,49 @@ export default {
       topTenLoading: false,
       activeList: [],
       topTenList: [],
-      globlList: [
-        { name: '美国', status: 1, radio: '15%' },
-        { name: '美国', status: 2, radio: '15%' },
-        { name: '美国', status: 3, radio: '15%' },
-        { name: '美国美国', status: 1, radio: '15%' },
-        { name: '美国', status: 1, radio: '15%' },
-        { name: '美国', status: 1, radio: '15%' },
-        { name: '美国', status: 1, radio: '15%' },
-        { name: '美国', status: 1, radio: '15%' },
-        { name: '美国', status: 1, radio: '15%' },
-        { name: '美国', status: 1, radio: '15%' }
-      ]
+      globlList: []
     }
   },
   methods: {
     init () {
+      globalStatic().then(res => {
+        this.globlList = res
+      })
+      // protocalStatic()
       // 协议统计页面获取方法 传入国家参数
-      // this.$refs.protocal.getListInfo(this.country)
+      this.$refs.protocal.getListInfo(this.country)
       // 获取世界地图数据
-      // this.$refs.worldMap.getWorldData(this.country)
+      this.$refs.worldMap.getWorldData(this.country)
       // this.initGlobal() // 获取全球统计信息
       this.initActive() // 获取活跃统计
-      // this.initTopTen() // 获取域名统计 top10
+      this.initTopTen() // 获取域名统计 top10
       // 品牌统计 top20+其他
-      // this.$refs.brand.getBrandInfo(this.country)
+      this.$refs.brand.getBrandInfo(this.country)
     },
     initTopTen () {
-      // this.topTenLoading = true
-      // const params = country ? { country } : {}
-      // topTenLoading(params).then(res => {
-      //   if (res.code === 200) {
-      //     this.topTenList = res.result
-      //   } else {
-      //     this.$message.error(res.message || '查询失败，请稍后重试')
-      //   }
-      //   this.topTenLoading = false
-      // }).catch(err => {
-      //   console.log(err)
-      //   this.topTenLoading = false
-      // })
+      this.topTenLoading = true
+      const params = this.country ? { country: this.country } : {}
+      domainTop(params).then(res => {
+        this.topTenList = res
+        this.topTenLoading = false
+      }).catch(err => {
+        console.log(err)
+        this.topTenLoading = false
+      })
+    },
+    changeMonth () {
+      this.initActive()
     },
     initActive () {
       this.activeLoading = true
-      setTimeout(() => {
+      const { country, month } = this
+      const params = { country, month }
+      activeStatic(params).then(res => {
+        if (res && res.length) {
+          this.activeList = res
+        }
         this.activeLoading = false
-        this.activeList = [
-          { date: '2021', num: 10 },
-          { date: '2020', num: 15 },
-          { date: '2019', num: 4 },
-          { date: '2018', num: 6 },
-          { date: '2017', num: 20 },
-          { date: '2016', num: 9 },
-          { date: '2015', num: 8 },
-          { date: '2014', num: 1 },
-          { date: '2013', num: 3 },
-          { date: '2012', num: 21 },
-          { date: '2011', num: 16 }
-        ]
-      }, 1000)
-      // const { country, month } = this
-      // const params = { country, month }
-      // activeStatic(params).then(res => {
-      //   if (res.code === 200) {
-      //     this.list = res.result
-      //   } else {
-      //     this.$message.error(res.message || '查询失败，请稍后重试')
-      //   }
-      //   this.activeLoading = false
-      // }).catch(err => {
-      //   console.log(err)
-      //   this.activeLoading = false
-      // })
+      })
     },
     initGlobal () {
       // this.globalLoading = true
@@ -232,10 +203,10 @@ export default {
       //   this.globalLoading = false
       // })
     },
-    handleIconClick(ev) {
-      console.log(ev);
+    handleIconClick () {
+      this.init()
     },
-    setQuery(item) {
+    setQuery (item) {
       this.country = item
     },
     blurinput (a) {

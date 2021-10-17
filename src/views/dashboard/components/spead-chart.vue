@@ -5,39 +5,38 @@
 </template>
 <script>
 import * as echarts from 'echarts'
-// import { brandTop } from '@/api/home'
+import { brandTop } from '@/api/home'
 
 export default {
-  props: {
-    chartData: {
-      type: Array,
-      default: () => [
-        { name: '张三1', value: 18 },
-        { name: '张三2', value: 21 },
-        { name: '张三3', value: 18 },
-        { name: '张三4', value: 18 },
-        { name: '张三5', value: 18 },
-        { name: '张三6', value: 18 },
-        { name: '张三7', value: 18 },
-        { name: '张三8', value: 18 },
-        { name: '张三9', value: 18 },
-        { name: '张三10', value: 18 },
-        { name: '张三11', value: 18 },
-        { name: '张三12', value: 18 },
-        { name: '张三14', value: 18 },
-        { name: '张三15', value: 18 },
-        { name: '张三16', value: 18 },
-        { name: '张三17', value: 18 }
-      ]
-    }
-  },
-  mounted () {
-    this.initCharts(this.chartData)
-  },
+  // props: {
+  //   chartData: {
+  //     type: Array,
+  //     default: () => [
+  //       { name: '张三1', value: 18 },
+  //       { name: '张三2', value: 21 },
+  //       { name: '张三3', value: 18 },
+  //       { name: '张三4', value: 18 },
+  //       { name: '张三5', value: 18 },
+  //       { name: '张三6', value: 18 },
+  //       { name: '张三7', value: 18 },
+  //       { name: '张三8', value: 18 },
+  //       { name: '张三9', value: 18 },
+  //       { name: '张三10', value: 18 },
+  //       { name: '张三11', value: 18 },
+  //       { name: '张三12', value: 18 },
+  //       { name: '张三14', value: 18 },
+  //       { name: '张三15', value: 18 },
+  //       { name: '张三16', value: 18 },
+  //       { name: '张三17', value: 18 }
+  //     ]
+  //   }
+  // },
   data() {
     return {
       instance: '',
-      loading: false
+      chartData: [],
+      loading: false,
+      total: 0
     }
   },
   beforeDestroy() {
@@ -48,12 +47,17 @@ export default {
       this.loading = true
       const params = country ? { country } : {}
       brandTop(params).then(res => {
-        if (res.code === 200) {
-          this.list = res.result
-        } else {
-          this.$message.error(res.message || '查询失败，请稍后重试')
+        this.total = 0
+        if (res && res.length) {
+          res.map(item => {
+            this.total += item.count
+            item.name = item.brandName
+            item.value = item.count
+          })
         }
+        this.chartData = res || []
         this.loading = false
+        this.initCharts(this.chartData)
       }).catch(err => {
         console.log(err)
         this.loading = false
@@ -71,13 +75,13 @@ export default {
       }
       this.instance.setOption(option)
     },
-    getChartOption(chartData) {
+    getChartOption(data) {
       return {
         // itemGap: 20,
         //     left: 'center',
         //     top: '56%'
         title: [{
-          text: '19823',
+          text: this.total,
           x: '50%',
           y: '50%',
           textAlign: 'center',
@@ -135,7 +139,7 @@ export default {
             labelLine: {
               show: false
             },
-            data: this.chartData
+            data
           }
         ]
       }

@@ -66,8 +66,8 @@ export default {
       this.loading = true
       return this.fetchApi(params).then(results => {
         this.loading = false
-        this.tableList = this.formatData(results.data.items || [])
-        this.total = Number(results.data.pager.total) || 0
+        this.tableList = this.formatData(results?.records || [])
+        this.total = Number(results.total) || 0
         this.afterSearch()
       })
     },

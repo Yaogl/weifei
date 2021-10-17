@@ -21,6 +21,9 @@
 					<el-form-item label="Field upload" prop="uploadField">
 						<el-input placeholder="Please Enter" v-model.trim="formData.uploadField" />
 					</el-form-item>
+					<el-form-item label="Heartbeat Time" prop="heartBeatTime">
+						<el-input placeholder="Please Enter" v-model.trim="formData.heartBeatTime" />
+					</el-form-item>
 					<el-form-item label="Length" prop="scrawPackageLength">
 						<el-input placeholder="Please Enter" v-model.trim="formData.scrawPackageLength" />
 					</el-form-item>
@@ -39,14 +42,16 @@
 				</el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-				<el-button size="medium" @click="handleClose">Cancel</el-button>
-				<el-button size="medium" type="primary" @click="submitFile">Submit</el-button>
+				<el-button size="medium" @click="handleClose" :disabled="loading">Cancel</el-button>
+				<el-button size="medium" :loading="loading" type="primary" @click="submitFile">Submit</el-button>
 			</div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { nodeScrawconfigAdd } from '@/api/node'
+
 export default {
   data () {
     return {
@@ -56,7 +61,9 @@ export default {
 					{ required: true, message: 'Required field, must be verified before execution', trigger: 'blur' }
 				]
 			},
+			loading: false,
 			formData: {
+				nodeIds: '',
 				captureFilter: '',
 				showFilter: '',
 				uploadField: '',
@@ -64,7 +71,8 @@ export default {
 				scrawCache: '',
 				esAuth: '',
 				esAddress: '',
-				scrawSwitch: false
+				scrawSwitch: false,
+				heartBeatTime: ''
 			}
     }
   },
@@ -73,12 +81,22 @@ export default {
 			this.$refs.form.resetFields()
 			this.visible = false
     },
-    showModal () {
+    showModal (id) {
+			const ids = Array.isArray(id) ? id : [id]
+			this.formData.nodeIds = ids.join(',')
 			this.visible = true
 		},
 		submitFile () {
 			this.$refs.form.validate(valid => {
-				console.log(valid)
+				if (valid) {
+					this.loading = true
+					nodeScrawconfigAdd(this.formData).then(res => {
+						console.log(res)
+						this.loading = false
+					}).catch(err => {
+						this.loading = false
+					})
+				}
 			})
 		}
   }

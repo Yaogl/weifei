@@ -62,3 +62,5 @@ export function fileListDeliver (params) {
     params
   })
 }
+
+export const uploadGetUrl = process.env.VUE_APP_IMAGE_URL + 'file/upload/get'

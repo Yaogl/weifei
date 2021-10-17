@@ -48,11 +48,11 @@ export function nodeScrawconfig (params) {
   })
 }
 // 新增或更新抓取配置
-export function nodeScrawconfigAdd (params) {
+export function nodeScrawconfigAdd (data) {
   return request({
     url: '/node/scrawconfig/save',
     method: 'post',
-    params
+    data
   })
 }
 // 执行命令
