@@ -27,22 +27,36 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row class="mt-10 mr-10 ml-10 mb-10">
+      <el-col :span="24" align="right">
+        <el-pagination
+          v-if="total > 0"
+          :current-page="query.pageSize"
+          :page-sizes="[5, 10, 20, 30, 40]"
+          :page-size="query.size"
+          :total="total"
+          :pager-count="4"
+          layout="prev, pager, next"
+          @size-change="changePages"
+          @current-change="currentChange"
+        />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import { nodeSearch } from '@/api/node'
+import { fileListGet } from '@/api/machineinspect'
 import List from '@/components/List'
 
 export default {
 	extends: List,
   data() {
     return {
-      createdSearch: false
     }
   },
   methods: {
-		fetchApi: nodeSearch
+		fetchApi: fileListGet
   }
 }
 </script>

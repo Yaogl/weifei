@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { uploadFileGet } from '@/api/machineinspect'
+import { uploadFileDeliver } from '@/api/machineinspect'
 
 export default {
   data() {
@@ -118,9 +118,10 @@ export default {
 		uploadFile(params) {
 			const form = new FormData()
 			form.append('file', params.file)
-			uploadFileGet(form)
+			uploadFileDeliver(form)
 		},
 		uploadProcess(event, file, fileList) {
+			console.log(file, 9090)
 			file.percent = Math.floor(event.percent);
 		},
 		showModal () {

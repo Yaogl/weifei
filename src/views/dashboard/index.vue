@@ -149,15 +149,11 @@ export default {
   },
   methods: {
     init () {
-      globalStatic().then(res => {
-        this.globlList = res
-      })
-      // protocalStatic()
       // 协议统计页面获取方法 传入国家参数
       this.$refs.protocal.getListInfo(this.country)
       // 获取世界地图数据
       this.$refs.worldMap.getWorldData(this.country)
-      // this.initGlobal() // 获取全球统计信息
+      this.initGlobal() // 获取全球统计信息
       this.initActive() // 获取活跃统计
       this.initTopTen() // 获取域名统计 top10
       // 品牌统计 top20+其他
@@ -189,19 +185,15 @@ export default {
       })
     },
     initGlobal () {
-      // this.globalLoading = true
-      // const params = country ? { country } : {}
-      // globalStatic(params).then(res => {
-      //   if (res.code === 200) {
-      //     this.list = res.result
-      //   } else {
-      //     this.$message.error(res.message || '查询失败，请稍后重试')
-      //   }
-      //   this.globalLoading = false
-      // }).catch(err => {
-      //   console.log(err)
-      //   this.globalLoading = false
-      // })
+      this.globalLoading = true
+      const params = this.country ? { country: this.country } : {}
+      globalStatic(params).then(res => {
+        this.globlList = res
+        this.globalLoading = false
+      }).catch(err => {
+        console.log(err)
+        this.globalLoading = false
+      })
     },
     handleIconClick () {
       this.init()
@@ -209,7 +201,7 @@ export default {
     setQuery (item) {
       this.country = item
     },
-    blurinput (a) {
+    blurinput () {
       setTimeout(() => {
         this.showmore = false
       }, 300)

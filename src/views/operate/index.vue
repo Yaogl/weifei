@@ -1,151 +1,87 @@
 <template>
-  <div class="operate-manage">
-		<div class="back mb-20">
-			<span @click="$router.go(-1)">
-				<i class="el-icon-arrow-left"></i>
-				Return
-			</span>
-		</div>
-    <div style="padding: 0 0.2rem;">
-			<el-card>
-				<p class="header-title">Sever IP  192.168.1.1</p>
-				<el-row>
-					<el-col :span="5" align="center">
-						<p class="big">65%</p>
-						<p class="small">CPU</p>
-					</el-col>
-					<el-col :span="5" align="center">
-						<p class="big">65%</p>
-						<p class="small">RAM</p>
-					</el-col>
-					<el-col :span="5" align="center">
-						<p class="big">
-							99T
-							<span style="font-size: 16px">/100T</span>
-						</p>
-						<p class="small">Memory consumption</p>
-					</el-col>
-					<el-col :span="5" align="center">
-						<p class="big">100M</p>
-						<p class="small">Bandwidth</p>
-					</el-col>
-				</el-row>
-			</el-card>
-			<el-card class="mt-20">
-				<p class="header-title">Processes</p>
-				<div style="background: #282C34;border-radius: 4px;color: #fff;padding: 20px;">
-					<table boder="0" cellpadding="0" cellspacing="0" style="width: 85%">
-						<tr style="text-align: left;" class="tHeader">
-							<th>PID</th>
-							<th>USER</th>
-							<th>PR</th>
-							<th>NI</th>
-							<th>VIRT</th>
-							<th>RES</th>
-							<th>SHR</th>
-							<th>S</th>
-							<th>%CPU</th>
-							<th>%MEM</th>
-							<th>TIME+</th>
-							<th>COMMAND</th>
-						</tr>
-						<tr class="tbody" v-for="i in 20" :key="i">
-							<td>1</td>
-							<td>root</td>
-							<td>20</td>
-							<td>-20</td>
-							<td>18982</td>
-							<td>2i2772</td>
-							<td>2123</td>
-							<td>S</td>
-							<td>0.0</td>
-							<td>0.3</td>
-							<td>0：38.45</td>
-							<td>systemd</td>
-						</tr>
-					</table>
-				</div>
-			</el-card>
-		</div>
+  <div class="operate-container">
+		<el-card>
+			<div slot="header" style="position: relative;">
+				<span class="list-header">
+					Operation Management
+				</span>
+			</div>
+			<el-table
+				ref="multipleTable"
+				:data="tableList"
+				tooltip-effect="dark"
+				v-loading="loading"
+				style="width: 100%"
+				@selection-change="handleSelectionChange">
+				<el-table-column label="服务器IP" min-width="160">
+					<template slot-scope="scope">
+						<span style="color: #00B64B;">{{ scope.row.ip }}</span>
+					</template>
+				</el-table-column>
+				<el-table-column label="CPU占用率" min-width="140">
+					<template slot-scope="scope">
+						<span style="color: #00B64B;">{{ scope.row.country }}</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="model" label="运行内存占用率" show-overflow-tooltip  min-width="140"/>
+				<el-table-column prop="firmware" label="存储占用" show-overflow-tooltip  min-width="180" />
+				<el-table-column prop="createtime" label="进程数量" show-overflow-tooltip  min-width="180"/>
+				<el-table-column prop="cpu" label="带宽" show-overflow-tooltip  min-width="180"/>
+				<el-table-column label="operation" min-width="120">
+					<template slot-scope="scope">
+						<div>
+							<el-button type="text" @click="toDetail(scope.row.id)">详情</el-button>
+						</div>
+					</template>
+				</el-table-column>
+			</el-table>
+			
+			<el-row class="mt-10 mr-10 ml-10 mb-10">
+				<el-col :span="24" align="right">
+					<el-pagination
+						v-if="total > 0"
+						:current-page="query.pageSize"
+						:page-sizes="[5, 10, 20, 30, 40]"
+						:page-size="query.size"
+						:total="total"
+						:pager-count="4"
+						layout="prev, pager, next"
+						@size-change="changePages"
+						@current-change="currentChange"
+					/>
+				</el-col>
+			</el-row>
+		</el-card>
   </div>
 </template>
 
 <script>
+import { getServerList } from '@/api/machineinspect'
 import List from '@/components/List'
 
 export default {
-  name: 'Records',
 	extends: List,
   data() {
     return {
 			query: {
-				page: 1,
-				size: 10
+				curPage: 1,
+				pageSize: 10
 			},
-			tableList: [
-				{},
-				{},
-				{},
-				{}
-			]
+			// 列表选中项
+			multipleSelection: []
     }
   },
   methods: {
+		fetchApi: getServerList,
+		toDetail(id) {}
   }
 }
 </script>
 <style lang="scss" scoped>
-.operate-manage {
+.operate-container {
   height: 100%;
   width: 100%;
 	background: #F5F5F5;
-	.back{
-		color: #333;
-		font-size: 14px;
-		height: 40px;
-		padding-left: 0.2rem;
-		background: #fff;
-		line-height: 40px;
-		cursor: pointer;
-	}
-	.header-title{
-		font-family: Helvetica-Bold;
-		font-size: 18px;
-		color: #333333;
-		line-height: 58px;
-		font-weight: 700;
-	}
-	.big{
-		line-height: 106px;
-		font-family: DIN-Medium;
-		font-size: 54px;
-		color: #333333;
-		font-weight: 500;
-	}
-	.small{
-		font-family: Helvetica-Bold;
-		font-size: 16px;
-		color: #999999;
-		font-weight: 700;
-		margin-bottom: 40px;
-	}
-	.tHeader{
-		th{
-			font-family: PingFangSC-Medium;
-			font-size: 16px;
-			color: #FFFFFF;
-			line-height: 20px;
-			font-weight: 500;
-		}
-	}
-	.tbody{
-		td{
-			font-family: PingFangSC-Medium;
-			font-size: 14px;
-			color: #AAB2BF;
-			line-height: 20px;
-			font-weight: 500;
-		}
-	}
+	padding: 0.2rem;
 }
 </style>

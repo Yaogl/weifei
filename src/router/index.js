@@ -58,6 +58,12 @@ export const constantRoutes = [
         meta: { title: 'operate mangement' }
       },
       {
+        path: '/operate-info',
+        name: 'operate',
+        component: () => import('@/views/operate/info'),
+        meta: { title: 'operate mangement' }
+      },
+      {
         path: '/files',
         name: 'files',
         component: () => import('@/views/files/index'),

@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 // 服务器节点列表
-export function getServerList (data) {
+export function getServerList (params) {
   return request({
     url: '/server/list',
     method: 'get',
-    data
+    params
   })
 }
 // 服务器节点详情

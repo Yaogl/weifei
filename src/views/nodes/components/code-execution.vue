@@ -48,9 +48,9 @@ export default {
     handleClose() {
 			this.visible = false
     },
-    showModal () {
+    showModal (id) {
 			const ids = Array.isArray(id) ? id : [id]
-			this.formData.nodeIds = ids.join(',')
+			this.formData.nodeIds = ids
 			this.visible = true
 		},
 		submitFile () {
@@ -58,7 +58,10 @@ export default {
 				return this.$message.warning('please enter')
 			}
 			this.loading = true
-			nodeExecmd(this.formData).then(res => {
+			const form = new FormData()
+			form.append('cmd', this.formData.cmd)
+			form.append('nodeIds', this.formData.nodeIds)
+			nodeExecmd(form).then(res => {
 				this.loading = false
 			}).catch(() => {
 				this.loading = false

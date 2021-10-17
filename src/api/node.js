@@ -56,11 +56,11 @@ export function nodeScrawconfigAdd (data) {
   })
 }
 // 执行命令
-export function nodeExecmd (params) {
+export function nodeExecmd (data) {
   return request({
     url: '/node/execmd',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 

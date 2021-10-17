@@ -13,31 +13,31 @@
       <div class="packets-capture-container">
 				<el-form ref="form" :model="formData" :rules="rules" label-width="180px" size="medium">
 					<el-form-item label="Capture filter" prop="captureFilter">
-						<el-input placeholder="Please Enter" v-model.trim="formData.captureFilter" />
+						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.captureFilter']" />
 					</el-form-item>
 					<el-form-item label="Display filter" prop="showFilter">
-						<el-input placeholder="Please Enter" v-model.trim="formData.showFilter" />
+						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.showFilter']" />
 					</el-form-item>
 					<el-form-item label="Field upload" prop="uploadField">
-						<el-input placeholder="Please Enter" v-model.trim="formData.uploadField" />
+						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.uploadField']" />
 					</el-form-item>
 					<el-form-item label="Heartbeat Time" prop="heartBeatTime">
-						<el-input placeholder="Please Enter" v-model.trim="formData.heartBeatTime" />
+						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.heartBeatTime']" />
 					</el-form-item>
 					<el-form-item label="Length" prop="scrawPackageLength">
-						<el-input placeholder="Please Enter" v-model.trim="formData.scrawPackageLength" />
+						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.scrawPackageLength']" />
 					</el-form-item>
 					<el-form-item label="Buffer size" prop="scrawCache">
-						<el-input placeholder="Please Enter" v-model.trim="formData.scrawCache" />
+						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.scrawCache']" />
 					</el-form-item>
 					<el-form-item label="ES Authentication" prop="esAuth">
-						<el-input placeholder="Please Enter" v-model.trim="formData.esAuth" />
+						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.esAuth']" />
 					</el-form-item>
 					<el-form-item label="ES address" prop="esAddress">
-						<el-input placeholder="Please Enter" v-model.trim="formData.esAddress" />
+						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.esAddress']" />
 					</el-form-item>
 					<el-form-item label="Enable">
-						<ElSwitch v-model="formData.scrawSwitch"></ElSwitch>
+						<ElSwitch v-model="formData['scrawConfig.scrawSwitch']"></ElSwitch>
 					</el-form-item>
 				</el-form>
       </div>
@@ -64,15 +64,15 @@ export default {
 			loading: false,
 			formData: {
 				nodeIds: '',
-				captureFilter: '',
-				showFilter: '',
-				uploadField: '',
-				scrawPackageLength: '',
-				scrawCache: '',
-				esAuth: '',
-				esAddress: '',
-				scrawSwitch: false,
-				heartBeatTime: ''
+				'scrawConfig.captureFilter': '',
+				'scrawConfig.showFilter': '',
+				'scrawConfig.uploadField': '',
+				'scrawConfig.scrawPackageLength': '',
+				'scrawConfig.scrawCache': '',
+				'scrawConfig.esAuth': '',
+				'scrawConfig.esAddress': '',
+				'scrawConfig.scrawSwitch': false,
+				'scrawConfig.heartBeatTime': ''
 			}
     }
   },
@@ -83,14 +83,18 @@ export default {
     },
     showModal (id) {
 			const ids = Array.isArray(id) ? id : [id]
-			this.formData.nodeIds = ids.join(',')
+			this.formData.nodeIds = ids
 			this.visible = true
 		},
 		submitFile () {
 			this.$refs.form.validate(valid => {
 				if (valid) {
 					this.loading = true
-					nodeScrawconfigAdd(this.formData).then(res => {
+					const form = new FormData()
+					Object.keys(this.formData).map(key => {
+						form.append(key, this.formData[key])
+					})
+					nodeScrawconfigAdd(form).then(res => {
 						console.log(res)
 						this.loading = false
 					}).catch(err => {
