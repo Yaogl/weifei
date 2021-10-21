@@ -9,29 +9,36 @@
         mode="horizontal"
         text-color="#A1A2A5"
       >
-        <el-menu-item v-for="(item, index) in menu" :key="index" :index="item.path" @click="clickMenu(item.path)">
+        <el-menu-item
+          v-for="(item, index) in menu"
+          :key="index"
+          :index="item.path"
+          @click="clickMenu(item.path)"
+        >
           {{ item.title }}
         </el-menu-item>
       </el-menu>
 
       <div class="right-menu">
         <div class="right-login">
-          <el-dropdown  @command="moreCommand">
-						<span class="el-dropdown-link">
+          <i class="el-icon-full-screen mr-10" @click="toggleScreen"></i>
+          <el-dropdown @command="moreCommand">
+            <span class="el-dropdown-link">
               <div v-if="userName">
                 {{ userName }}
-                <span
-                  style="margin-left: 8px;cursor: pointer"
-                  @click="logout"
-                >退出</span>
+                <span style="margin-left: 8px; cursor: pointer" @click="logout"
+                  >退出</span
+                >
               </div>
               <span v-else @click="login">登录</span>
-						</span>
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item command="setting">Account Settings</el-dropdown-item>
-							<el-dropdown-item command="logout">Sign Out</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="setting"
+                >Account Settings</el-dropdown-item
+              >
+              <el-dropdown-item command="logout">Sign Out</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
       </div>
 
@@ -42,28 +49,57 @@
         :append-to-body="true"
         :before-close="handleClose"
       >
-        <div slot="title" style="font-family: Helvetica;font-size: 16px;color: #333333;;">
+        <div
+          slot="title"
+          style="font-family: Helvetica; font-size: 16px; color: #333333"
+        >
           Change Password
         </div>
         <div class="packets-capture-container">
-          <el-form ref="form" :model="formData" :rules="rules" label-width="180px">
+          <el-form
+            ref="form"
+            :model="formData"
+            :rules="rules"
+            label-width="180px"
+          >
             <el-form-item label="Original password" prop="pwd">
-              <el-input placeholder="Please enter the original password" v-model.trim="formData.pwd" />
+              <el-input
+                placeholder="Please enter the original password"
+                v-model.trim="formData.pwd"
+              />
             </el-form-item>
             <el-form-item label="New password" prop="newPwd">
-              <el-input placeholder="Please enter a new password" v-model.trim="formData.newPwd" />
-              <p style="font-family: Helvetica;font-size: 12px;color: #999999;line-height: 18px;">
-                The length is 8-16 characters, excluding spaces and special symbols
+              <el-input
+                placeholder="Please enter a new password"
+                v-model.trim="formData.newPwd"
+              />
+              <p
+                style="
+                  font-family: Helvetica;
+                  font-size: 12px;
+                  color: #999999;
+                  line-height: 18px;
+                "
+              >
+                The length is 8-16 characters, excluding spaces and special
+                symbols
               </p>
             </el-form-item>
             <el-form-item label="Enter again" prop="confirmPwd">
-              <el-input placeholder="Enter the password again" v-model.trim="formData.confirmPwd" />
+              <el-input
+                placeholder="Enter the password again"
+                v-model.trim="formData.confirmPwd"
+              />
             </el-form-item>
           </el-form>
         </div>
         <div slot="footer">
-          <el-button @click="handleClose" :disabled="pwdLoading">Cancel</el-button>
-          <el-button type="primary" :loading="pwdLoading" @click="submitPass">Submit</el-button>
+          <el-button @click="handleClose" :disabled="pwdLoading"
+            >Cancel</el-button
+          >
+          <el-button type="primary" :loading="pwdLoading" @click="submitPass"
+            >Submit</el-button
+          >
         </div>
       </el-dialog>
     </div>
@@ -71,8 +107,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { changepwd } from '@/api/user'
+import { mapGetters } from "vuex";
+import { changepwd } from "@/api/user";
+import screenfull from "screenfull";
 
 export default {
   components: {},
@@ -82,91 +119,130 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       visible: false,
+      isFullscreen: false,
       formData: {
-        uname: '',
-        pwd: '',
-        newPwd: '',
-        confirmPwd: ''
+        uname: "",
+        pwd: "",
+        newPwd: "",
+        confirmPwd: ""
       },
       pwdLoading: false,
       rules: {
         newPwd: [
-          { required: true, message: 'Please enter the original password', trigger: 'blur' }
+          {
+            required: true,
+            message: "Please enter the original password",
+            trigger: "blur"
+          }
         ],
         pwd: [
-          { required: true, message: 'Please enter the new password', trigger: 'blur' }
+          {
+            required: true,
+            message: "Please enter the new password",
+            trigger: "blur"
+          }
         ],
         confirmPwd: [
-          { required: true, message: 'Please enter the new password again', trigger: 'blur' }
+          {
+            required: true,
+            message: "Please enter the new password again",
+            trigger: "blur"
+          }
         ]
       },
       menu: [
-        { title: 'Home', path: '/dashboard' },
-        { title: 'Nodes Management', path: '/nodes' },
-        { title: 'ES Management', path: '/es' },
-        { title: 'Files Management ', path: '/files' },
-        { title: 'Operation Management', path: '/operate' }
+        { title: "Home", path: "/dashboard" },
+        { title: "Nodes Management", path: "/nodes" },
+        { title: "ES Management", path: "/es" },
+        { title: "Files Management ", path: "/files" },
+        { title: "Operation Management", path: "/operate" }
       ]
-    }
+    };
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'showNavBar', 'userName']),
+    ...mapGetters(["sidebar", "avatar", "showNavBar", "userName"]),
     activeIndex() {
-      return this.$route.path
+      return this.$route.path;
     }
   },
+  mounted() {
+    this.init();
+  },
+  beforeDestroy() {
+    this.destroy();
+  },
   methods: {
-    moreCommand (name) {
-      if (name === 'setting') {
-        this.showModal()
+    toggleScreen() {
+      if (!screenfull.isEnabled) {
+        this.$message.info("您的浏览器版本过低，不支持全屏浏览");
+        return false;
       }
-      if (name === 'logout') {
-        this.logout()
+      screenfull.toggle();
+    },
+    change() {
+      this.isFullscreen = screenfull.isFullscreen;
+    },
+    init() {
+      if (screenfull.isEnabled) {
+        screenfull.on("change", this.change);
+      }
+    },
+    destroy() {
+      if (screenfull.isEnabled) {
+        screenfull.off("change", this.change);
+      }
+    },
+    moreCommand(name) {
+      if (name === "setting") {
+        this.showModal();
+      }
+      if (name === "logout") {
+        this.logout();
       }
     },
     handleClose() {
-			this.$refs.form.resetFields()
-			this.visible = false
+      this.$refs.form.resetFields();
+      this.visible = false;
     },
-    showModal () {
-			this.visible = true
-		},
+    showModal() {
+      this.visible = true;
+    },
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
+      this.$store.dispatch("app/toggleSideBar");
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login`)
+      await this.$store.dispatch("user/logout");
+      this.$router.push(`/login`);
     },
     clickMenu(path) {
-      if (this.$route.path !== path) this.$router.push(path)
+      if (this.$route.path !== path) this.$router.push(path);
     },
     submitPass() {
-      this.pwdLoading = true
-      this.formData.uname = this.userName
+      this.pwdLoading = true;
+      this.formData.uname = this.userName;
       changepwd(this.formData).then(res => {
         if (res) {
-          this.logout()
-          this.$message.success('Operation succeeded')
+          this.logout();
+          this.$message.success("Operation succeeded");
         } else {
-          this.$message.warning('operation failed')
+          this.$message.warning("operation failed");
         }
-      })
+      });
     },
     login() {
-      this.$router.push(`/login`)
+      this.$router.push(`/login`);
     }
   }
-}
+};
 </script>
 <style lang="scss">
 .navbar {
-  .is-active{
-    background: #2C2F35!important;
-    border: none!important;
+  .is-active {
+    background: #2c2f35 !important;
+    border: none !important;
   }
 }
 </style>
@@ -180,10 +256,10 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 26px 0 10px;
-  .is-active{
-    background: #2C2F35;
+  .is-active {
+    background: #2c2f35;
   }
-  .el-dropdown-link{
+  .el-dropdown-link {
     cursor: pointer;
   }
   font-family: Helvetica;
