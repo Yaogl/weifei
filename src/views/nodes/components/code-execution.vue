@@ -62,7 +62,13 @@ export default {
 			form.append('cmd', this.formData.cmd)
 			form.append('nodeIds', this.formData.nodeIds)
 			nodeExecmd(form).then(res => {
-				this.loading = false
+				if (res) {
+					this.loading = false
+					this.$message.success('success')
+					this.handleClose()
+				} else {
+					this.$message.error('error')
+				}
 			}).catch(() => {
 				this.loading = false
 			})

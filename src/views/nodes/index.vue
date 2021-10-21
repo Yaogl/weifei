@@ -31,7 +31,7 @@
 					</el-col>
 					<el-col :span="3">
 						<el-form-item label="Brand">
-							<el-select v-model="query.brand" @change="changeBrand" clearable placeholder="Please Select" style="width: 100%;">
+							<el-select v-model="query.brand" @change="changeBrand" @clear="clearBrand" clearable placeholder="Please Select" style="width: 100%;">
 								<el-option v-for="item in nodeBrandList" :key="item.id" :label="item.val" :value="item.val"></el-option>
 							</el-select>
 						</el-form-item>
@@ -123,7 +123,7 @@
 				</el-table-column>
 				<el-table-column label="Command execution status" min-width="220">
 					<template slot-scope="scope">
-						<span class="command-status ok" v-if="scope.row.exeStatus">
+						<span class="command-status ok" v-if="scope.row.exeStatus === 0">
 							done
 						</span>
 						<span class="command-status wrong" v-else>
@@ -188,7 +188,7 @@
 </template>
 
 <script>
-import { nodeSearch } from '@/api/node'
+import { nodeSearch, nodeDel } from '@/api/node'
 import List from '@/components/List'
 import GetFile from './components/get-files.vue'
 import CodeExecution from './components/code-execution.vue'
@@ -239,6 +239,9 @@ export default {
   methods: {
 		...mapActions('nodes', ['initSearchOptions', 'getModelOptions']),
 		fetchApi: nodeSearch,
+		clearBrand() {
+			this.query.model = ''
+		},
 		changeBrand (va) {
 			this.getModelOptions(va)
 		},
@@ -249,6 +252,9 @@ export default {
 			this.$refs.codeexecution.showModal(this.multipleSelection.map(item => item.id))
 		},
 		moreCommand (name) {
+			if (!this.multipleSelection.length) {
+				return this.$message.warning('please select one')
+			}
 			if (name === 'delete') {
 				// 如果是删除按钮
 				if (!this.multipleSelection.length) {
@@ -256,7 +262,15 @@ export default {
 				}
 				this.$refs.deleteDialog.showModal()
 			} else {
-				this.$router.push('/operation-record')
+				const arr = this.multipleSelection.map(item => {
+					return item.id
+				})
+				this.$router.push({
+					path: '/operation-record',
+					query: {
+						ids: arr.join(',')
+					}
+				})
 			}
 		},
 		nodeScrawconfigAdd () {
@@ -265,7 +279,21 @@ export default {
 			}
 			this.$refs.packetsCapture.showModal(this.multipleSelection.map(item => item.id))
 		},
-		deleteNode () {},
+		deleteNode () {
+			const arr = this.multipleSelection.map(item => {
+				return 'nodeIds=' + item.id
+			})
+			nodeDel(arr.join('&')).then(res => {
+				if (res) {
+					this.$message.success('success')
+					this.search()
+					this.$refs.deleteDialog.handleClose()
+					this.toggleSelection()
+				} else {
+					this.$message.error('error')
+				}
+			})
+		},
 		handleCommand (arg, row) {
 			if (arg[0] === 'getFile') {
 				this.$refs.getfile.showModal()

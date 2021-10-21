@@ -95,7 +95,12 @@ export default {
 						form.append(key, this.formData[key])
 					})
 					nodeScrawconfigAdd(form).then(res => {
-						console.log(res)
+						if (res) {
+							this.$message.success('success')
+							this.handleClose()
+						} else {
+							this.$message.error('error')
+						}
 						this.loading = false
 					}).catch(err => {
 						this.loading = false

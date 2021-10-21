@@ -32,11 +32,10 @@ export function nodeSearch (params) {
   })
 }
 // 删除节点
-export function nodeDel (params) {
+export function nodeDel (str) {
   return request({
-    url: '/node/del',
-    method: 'get',
-    params
+    url: '/node/del?' + str,
+    method: 'get'
   })
 }
 // 根据节点id查询抓取配置
