@@ -20,13 +20,21 @@
 				</el-table-column>
 				<el-table-column label="CPU占用率" min-width="140">
 					<template slot-scope="scope">
-						<span style="color: #00B64B;">{{ scope.row.country }}</span>
+						<span>{{ scope.row.cpuUsed }} / {{ scope.row.cpuTotal }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="model" label="运行内存占用率" show-overflow-tooltip  min-width="140"/>
-				<el-table-column prop="firmware" label="存储占用" show-overflow-tooltip  min-width="180" />
-				<el-table-column prop="createtime" label="进程数量" show-overflow-tooltip  min-width="180"/>
-				<el-table-column prop="cpu" label="带宽" show-overflow-tooltip  min-width="180"/>
+				<el-table-column label="运行内存占用率" min-width="140">
+					<template slot-scope="scope">
+						<span>{{ scope.row.memoryUsed }} / {{ scope.row.memoryTotal }}</span>
+					</template>
+				</el-table-column>
+				<el-table-column label="存储占用" min-width="140">
+					<template slot-scope="scope">
+						<span>{{ scope.row.diskUsed }} / {{ scope.row.diskTotal }}</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="processNum" label="进程数量" show-overflow-tooltip  min-width="180"/>
+				<el-table-column prop="brandWidth" label="带宽" show-overflow-tooltip  min-width="180"/>
 				<el-table-column label="operation" min-width="120">
 					<template slot-scope="scope">
 						<div>
@@ -63,17 +71,29 @@ export default {
 	extends: List,
   data() {
     return {
-			query: {
-				curPage: 1,
-				pageSize: 10
-			},
 			// 列表选中项
 			multipleSelection: []
     }
   },
   methods: {
 		fetchApi: getServerList,
-		toDetail(id) {}
+		fetchByPage() {
+      if (this.loading) {
+        this.$message.warning('正在加载，请勿重复操作')
+        return
+      }
+      this.loading = true
+      return this.fetchApi().then(results => {
+        this.loading = false
+        this.tableList = results
+      })
+    },
+		toDetail(id) {
+			this.$router.push({
+				path: '/operate-info',
+				query: { id }
+			})
+		}
   }
 }
 </script>

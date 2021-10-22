@@ -167,9 +167,9 @@
 				<el-col :span="16" align="right">
 					<el-pagination
 						v-if="total > 0"
-						:current-page="query.pageSize"
+						:current-page="query.curPage"
 						:page-sizes="[5, 10, 20, 30, 40]"
-						:page-size="query.size"
+						:page-size="query.pageSize"
 						:total="total"
 						:pager-count="4"
 						layout="prev, pager, next"
@@ -296,7 +296,7 @@ export default {
 		},
 		handleCommand (arg, row) {
 			if (arg[0] === 'getFile') {
-				this.$refs.getfile.showModal()
+				this.$refs.getfile.showModal(row.id)
 			}
 			if (arg[0] === 'codeExecution') {
 				this.$refs.codeexecution.showModal(row.id)

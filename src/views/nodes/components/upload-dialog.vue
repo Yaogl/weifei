@@ -17,6 +17,7 @@
             class="upload-demo"
 						:http-request="uploadFile"
             drag
+						:on-change="changeData"
 						:on-progress="uploadProcess"
 						:before-upload="beforeUpload"
           >
@@ -33,49 +34,36 @@
 					</div>
 					<div>
 						<p class="list-top">UPLOADED</p>
+						<!-- {{ fileList }} -->
 						<!-- 上传进度 -->
-						<div class="file-item">
+						<div class="file-item" v-for="item in uploadSuccessList" :key="item.uuid">
 							<img src="../../../assets/img/file.png" style="width: 28px" alt="">
 							<div class="file-info">
 								<p class="file-name">
-									Dashboard MonetizationMonetizationMonetization brief.pdf
+									{{ item.name }}
 								</p>
 								<p class="file-time">
-									Jan 16, 2020 | 14.1Mb
+									{{ file.date }} | {{ item.size / 1024 }}kb
 								</p>
 							</div>
 							<div>
-								<el-progress type="circle" color="#00B64B" :percentage="25" :width="40" stroke-width="4"></el-progress>
+								<el-progress type="circle" color="#00B64B" :percentage="item.percent" :width="40" stroke-width="4"></el-progress>
 							</div>
 						</div>
 						<p class="list-top">IN PROGRESS</p>
 
-						<div class="file-item">
+						<div class="file-item" v-for="item in uploadSuccessList" :key="item.uuid">
 							<img src="../../../assets/img/file.png" style="width: 28px" alt="">
 							<div class="file-info">
 								<p class="file-name">
-									Dashboard MonetizationMonetizationMonetization brief.pdf
+									{{ item.name }}
 								</p>
 								<p class="file-time">
-									Jan 16, 2020 | 14.1Mb
+									{{ file.date }} | {{ item.size / 1024 }}kb
 								</p>
 							</div>
 							<div>
-								<el-progress type="circle" color="#00B64B" :percentage="25" :width="40" stroke-width="4"></el-progress>
-							</div>
-						</div>
-						<div class="file-item">
-							<img src="../../../assets/img/file.png" style="width: 28px" alt="">
-							<div class="file-info">
-								<p class="file-name">
-									Dashboard MonetizationMonetizationMonetization brief.pdf
-								</p>
-								<p class="file-time">
-									Jan 16, 2020 | 14.1Mb
-								</p>
-							</div>
-							<div>
-								<el-progress type="circle" color="#00B64B" :percentage="25" :width="40" stroke-width="4"></el-progress>
+								<el-progress type="circle" color="#00B64B" :percentage="item.percent" :width="40" stroke-width="4"></el-progress>
 							</div>
 						</div>
 					</div>
@@ -90,7 +78,9 @@
 </template>
 
 <script>
-import { uploadFileDeliver } from '@/api/machineinspect'
+import { uploadFileDeliver, uploadDeliverUrl } from '@/api/machineinspect'
+import dayjs from 'dayjs'
+import axios from 'axios'
 
 export default {
   data() {
@@ -100,6 +90,14 @@ export default {
       visible: false
     }
   },
+	computed: {
+		uploadSuccessList() {
+			return this.fileList.filter(item => item.percent === 100 && item.status === 'success')
+		},
+		unSuccessList() {
+			return this.fileList.filter(item => !item.percent === 100 || !item.status === 'success')
+		}
+	},
   methods: {
     handleClose() {
       this.visible = false
@@ -118,11 +116,26 @@ export default {
 		uploadFile(params) {
 			const form = new FormData()
 			form.append('file', params.file)
-			uploadFileDeliver(form)
+			// uploadFileDeliver(form)
+			axios({
+				url: uploadDeliverUrl,
+				method: 'post',
+				data: form,
+				//上传进度
+				onUploadProgress: (progressEvent) => {
+					let num = progressEvent.loaded / progressEvent.total * 100 | 0 //百分比
+					params.onProgress({ percent: num })     //进度条
+				}
+			}).then((data) => {
+				params.onSuccess()
+			})
 		},
-		uploadProcess(event, file, fileList) {
-			console.log(file, 9090)
-			file.percent = Math.floor(event.percent);
+		changeData(file, fileList) {
+			this.fileList = fileList
+		},
+		uploadProcess(event, file) {
+			file.percent = Math.floor(event.percent)
+			file.date = dayjs().format('MMM DD, YYYY')
 		},
 		showModal () {
 			this.visible = true

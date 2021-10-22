@@ -25,8 +25,12 @@ export default {
   },
   beforeDestroy() {
     this.instance && this.instance.dispose()
+    window.removeEventListener('resize', this.chartResize, false)
   },
   methods: {
+    chartResize() {
+      this.instance.resize()
+    },
     initCharts (data) {
       this.instance && this.instance.dispose()
       this.instance = echarts.init(this.$el.querySelector('[name="chart"]'))
@@ -38,6 +42,8 @@ export default {
         return Promise.reject('没有实例化')
       }
       this.instance.setOption(option)
+      this.chartResize()
+      window.addEventListener('resize', this.chartResize)
     },
     getChartOption(chartData) {
       const xAxis = []

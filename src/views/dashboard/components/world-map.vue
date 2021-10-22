@@ -276,11 +276,15 @@ export default {
       return;
     }
     this.myChart.dispose();
+    window.removeEventListener('resize', this.chartResize, false)
     this.myChart = null;
   },
   methods: {
     backToWorld () {
       this.value = 'world'
+    },
+    chartResize() {
+      this.myChart.resize()
     },
     getWorldData (country) {
       this.loading = true
@@ -360,6 +364,8 @@ export default {
         ]
       };
       this.myChart.setOption(option, true);
+      this.chartResize()
+      window.addEventListener('resize', this.chartResize)
       this.myChart.on('click', params => {
         // 点击函数
         this.value = params.name;

@@ -12,36 +12,40 @@
       </div>
       <div class="get-files-container">
 				<el-form ref="form" :model="formData" :rules="rules">
-					<el-form-item label="Absolute path" prop="path">
+					<el-form-item label="Absolute path" prop="filePath">
 						<el-input
 							type="textarea"
 							:rows="4"
 							placeholder="Enter absolute path"
-							v-model.trim="formData.name">
+							v-model.trim="formData.filePath">
 						</el-input>
 					</el-form-item>
 				</el-form>
       </div>
       <div slot="footer" class="dialog-footer">
 				<el-button size="medium" @click="handleClose">Cancel</el-button>
-				<el-button size="medium" type="primary" @click="submitFile">Submit</el-button>
+				<el-button size="medium" :loading="loading" type="primary" @click="submitFile">Submit</el-button>
 			</div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { nodeFileGet } from '@/api/node'
+
 export default {
   data () {
     return {
       visible: false,
 			rules: {
-				path: [
+				filePath: [
 					{ required: true, message: 'Required field, must be verified before execution', trigger: 'blur' }
 				]
 			},
+			loading: false,
 			formData: {
-				path: ''
+				filePath: '/deliver/1451545287481933825.png',
+				nodeIds: ''
 			}
     }
   },
@@ -50,12 +54,25 @@ export default {
 			this.$refs.form.resetFields()
 			this.visible = false
     },
-    showModal () {
+    showModal (ids) {
+			this.formData.nodeIds = ids
 			this.visible = true
 		},
 		submitFile () {
-			this.$refs.form.validate(valid => {
-				console.log(valid)
+			if (!this.formData.filePath) {
+				return this.$message.warning('please enter')
+			}
+			this.loading = true
+			nodeFileGet(this.formData).then(res => {
+				if (res) {
+					this.loading = false
+					this.$message.success('success')
+					this.handleClose()
+				} else {
+					this.$message.error('error')
+				}
+			}).catch(() => {
+				this.loading = false
 			})
 		}
   }

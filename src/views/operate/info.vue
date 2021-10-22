@@ -8,25 +8,25 @@
 		</div>
     <div style="padding: 0 0.2rem;">
 			<el-card>
-				<p class="header-title">Sever IP  192.168.1.1</p>
+				<p class="header-title">Sever IP  {{ serviceInfo.ip }}</p>
 				<el-row>
 					<el-col :span="5" align="center">
-						<p class="big">65%</p>
+						<p class="big">{{ ((serviceInfo.cpuUsed / serviceInfo.cpuTotal) * 100).toFixed(2) }}%</p>
 						<p class="small">CPU</p>
 					</el-col>
 					<el-col :span="5" align="center">
-						<p class="big">65%</p>
+						<p class="big">{{ ((serviceInfo.memoryUsed / serviceInfo.memoryTotal) * 100).toFixed(2) }}%</p>
 						<p class="small">RAM</p>
 					</el-col>
 					<el-col :span="5" align="center">
 						<p class="big">
-							99T
-							<span style="font-size: 16px">/100T</span>
+							{{ serviceInfo.diskUsed }}
+							<span style="font-size: 16px">/{{ serviceInfo.diskTotal }}</span>
 						</p>
 						<p class="small">Memory consumption</p>
 					</el-col>
 					<el-col :span="5" align="center">
-						<p class="big">100M</p>
+						<p class="big">{{ serviceInfo.brandWidth }}</p>
 						<p class="small">Bandwidth</p>
 					</el-col>
 				</el-row>
@@ -49,19 +49,19 @@
 							<th>TIME+</th>
 							<th>COMMAND</th>
 						</tr>
-						<tr class="tbody" v-for="i in 20" :key="i">
-							<td>1</td>
-							<td>root</td>
-							<td>20</td>
-							<td>-20</td>
-							<td>18982</td>
-							<td>2i2772</td>
-							<td>2123</td>
-							<td>S</td>
-							<td>0.0</td>
-							<td>0.3</td>
-							<td>0：38.45</td>
-							<td>systemd</td>
+						<tr class="tbody" v-for="(item, index) in serviceInfo.processes" :key="index">
+							<td>{{ item.pID }}</td>
+							<td>{{ item.uSER }}</td>
+							<td>{{ item.pR }}</td>
+							<td>{{ item.nI }}</td>
+							<td>{{ item.uSER }}</td>
+							<td>{{ item.rES }}</td>
+							<td>{{ item.sHR }}</td>
+							<td>{{ item.s }}</td>
+							<td>{{ item.cPU }}</td>
+							<td>{{ item.mEM }}</td>
+							<td>{{ item.tIME }}</td>
+							<td>{{ item.cOMMAND }}</td>
 						</tr>
 					</table>
 				</div>
@@ -71,25 +71,26 @@
 </template>
 
 <script>
-import List from '@/components/List'
+import { getServerDetails } from '@/api/machineinspect'
 
 export default {
   name: 'Records',
-	extends: List,
   data() {
     return {
-			query: {
-				page: 1,
-				size: 10
-			},
-			tableList: [
-				{},
-				{},
-				{},
-				{}
-			]
+			serviceInfo: {}
     }
   },
+	created() {
+		getServerDetails(this.$route.query.id).then(res => {
+			if (res) {
+				if (res.processes) {
+					res.processes = JSON.parse(res.processes)
+					Array.isArray(res.processes) ? '' : (res.processes = [])
+				}
+				this.serviceInfo = res
+			}
+		})
+	},
   methods: {
   }
 }

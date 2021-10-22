@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import blobAxios from '@/utils/blobAxios'
 // 服务器节点列表
 export function getServerList (params) {
   return request({
@@ -40,7 +41,7 @@ export function uploadFileDel (id) {
 }
 // 下载节点文件
 export function uploadDownload (id) {
-  return request({
+  return blobAxios({
     url: `/file/download`,
     method: 'get',
     params: { id }
@@ -63,4 +64,5 @@ export function fileListDeliver (params) {
   })
 }
 
-export const uploadGetUrl = process.env.VUE_APP_IMAGE_URL + 'file/upload/get'
+export const uploadGetUrl = process.env.VUE_APP_BASE_API + 'file/upload/get'
+export const uploadDeliverUrl = process.env.VUE_APP_BASE_API + 'file/upload/deliver'

@@ -8,7 +8,8 @@ const state = {
     withoutAnimation: false
   },
   device: 'desktop',
-  showNavBar: true
+  showNavBar: true,
+  isFullscreen: false
 }
 
 const mutations = {
@@ -31,10 +32,16 @@ const mutations = {
   },
   CHANGE_SHOWNAVBAR: (state, showNavBar) => {
     state.showNavBar = showNavBar
+  },
+  TOGGLE_SCREEN: (state) => {
+    state.isFullscreen = !state.isFullscreen
   }
 }
 
 const actions = {
+  toggleScreen({ commit }) {
+    commit('TOGGLE_SCREEN')
+  },
   toggleSideBar({ commit }) {
     commit('TOGGLE_SIDEBAR')
   },

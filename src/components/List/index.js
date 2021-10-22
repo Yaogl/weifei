@@ -7,9 +7,12 @@ export default {
       tableList: [], // 列表数据
       total: 0, // 数据总数
       cacheQuery: false, // 是否缓存搜索条件
-      query: {}, // 搜索条件
+      query: {
+        pageSize: 10,
+        curPage: 1
+      }, // 搜索条件
       createdSearch: true, // 是否在页面创建时立刻搜索
-      deleteMessage: '您正在进行删除操作, 是否继续?'
+      deleteMessage: 'You are in the process of deleting, do you want to continue?'
     }
   },
   created() {
@@ -93,26 +96,21 @@ export default {
     afterSearch() {},
     deleteRow(row) {
       // 删除列表当前行
-      this.$confirm(this.deleteMessage, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.deleteMessage, 'Tips', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
         type: 'warning',
         center: true
       })
         .then(() => {
           this.deleteApi(row).then(res => {
-            if (res.code === 200) {
-              this.$message.success('操作成功')
+            if (res) {
+              this.$message.success('success')
               this.search()
               this.afterDelete()
+            } else {
+              this.$message.error('error')
             }
-          })
-        })
-        .catch(err => {
-          console.log(err)
-          this.$message({
-            type: 'info',
-            message: '已取消'
           })
         })
     }

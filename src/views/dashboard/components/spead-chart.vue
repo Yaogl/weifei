@@ -41,8 +41,12 @@ export default {
   },
   beforeDestroy() {
     this.instance && this.instance.dispose()
+    window.removeEventListener('resize', this.chartResize, false)
   },
   methods: {
+    chartResize() {
+      this.instance.resize()
+    },
     getBrandInfo (country) {
       this.loading = true
       const params = country ? { country } : {}
@@ -74,6 +78,8 @@ export default {
         return Promise.reject('没有实例化')
       }
       this.instance.setOption(option)
+      this.chartResize()
+      window.addEventListener('resize', this.chartResize)
     },
     getChartOption(data) {
       return {

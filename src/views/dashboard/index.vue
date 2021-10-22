@@ -41,7 +41,7 @@
             </span>
           </el-input>
           <div v-show="showmore" style="position: absolute;z-index: 3; width: 4.4rem;background: #212631;padding: 0.15rem;">
-            <p style="font-family: PingFangSC-Regular;font-size: 0.14rem;color: #777777;line-height: 24px;">
+            <p style="font-family: PingFangSC-Regular;font-size: 0.14rem;color: #777777;line-height: 0.24rem;">
               Top searchedCountries
             </p>
             <div style="flex-wrap: wrap;display: flex;">
@@ -90,6 +90,10 @@
       </div>
     </div>
     <div class="right">
+      <div style="text-align: right;">
+        <img @click="changeSize" v-if="!isFullscreen" src="../../assets/img/fullscreen.png" style="margin-top: 0.08rem;margin-right: 0.2rem;" alt="">
+        <img @click="changeSize" v-else src="../../assets/img/zoomout.png" style="margin-top: 0.08rem;margin-right: 0.2rem;" alt="">
+      </div>
       <div class="top" v-loading="topTenLoading">
         <h3 class="title">Top 10 of domainame across</h3>
         <el-row style="margin-bottom: 0.2rem;">
@@ -122,6 +126,8 @@ import ProcessBar from './components/process-bar.vue'
 import NodesLine from './components/nodes-line.vue'
 import WorldMap from './components/world-map.vue'
 import { domainTop, globalStatic, activeStatic } from '@/api/home'
+import screenfull from 'screenfull'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Dashboard',
@@ -131,8 +137,14 @@ export default {
     NodesLine,
     WorldMap
   },
+  computed: {
+    ...mapGetters([
+      'isFullscreen'
+    ])
+  },
   mounted () {
     this.init()
+    this.initScreen()
   },
   data() {
     return {
@@ -148,6 +160,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'toggleScreen'
+    ]),
     init () {
       // 协议统计页面获取方法 传入国家参数
       this.$refs.protocal.getListInfo(this.country)
@@ -205,7 +220,30 @@ export default {
       setTimeout(() => {
         this.showmore = false
       }, 300)
+    },
+    change() {
+      this.toggleScreen(screenfull.isFullscreen)
+    },
+    initScreen() {
+      if (screenfull.isEnabled) {
+        screenfull.on('change', this.change)
+      }
+    },
+    destroyScreen() {
+      if (screenfull.isEnabled) {
+        screenfull.off('change', this.change)
+      }
+    },
+    changeSize() {
+      if (!screenfull.isEnabled) {
+        this.$message.info('您的浏览器版本过低，不支持全屏浏览')
+        return false;
+      }
+      screenfull.toggle()
     }
+  },
+  beforeDestroy() {
+    this.destroyScreen()
   }
 }
 </script>
@@ -216,7 +254,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: 6px;
+      margin-left: 0.06rem;
       font-size: 0.18rem;
     }
     input::-webkit-input-placeholder {
@@ -233,7 +271,7 @@ export default {
       border: none;
     }
     .el-input__inner{
-      padding-left: 60px;
+      padding-left: 0.8rem;
       background: #4BFC48;
       height: 0.48rem;
       width: 4.4rem;
@@ -282,22 +320,25 @@ export default {
   color: #fff;
   display: flex;
   justify-content: space-between;
+  .left{
+    margin-top: 0.16rem;
+  }
   .center{
     flex: 1;
     display: flex;
     align-items: center;
+    padding-bottom: 0.3rem;
     flex-direction: column;
     .map-search{
       flex: 1;
       width: 8.94rem;
-      margin-top: 0.2rem;
+      padding-top: 0.2rem;
     }
     .center-chart{
       width: 8.94rem;
       height: 2.65rem;
       background: #212631;
       border-radius: 0.04rem;
-      margin-bottom: 0.1rem;
       padding: 0.2rem;
     }
     .chart-title{
@@ -392,7 +433,7 @@ export default {
   .top{
     width: 4.66rem;
     height: 5.68rem;
-    margin: 0.2rem 0.2rem 0.1rem 0;
+    margin: 0.08rem 0.2rem 0.1rem 0;
     font-size: 0.2rem;
     .top-flex{
       display: flex;
@@ -410,7 +451,7 @@ export default {
         .url{
           flex: 1;
           overflow: hidden;
-          width: 100px;
+          width: 1rem;
           text-overflow: ellipsis;
           white-space: nowrap;
         }

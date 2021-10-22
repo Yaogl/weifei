@@ -21,7 +21,6 @@
 
       <div class="right-menu">
         <div class="right-login">
-          <i class="el-icon-full-screen mr-10" @click="toggleScreen"></i>
           <el-dropdown @command="moreCommand">
             <span class="el-dropdown-link">
               <div v-if="userName">
@@ -175,13 +174,6 @@ export default {
     this.destroy();
   },
   methods: {
-    toggleScreen() {
-      if (!screenfull.isEnabled) {
-        this.$message.info("您的浏览器版本过低，不支持全屏浏览");
-        return false;
-      }
-      screenfull.toggle();
-    },
     change() {
       this.isFullscreen = screenfull.isFullscreen;
     },
