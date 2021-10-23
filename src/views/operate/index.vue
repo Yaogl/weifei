@@ -20,7 +20,7 @@
 				</el-table-column>
 				<el-table-column label="CPU占用率" min-width="140">
 					<template slot-scope="scope">
-						<span>{{ scope.row.cpuUsed }} / {{ scope.row.cpuTotal }}</span>
+						<span>{{ scope.row.cpu }}%</span>
 					</template>
 				</el-table-column>
 				<el-table-column label="运行内存占用率" min-width="140">
@@ -45,12 +45,25 @@
 			</el-table>
 			
 			<el-row class="mt-10 mr-10 ml-10 mb-10">
-				<el-col :span="24" align="right">
+				<el-col :span="8">
+					{{ total }}
+					<span style="font-size: 12px;color: #999999;" class="mr-20">Items</span>
+					<el-select v-model="query.pageSize" @change="changePages" size="mini" style="width: 130px">
+						<el-option
+							v-for="item in [5, 10, 20, 30, 40]"
+							:key="item"
+							:label="item + ' items/page'"
+							:value="item">
+							{{ item }} items/page
+						</el-option>
+					</el-select>
+				</el-col>
+				<el-col :span="16" align="right">
 					<el-pagination
 						v-if="total > 0"
-						:current-page="query.pageSize"
+						:current-page="query.curPage"
 						:page-sizes="[5, 10, 20, 30, 40]"
-						:page-size="query.size"
+						:page-size="query.pageSize"
 						:total="total"
 						:pager-count="4"
 						layout="prev, pager, next"
@@ -77,17 +90,6 @@ export default {
   },
   methods: {
 		fetchApi: getServerList,
-		fetchByPage() {
-      if (this.loading) {
-        this.$message.warning('正在加载，请勿重复操作')
-        return
-      }
-      this.loading = true
-      return this.fetchApi().then(results => {
-        this.loading = false
-        this.tableList = results
-      })
-    },
 		toDetail(id) {
 			this.$router.push({
 				path: '/operate-info',

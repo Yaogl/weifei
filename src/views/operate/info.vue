@@ -1,5 +1,5 @@
 <template>
-  <div class="operate-manage">
+  <div class="operate-manage" v-loading="loading">
 		<div class="back mb-20">
 			<span @click="$router.go(-1)">
 				<i class="el-icon-arrow-left"></i>
@@ -77,11 +77,14 @@ export default {
   name: 'Records',
   data() {
     return {
-			serviceInfo: {}
+			serviceInfo: {},
+			loading: false
     }
   },
 	created() {
+		this.loading = true
 		getServerDetails(this.$route.query.id).then(res => {
+			this.loading = false
 			if (res) {
 				if (res.processes) {
 					res.processes = JSON.parse(res.processes)
@@ -89,10 +92,10 @@ export default {
 				}
 				this.serviceInfo = res
 			}
+		}).catch(() => {
+			this.loading = false
 		})
-	},
-  methods: {
-  }
+	}
 }
 </script>
 <style lang="scss" scoped>

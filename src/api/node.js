@@ -72,17 +72,25 @@ export function nodeFileGet (params) {
   })
 }
 // 文件下发
-export function nodeFiledeliver (params) {
+export function nodeFiledeliver (data) {
   return request({
     url: '/node/filedeliver',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 // 操作记录
 export function nodeOperatelist (params) {
   return request({
     url: '/node/operatelist',
+    method: 'get',
+    params
+  })
+}
+// 操作详情
+export function nodeOperateInfo (params) {
+  return request({
+    url: '/node/operatedetail',
     method: 'get',
     params
   })

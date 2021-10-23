@@ -73,7 +73,7 @@
 				<div style="position: absolute; right: 0;top: -10px" class="more">
 					<el-button-group class="mr-5">
 						<el-button size="medium" icon="el-icon-upload2" @click="uploadFile">Upload</el-button>
-						<el-button size="medium" icon="el-icon-download">Download</el-button>
+						<el-button size="medium" icon="el-icon-download" @click="downloadUploadFile">Download</el-button>
 					</el-button-group>
 					
 					<el-button size="medium" class="mr-5" @click="codeExecution">Code execution</el-button>
@@ -252,24 +252,18 @@ export default {
 			this.$refs.codeexecution.showModal(this.multipleSelection.map(item => item.id))
 		},
 		moreCommand (name) {
-			if (!this.multipleSelection.length) {
-				return this.$message.warning('please select one')
-			}
 			if (name === 'delete') {
 				// 如果是删除按钮
 				if (!this.multipleSelection.length) {
 					return this.$message.warning('please select one')
 				}
+				if (!this.multipleSelection.length) {
+					return this.$message.warning('please select one')
+				}
 				this.$refs.deleteDialog.showModal()
 			} else {
-				const arr = this.multipleSelection.map(item => {
-					return item.id
-				})
 				this.$router.push({
-					path: '/operation-record',
-					query: {
-						ids: arr.join(',')
-					}
+					path: '/operation-record'
 				})
 			}
 		},
@@ -305,8 +299,17 @@ export default {
 				this.$refs.packetsCapture.showModal(row.id)
 			}
 		},
+		downloadUploadFile () {
+			if (!this.multipleSelection.length) {
+				return this.$message.warning('please select one')
+			}
+			this.$refs.uploadDialog.showModal(this.multipleSelection.map(item => item.id))
+		},
 		uploadFile () {
-			this.$refs.uploadDialog.showModal()
+			if (!this.multipleSelection.length) {
+				return this.$message.warning('please select one')
+			}
+			this.$refs.uploadDialog.showModal(this.multipleSelection.map(item => item.id))
 		},
 		toggleSelection(rows) {
 			if (rows) {

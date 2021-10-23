@@ -13,12 +13,12 @@
       <div class="upload-dialog-container">
         <div>
           <el-upload
-            :show-file-list="false"
+						:show-file-list="false"
             class="upload-demo"
-						:http-request="uploadFile"
+						:file-list="fileList"
+						:action="uploadDeliverUrl"
             drag
-						:on-change="changeData"
-						:on-progress="uploadProcess"
+						:on-success="uploadSuccess"
 						:before-upload="beforeUpload"
           >
             <!-- :http-request="uploadJson" -->
@@ -33,26 +33,26 @@
 						Uploading
 					</div>
 					<div>
-						<p class="list-top">UPLOADED</p>
+						<!-- <p class="list-top">UPLOADED</p> -->
 						<!-- {{ fileList }} -->
 						<!-- 上传进度 -->
-						<div class="file-item" v-for="item in uploadSuccessList" :key="item.uuid">
+						<div class="file-item" v-for="item in fileList" :key="item.uuid">
 							<img src="../../../assets/img/file.png" style="width: 28px" alt="">
 							<div class="file-info">
 								<p class="file-name">
 									{{ item.name }}
 								</p>
 								<p class="file-time">
-									{{ file.date }} | {{ item.size / 1024 }}kb
+									{{ item.date }} | {{ item.size / 1024 }}kb
 								</p>
 							</div>
 							<div>
-								<el-progress type="circle" color="#00B64B" :percentage="item.percent" :width="40" stroke-width="4"></el-progress>
+								<el-progress type="circle" color="#00B64B" :percentage="item.percentage" :width="40" stroke-width="4"></el-progress>
 							</div>
 						</div>
-						<p class="list-top">IN PROGRESS</p>
+						<!-- <p class="list-top">IN PROGRESS</p> -->
 
-						<div class="file-item" v-for="item in uploadSuccessList" :key="item.uuid">
+						<!-- <div class="file-item" v-for="item in uploadSuccessList" :key="item.uuid">
 							<img src="../../../assets/img/file.png" style="width: 28px" alt="">
 							<div class="file-info">
 								<p class="file-name">
@@ -65,79 +65,73 @@
 							<div>
 								<el-progress type="circle" color="#00B64B" :percentage="item.percent" :width="40" stroke-width="4"></el-progress>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</el-card>
       </div>
 			<div slot="footer" class="dialog-footer">
 				<el-button size="medium" @click="handleClose">Cancel</el-button>
-				<el-button size="medium" type="primary" @click="submitFile">Submit</el-button>
+				<el-button size="medium" type="primary" :loading="loading" @click="submitFile">Submit</el-button>
 			</div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { uploadFileDeliver, uploadDeliverUrl } from '@/api/machineinspect'
+import { uploadDeliverUrl } from '@/api/machineinspect'
+import { nodeFiledeliver } from '@/api/node'
 import dayjs from 'dayjs'
-import axios from 'axios'
 
 export default {
   data() {
     return {
       loading: false,
-      fileList: [],
-      visible: false
+			uploadDeliverUrl,
+			fileList: [],
+      visible: false,
+			nodeIds: []
     }
   },
-	computed: {
-		uploadSuccessList() {
-			return this.fileList.filter(item => item.percent === 100 && item.status === 'success')
-		},
-		unSuccessList() {
-			return this.fileList.filter(item => !item.percent === 100 || !item.status === 'success')
-		}
-	},
   methods: {
     handleClose() {
+			this.fileList = []
       this.visible = false
     },
+		submitFile() {
+			if (!this.fileList.length) {
+				return this.$message.warning('please upload file')
+			}
+			const form = new FormData()
+			const file = this.fileList[0]
+			form.append('fileDeliverConfig.ip', file.response?.server)
+			form.append('fileDeliverConfig.filePath', file.response?.filePath)
+			form.append('nodeIds', this.nodeIds)
+			nodeFiledeliver(form).then(res => {
+				if (res) {
+					this.$message.success('success')
+					this.handleClose()
+				} else {
+					this.$message.error('error')
+				}
+			})
+		},
 		beforeUpload(file) {
 			const maxSize = 1024 * 1024 * 200
       try {
         if (file.size > maxSize) {
           return this.$message.warning('文件大小超出限制')
         }
+				this.fileList.splice(0, 1, file)
       } catch (error) {
-        this.loading = false
         this.$message.error('上传失败，请检查文件格式')
       }
 		},
-		uploadFile(params) {
-			const form = new FormData()
-			form.append('file', params.file)
-			// uploadFileDeliver(form)
-			axios({
-				url: uploadDeliverUrl,
-				method: 'post',
-				data: form,
-				//上传进度
-				onUploadProgress: (progressEvent) => {
-					let num = progressEvent.loaded / progressEvent.total * 100 | 0 //百分比
-					params.onProgress({ percent: num })     //进度条
-				}
-			}).then((data) => {
-				params.onSuccess()
-			})
-		},
-		changeData(file, fileList) {
-			this.fileList = fileList
-		},
-		uploadProcess(event, file) {
-			file.percent = Math.floor(event.percent)
+		uploadSuccess(response, file) {
 			file.date = dayjs().format('MMM DD, YYYY')
+			this.fileList.splice(0, 1, file)
 		},
-		showModal () {
+		showModal (ids) {
+			this.nodeIds = ids
 			this.visible = true
 		}
   }

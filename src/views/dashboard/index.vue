@@ -434,6 +434,7 @@ export default {
     width: 4.66rem;
     height: 5.68rem;
     margin: 0.08rem 0.2rem 0.1rem 0;
+    overflow: auto;
     font-size: 0.2rem;
     .top-flex{
       display: flex;

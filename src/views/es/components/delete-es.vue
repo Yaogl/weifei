@@ -14,13 +14,15 @@
           <el-date-picker
             v-model="formData.startTime"
             type="date"
+            value-format="yyyyMMdd"
             placeholder="Please Select">
           </el-date-picker>
 				</el-form-item>
-				<el-form-item label="End Date" prop="deleteTime">
+				<el-form-item label="End Date" prop="endTime">
           <el-date-picker
-            v-model="formData.deleteTime"
+            v-model="formData.endTime"
             type="date"
+            value-format="yyyyMMdd"
             placeholder="Please Select">
           </el-date-picker>
 				</el-form-item>
@@ -49,13 +51,13 @@ export default {
       loading: false,
 			formData: {
         startTime: '',
-        deleteTime: ''
+        endTime: ''
       },
       rules: {
         startTime: [
           { required: true, message: 'Please Select Starting Date', trigger: 'change' }
         ],
-        deleteTime: [
+        endTime: [
           { required: true, message: 'Please Select End Date', trigger: 'change' }
         ]
       }
@@ -79,7 +81,19 @@ export default {
             center: true
           })
             .then(() => {
-              esDel()
+              const { startTime, endTime } = this.formData
+              if (!startTime || !endTime) {
+                this.$message.warning('please select time')
+              } else {
+                esDel(this.formData).then(res => {
+                  if (res) {
+                    this.$message.success('success')
+                    this.handleClose()
+                  } else {
+                    this.$message.error('error')
+                  }
+                })
+              }
             })
             .catch(err => {
               console.log(err)

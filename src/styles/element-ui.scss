@@ -14,7 +14,9 @@
 .el-upload__input {
   display: none;
 }
-
+.el-table thead{
+  color: #333;
+}
 
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {

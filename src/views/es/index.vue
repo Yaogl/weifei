@@ -74,7 +74,8 @@
 						<el-form-item label="Date">
 							<el-date-picker
 								v-model="query.date"
-								type="daterange"
+								type="datetimerange"
+								value-format="yyyyMMddHHmmss"
 								range-separator="-"
 								start-placeholder="Starting Date"
 								end-placeholder="End Date" />
@@ -92,7 +93,7 @@
 					<div style="width: 200px">
 						<el-form-item>
 							<div slot="label"><br /></div>
-							<el-button type="primary" icon="el-icon-search">Search</el-button>
+							<el-button type="primary" icon="el-icon-search" @click="search">Search</el-button>
 							<el-button>Reset</el-button>
 						</el-form-item>
 					</div>
@@ -172,16 +173,18 @@ export default {
 				fromTime:	'', // 开始时间
 				toTime:	'', // 结束时间
 				kql: '' // 结束时间
-			},
-			// 列表选中项
-			tableList: [
-				{},
-				{}
-			]
+			}
     }
   },
   methods: {
 		fetchApi: esSearch,
+		formatQuery(query) {
+			const clone = JSON.parse(JSON.stringify(query))
+			clone.fromTime = clone.date[0] || ''
+			clone.toTime = clone.date[1] || ''
+			delete clone.date
+      return clone
+    },
 		deleteEs () {
 			this.$refs.deleteEs.showModal()
 		}

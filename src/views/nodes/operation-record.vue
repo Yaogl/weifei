@@ -12,28 +12,28 @@
 				<el-row class="top-content">
 					<el-col :span="4">
 						<p class="top-sub-title">Number of nodes</p>
-						<p class="top-value">134,241</p>
+						<p class="top-value">{{ operateInfo.nodeNum }}</p>
 					</el-col>
 					<el-col :span="4">
 						<p class="top-sub-title">Done</p>
-						<p class="top-value">134,241</p>
+						<p class="top-value">{{ operateInfo.successNum }}</p>
 					</el-col>
 					<el-col :span="4">
 						<p class="top-sub-title">Failed</p>
-						<p class="top-value">134,241</p>
+						<p class="top-value">{{ operateInfo.failNum }}</p>
 					</el-col>
 					<el-col :span="4">
 						<p class="top-sub-title">Unexecuted</p>
-						<p class="top-value">134,241</p>
+						<p class="top-value">{{ operateInfo.unexeNum }}</p>
 					</el-col>
 					<el-col :span="4">
 						<p class="top-sub-title">Operation time</p>
-						<p class="top-value">134,241</p>
+						<p class="top-value">{{ operateInfo.operateTime }}</p>
 					</el-col>
 					<el-col :span="4">
 						<p class="top-sub-title">Operation type</p>
 						<p class="top-value">
-							Command execution
+							{{ operateInfo.operateType }}
 							<a style="color: #00B64B;">Details</a>
 						</p>
 					</el-col>
@@ -48,24 +48,24 @@
 					style="width: 100%">
 					<el-table-column label="IP" min-width="160">
 						<template slot-scope="scope">
-							<span style="color: #00B64B;">{{ scope.row.date }}</span>
+							<span style="color: #00B64B;">{{ scope.row.ip }}</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="Country" min-width="140">
 						<template slot-scope="scope">
-							<span style="color: #00B64B;">{{ scope.row.date }}</span>
+							<span>{{ scope.row.country }}</span>
 						</template>
 					</el-table-column>
-					<el-table-column prop="Model" label="Model" show-overflow-tooltip  min-width="140"/>
-					<el-table-column prop="Firmware version" label="Firmware version" show-overflow-tooltip  min-width="180" />
-					<el-table-column prop="Date" label="Date" show-overflow-tooltip  min-width="180"/>
-					<el-table-column prop="Processor architecture" label="Processor architecture" show-overflow-tooltip  min-width="180"/>
+					<el-table-column prop="model" label="Model" show-overflow-tooltip  min-width="140"/>
+					<el-table-column prop="firmware" label="Firmware version" show-overflow-tooltip  min-width="180" />
+					<el-table-column prop="modifytime" label="Date" show-overflow-tooltip  min-width="180"/>
+					<el-table-column prop="cpu" label="Processor architecture" show-overflow-tooltip  min-width="180"/>
 					<el-table-column label="Command execution status" min-width="220">
 						<template slot-scope="scope">
-							<span class="command-status wrong">
+							<span class="command-status wrong" v-if="scope.row.exeStatus === 0">
 								done
 							</span>
-							<span class="command-status ok">
+							<span class="command-status ok" v-else>
 								done
 							</span>
 						</template>
@@ -76,7 +76,7 @@
 					<el-col :span="8">
 						{{ total }}
 						<span style="font-size: 12px;color: #999999;" class="mr-20">Items</span>
-						<el-select v-model="query.size" @change="changePages" size="mini" style="width: 130px">
+						<el-select v-model="query.pageSize" @change="changePages" size="mini" style="width: 130px">
 							<el-option
 								v-for="item in [5, 10, 20, 30, 40]"
 								:key="item"
@@ -89,7 +89,7 @@
 					<el-col :span="16" align="right">
 						<el-pagination
 							v-if="total > 0"
-							:current-page="query.page"
+							:current-page="query.curPage"
 							:page-sizes="[5, 10, 20, 30, 40]"
 							:page-size="query.pageSize"
 							:total="total"
@@ -107,6 +107,7 @@
 
 <script>
 import List from '@/components/List'
+import { nodeOperatelist, nodeOperateInfo } from '@/api/node'
 
 export default {
   name: 'Records',
@@ -114,18 +115,33 @@ export default {
   data() {
     return {
 			query: {
-				page: 1,
-				size: 10
+				status: 0,
+				curPage: 1,
+				pageSize: 10
 			},
-			tableList: [
-				{},
-				{},
-				{},
-				{}
-			]
+			operateInfo: {}
     }
   },
+	created() {
+		nodeOperateInfo()
+	},
   methods: {
+		fetchApi: nodeOperatelist,
+		fetchByPage(curPage = this.query.curPage) {
+      if (this.loading) {
+        this.$message.warning('正在加载，请勿重复操作')
+        return
+      }
+      this.query.curPage = curPage
+      this.loading = true
+      return this.fetchApi(this.query).then(results => {
+				this.operateInfo = results
+        this.loading = false
+        this.tableList = this.formatData(results.logs?.records || [])
+        this.total = Number(results.logs.total) || 0
+        this.afterSearch()
+      })
+    }
   }
 }
 </script>
