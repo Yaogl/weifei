@@ -10,7 +10,7 @@
       <div slot="title" style="font-family: Helvetica;font-size: 16px;color: #333333;;">
 				Packets-capture configuration
       </div>
-      <div class="packets-capture-container">
+      <div class="packets-capture-container" v-loading="configLoading">
 				<el-form ref="form" :model="formData" :rules="rules" label-width="180px" size="medium">
 					<el-form-item label="Capture filter" prop="captureFilter">
 						<el-input placeholder="Please Enter" v-model.trim="formData['scrawConfig.captureFilter']" />
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { nodeScrawconfigAdd } from '@/api/node'
+import { nodeScrawconfigAdd, nodeScrawconfigDefault } from '@/api/node'
 
 export default {
   data () {
@@ -61,6 +61,7 @@ export default {
 					{ required: true, message: 'Required field, must be verified before execution', trigger: 'blur' }
 				]
 			},
+			configLoading: false,
 			loading: false,
 			formData: {
 				nodeIds: '',
@@ -84,6 +85,17 @@ export default {
     showModal (id) {
 			const ids = Array.isArray(id) ? id : [id]
 			this.formData.nodeIds = ids
+			this.configLoading = true
+			nodeScrawconfigDefault().then(res => {
+				if (res) {
+					Object.keys(res).map(key => {
+						this.formData['scrawConfig.' + key] = res[key]
+					})
+				}
+				this.configLoading = false
+			}).catch(() => {
+				this.configLoading = false
+			})
 			this.visible = true
 		},
 		submitFile () {

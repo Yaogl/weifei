@@ -39,9 +39,9 @@ export function nodeDel (str) {
   })
 }
 // 根据节点id查询抓取配置
-export function nodeScrawconfig (params) {
+export function nodeScrawconfigDefault (params) {
   return request({
-    url: '/node/scrawconfig/get',
+    url: '/node/scrawconfig/default',
     method: 'get',
     params
   })
