@@ -14,27 +14,23 @@
 						<p class="top-sub-title">Number of nodes</p>
 						<p class="top-value">{{ operateInfo.nodeNum }}</p>
 					</el-col>
-					<el-col :span="4">
+					<el-col :span="5">
 						<p class="top-sub-title">Done</p>
 						<p class="top-value">{{ operateInfo.successNum }}</p>
 					</el-col>
-					<el-col :span="4">
+					<el-col :span="5">
 						<p class="top-sub-title">Failed</p>
 						<p class="top-value">{{ operateInfo.failNum }}</p>
 					</el-col>
-					<el-col :span="4">
-						<p class="top-sub-title">Unexecuted</p>
-						<p class="top-value">{{ operateInfo.unexeNum }}</p>
-					</el-col>
-					<el-col :span="4">
+					<el-col :span="5">
 						<p class="top-sub-title">Operation time</p>
 						<p class="top-value">{{ operateInfo.operateTime }}</p>
 					</el-col>
-					<el-col :span="4">
+					<el-col :span="5">
 						<p class="top-sub-title">Operation type</p>
 						<p class="top-value">
 							{{ operateInfo.operateType }}
-							<a style="color: #00B64B;">Details</a>
+							<el-button type="text" :loading="detailLoading" @click="getDetails">Details</el-button>
 						</p>
 					</el-col>
 				</el-row>
@@ -102,6 +98,72 @@
 				</el-row>
 			</el-card>
 		</div>
+
+		<el-dialog
+      :visible="showDetail"
+      width="660px"
+      :append-to-body="true"
+			custom-class="operate-record-dialog"
+      :before-close="handleClose"
+    >
+      <div slot="title" style="font-family: Helvetica;font-size: 16px;color: #333333;;">
+				Details
+      </div>
+				<el-form label-width="180px" size="medium">
+					<el-form-item label="Operation type：">
+						{{ operateInfo.operateType }}
+					</el-form-item>
+					<div v-if="details.cmdType === 3">
+						<el-form-item label="Code execution：">
+							{{ details.cmdData }}
+						</el-form-item>
+					</div>
+					<div v-if="details.cmdType === 1">
+						<el-form-item label="Absolute path：">
+							{{ details.cmdData }}
+						</el-form-item>
+					</div>
+					<div v-if="details.cmdType === 2">
+						<el-form-item label="IP：">
+							{{ details.cmdData.ip }}
+						</el-form-item>
+						<el-form-item label="File path：">
+							{{ details.cmdData.filePath }}
+						</el-form-item>
+					</div>
+					<div v-if="details.cmdType === 4">
+						<el-form-item label="Capture filter：">
+							{{ details.cmdData.captureFilter }}
+						</el-form-item>
+						<el-form-item label="Display filter：">
+							{{ details.cmdData.showFilter }}
+						</el-form-item>
+						<el-form-item label="Field upload：">
+							{{ details.cmdData.uploadField }}
+						</el-form-item>
+						<el-form-item label="Heartbeat Time：">
+							{{ details.cmdData.heartBeatTime }}
+						</el-form-item>
+						<el-form-item label="Length：">
+							{{ details.cmdData.scrawPackageLength }}
+						</el-form-item>
+						<el-form-item label="Buffer size：">
+							{{ details.cmdData.scrawCache }}
+						</el-form-item>
+						<el-form-item label="ES Authentication：">
+							{{ details.cmdData.esAuth }}
+						</el-form-item>
+						<el-form-item label="ES address：">
+							{{ details.cmdData.esAddress }}
+						</el-form-item>
+						<el-form-item label="Enable：">
+							{{ details.cmdData.scrawSwitch ? '是' : '否' }}
+						</el-form-item>
+					</div>
+				</el-form>
+      <div slot="footer" class="dialog-footer">
+			</div>
+    </el-dialog>
   </div>
 </template>
 
@@ -119,13 +181,35 @@ export default {
 				curPage: 1,
 				pageSize: 10
 			},
-			operateInfo: {}
+			operateInfo: {},
+			details: {},
+			detailLoading: false,
+			showDetail: false
     }
   },
-	created() {
-		nodeOperateInfo()
-	},
   methods: {
+		handleClose() {
+			this.showDetail = false
+		},
+		getDetails() {
+			this.detailLoading = true
+			nodeOperateInfo().then(res => {
+				this.detailLoading = false
+				if (res) {
+					this.showDetail = true
+					if (res.cmdType === 4 || res.cmdType === 2) {
+						try {
+							res.cmdData = JSON.parse(res.cmdData)
+						} catch (error) {
+						}
+					}
+					res.cmdData = res.cmdData || {}
+					this.details = res
+				}
+			}).catch(() => {
+				this.detailLoading = false
+			})
+		},
 		fetchApi: nodeOperatelist,
 		fetchByPage(curPage = this.query.curPage) {
       if (this.loading) {
@@ -138,7 +222,7 @@ export default {
 				this.operateInfo = results
         this.loading = false
         this.tableList = this.formatData(results.logs?.records || [])
-        this.total = Number(results.logs.total) || 0
+        this.total = Number(results?.logs?.total) || 0
         this.afterSearch()
       })
     }
@@ -149,6 +233,11 @@ export default {
 .operation-record{
 	.el-card__body{
 		padding: 0.2rem;
+	}
+}
+.operate-record-dialog{
+	.el-form-item{
+		margin-bottom: 10px;
 	}
 }
 </style>
