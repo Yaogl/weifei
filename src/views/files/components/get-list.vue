@@ -21,8 +21,8 @@
       <el-table-column label="operation" min-width="120">
         <template slot-scope="scope">
           <div>
-            <el-button type="text" @click="deleteRow(scope.row.id)">删除</el-button>
-            <el-button type="text" :loading="scope.row.downloadLoading" @click="downloadRow(scope.row)">下载</el-button>
+            <el-button type="text" @click="deleteRow(scope.row.id)">delete</el-button>
+            <el-button type="text" :loading="scope.row.downloadLoading" @click="downloadRow(scope.row)">download</el-button>
           </div>
         </template>
       </el-table-column>

@@ -64,11 +64,10 @@ export function nodeExecmd (data) {
 }
 
 // 获取节点文件
-export function nodeFileGet (params) {
+export function nodeFileGet (path) {
   return request({
-    url: '/node/fileget',
-    method: 'get',
-    params
+    url: `/node/fileget?${path}`,
+    method: 'get'
   })
 }
 // 文件下发

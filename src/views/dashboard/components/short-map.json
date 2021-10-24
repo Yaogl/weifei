@@ -1,0 +1,1298 @@
+[
+  {
+      "shorter": "AF",
+      "base": "Afghanistan",
+      "chinese": "阿富汗",
+      "fullName": "Afghanistan"
+  },
+  {
+      "shorter": "AL",
+      "base": "Albania",
+      "chinese": "阿尔巴尼亚",
+      "fullName": "Albania"
+  },
+  {
+      "shorter": "DZ",
+      "base": "Algeria",
+      "chinese": "阿尔及利亚",
+      "fullName": "Algeria"
+  },
+  {
+      "shorter": "AD",
+      "base": "Andorra",
+      "chinese": "安道尔",
+      "fullName": "Andorra"
+  },
+  {
+      "shorter": "AO",
+      "base": "Angola",
+      "chinese": "安哥拉",
+      "fullName": "Angola"
+  },
+  {
+      "shorter": "AQ",
+      "base": "Antarctica",
+      "chinese": "南极洲",
+      "fullName": "Antarctica"
+  },
+  {
+      "shorter": "AG",
+      "base": "AntiguaAndBarbuda",
+      "chinese": "安提瓜和巴布达",
+      "fullName": "Antigua and Barbuda"
+  },
+  {
+      "shorter": "AR",
+      "base": "Argentina",
+      "chinese": "阿根廷",
+      "fullName": "Argentina"
+  },
+  {
+      "shorter": "AM",
+      "base": "Armenia",
+      "chinese": "亚美尼亚",
+      "fullName": "Armenia"
+  },
+  {
+      "shorter": "AU",
+      "base": "Australia",
+      "chinese": "澳大利亚",
+      "fullName": "Australia"
+  },
+  {
+      "shorter": "AT",
+      "base": "Austria",
+      "chinese": "奥地利",
+      "fullName": "Austria"
+  },
+  {
+      "shorter": "AZ",
+      "base": "Azerbaijan",
+      "chinese": "阿塞拜疆",
+      "fullName": "Azerbaijan"
+  },
+  {
+      "shorter": "BS",
+      "base": "TheBahamas",
+      "chinese": "巴哈马",
+      "fullName": "The Bahamas"
+  },
+  {
+      "shorter": "BH",
+      "base": "Bahrain",
+      "chinese": "巴林",
+      "fullName": "Bahrain"
+  },
+  {
+      "shorter": "BD",
+      "base": "Bangladesh",
+      "chinese": "孟加拉国",
+      "fullName": "Bangladesh"
+  },
+  {
+      "shorter": "BB",
+      "base": "Barbados",
+      "chinese": "巴巴多斯",
+      "fullName": "Barbados"
+  },
+  {
+      "shorter": "",
+      "base": "Belarus",
+      "chinese": "白俄罗斯",
+      "fullName": "Belarus"
+  },
+  {
+      "shorter": "BE",
+      "base": "Belgium",
+      "chinese": "比利时",
+      "fullName": "Belgium"
+  },
+  {
+      "shorter": "BZ",
+      "base": "Belize",
+      "chinese": "伯利兹",
+      "fullName": "Belize"
+  },
+  {
+      "shorter": "BJ",
+      "base": "Benin",
+      "chinese": "贝宁",
+      "fullName": "Benin"
+  },
+  {
+      "shorter": "BM",
+      "base": "Bermuda",
+      "chinese": "百慕大",
+      "fullName": "Bermuda"
+  },
+  {
+      "shorter": "BT",
+      "base": "Bhutan",
+      "chinese": "不丹",
+      "fullName": "Bhutan"
+  },
+  {
+      "shorter": "BO",
+      "base": "Bolivia",
+      "chinese": "玻利维亚",
+      "fullName": "Bolivia"
+  },
+  {
+      "shorter": "BW",
+      "base": "Botswana",
+      "chinese": "博茨瓦纳",
+      "fullName": "Botswana"
+  },
+  {
+      "shorter": "BR",
+      "base": "Brazil",
+      "chinese": "巴西",
+      "fullName": "Brazil"
+  },
+  {
+      "shorter": "BN",
+      "base": "Brunei",
+      "chinese": "文莱",
+      "fullName": "Brunei"
+  },
+  {
+      "shorter": "BG",
+      "base": "Bulgaria",
+      "chinese": "保加利亚",
+      "fullName": "Bulgaria"
+  },
+  {
+      "shorter": "BF",
+      "base": "BurkinaFaso",
+      "chinese": "布基纳法索",
+      "fullName": "Burkina Faso"
+  },
+  {
+      "shorter": "BI",
+      "base": "Burundi",
+      "chinese": "布隆迪",
+      "fullName": "Burundi"
+  },
+  {
+      "shorter": "KH",
+      "base": "Cambodia",
+      "chinese": "柬埔寨",
+      "fullName": "Cambodia"
+  },
+  {
+      "shorter": "CM",
+      "base": "Cameroon",
+      "chinese": "喀麦隆",
+      "fullName": "Cameroon"
+  },
+  {
+      "shorter": "CA",
+      "base": "Canada",
+      "chinese": "加拿大",
+      "fullName": "Canada"
+  },
+  {
+      "shorter": "CV",
+      "base": "CapeVerde",
+      "chinese": "佛得角",
+      "fullName": "Cape Verde"
+  },
+  {
+      "shorter": "CentralAfricanRep",
+      "base": "CentralAfricanRep.",
+      "chinese": "中非共和国",
+      "fullName": "Central African Rep."
+  },
+  {
+      "shorter": "CôteD'Ivoire",
+      "base": "CôteD'Ivoire",
+      "chinese": "象牙海岸",
+      "fullName": "Côte d'Ivoire"
+  },
+  {
+      "shorter": "TD",
+      "base": "Chad",
+      "chinese": "乍得",
+      "fullName": "Chad"
+  },
+  {
+      "shorter": "CL",
+      "base": "Chile",
+      "chinese": "智利",
+      "fullName": "Chile"
+  },
+  {
+      "shorter": "CN",
+      "base": "China",
+      "chinese": "中国",
+      "fullName": "China"
+  },
+  {
+      "shorter": "CO",
+      "base": "Colombia",
+      "chinese": "哥伦比亚",
+      "fullName": "Colombia"
+  },
+  {
+      "shorter": "KM",
+      "base": "Comoros",
+      "chinese": "科摩罗",
+      "fullName": "Comoros"
+  },
+  {
+      "shorter": "Dem.Rep.Congo",
+      "base": "Dem.Rep.Congo",
+      "chinese": "刚果共和国",
+      "fullName": "Dem. Rep. Congo"
+  },
+  {
+      "shorter": "CG",
+      "base": "Congo",
+      "chinese": "刚果",
+      "fullName": "Congo"
+  },
+  {
+      "shorter": "CR",
+      "base": "CostaRica",
+      "chinese": "哥斯达黎加",
+      "fullName": "Costa Rica"
+  },
+  {
+      "shorter": "HR",
+      "base": "Croatia",
+      "chinese": "克罗地亚",
+      "fullName": "Croatia"
+  },
+  {
+      "shorter": "CU",
+      "base": "Cuba",
+      "chinese": "古巴",
+      "fullName": "Cuba"
+  },
+  {
+      "shorter": "CY",
+      "base": "Cyprus",
+      "chinese": "塞浦路斯",
+      "fullName": "Cyprus"
+  },
+  {
+      "shorter": "CzechRepublic",
+      "base": "CzechRepublic",
+      "chinese": "捷克共和国",
+      "fullName": "Czech Republic"
+  },
+  {
+      "shorter": "DK",
+      "base": "Denmark",
+      "chinese": "丹麦",
+      "fullName": "Denmark"
+  },
+  {
+      "shorter": "DJ",
+      "base": "Djibouti",
+      "chinese": "吉布提",
+      "fullName": "Djibouti"
+  },
+  {
+      "shorter": "DO",
+      "base": "Dominica",
+      "chinese": "多米尼加",
+      "fullName": "Dominica"
+  },
+  {
+      "shorter": "DominicanRepublic",
+      "base": "DominicanRepublic",
+      "chinese": "多明尼加共和国",
+      "fullName": "Dominican Republic"
+  },
+  {
+      "shorter": "EC",
+      "base": "Ecuador",
+      "chinese": "厄瓜多尔",
+      "fullName": "Ecuador"
+  },
+  {
+      "shorter": "EG",
+      "base": "Egypt",
+      "chinese": "埃及",
+      "fullName": "Egypt"
+  },
+  {
+      "shorter": "SV",
+      "base": "ElSalvador",
+      "chinese": "萨尔瓦多",
+      "fullName": "El Salvador"
+  },
+  {
+      "shorter": "GQ",
+      "base": "EquatorialGuinea",
+      "chinese": "赤道几内亚",
+      "fullName": "Equatorial Guinea"
+  },
+  {
+      "shorter": "ER",
+      "base": "Eritrea",
+      "chinese": "厄立特里亚",
+      "fullName": "Eritrea"
+  },
+  {
+      "shorter": "EE",
+      "base": "Estonia",
+      "chinese": "爱沙尼亚",
+      "fullName": "Estonia"
+  },
+  {
+      "shorter": "ET",
+      "base": "Ethiopia",
+      "chinese": "埃塞俄比亚",
+      "fullName": "Ethiopia"
+  },
+  {
+      "shorter": "FK",
+      "base": "FalklandIslands",
+      "chinese": "福克兰群岛",
+      "fullName": "Falkland Islands"
+  },
+  {
+      "shorter": "FO",
+      "base": "FaroeIslands",
+      "chinese": "法罗群岛",
+      "fullName": "Faroe Islands"
+  },
+  {
+      "shorter": "FJ",
+      "base": "Fiji",
+      "chinese": "斐济",
+      "fullName": "Fiji"
+  },
+  {
+      "shorter": "FI",
+      "base": "Finland",
+      "chinese": "芬兰",
+      "fullName": "Finland"
+  },
+  {
+      "shorter": "FR",
+      "base": "France",
+      "chinese": "法国",
+      "fullName": "France"
+  },
+  {
+      "shorter": "GF",
+      "base": "FrenchGuiana",
+      "chinese": "法属圭亚那",
+      "fullName": "French Guiana"
+  },
+  {
+      "shorter": "TF",
+      "base": "FrenchSouthernAndAntarcticLands",
+      "chinese": "法属南半球和南极领地",
+      "fullName": "French Southern and Antarctic Lands"
+  },
+  {
+      "shorter": "GA",
+      "base": "Gabon",
+      "chinese": "加蓬",
+      "fullName": "Gabon"
+  },
+  {
+      "shorter": "GM",
+      "base": "Gambia",
+      "chinese": "冈比亚",
+      "fullName": "Gambia"
+  },
+  {
+      "shorter": "GazaStrip",
+      "base": "GazaStrip",
+      "chinese": "加沙",
+      "fullName": "Gaza Strip"
+  },
+  {
+      "shorter": "GE",
+      "base": "Georgia",
+      "chinese": "格鲁吉亚",
+      "fullName": "Georgia"
+  },
+  {
+      "shorter": "DE",
+      "base": "Germany",
+      "chinese": "德国",
+      "fullName": "Germany"
+  },
+  {
+      "shorter": "GH",
+      "base": "Ghana",
+      "chinese": "加纳",
+      "fullName": "Ghana"
+  },
+  {
+      "shorter": "GR",
+      "base": "Greece",
+      "chinese": "希腊",
+      "fullName": "Greece"
+  },
+  {
+      "shorter": "GL",
+      "base": "Greenland",
+      "chinese": "格陵兰",
+      "fullName": "Greenland"
+  },
+  {
+      "shorter": "GD",
+      "base": "Grenada",
+      "chinese": "格林纳达",
+      "fullName": "Grenada"
+  },
+  {
+      "shorter": "GP",
+      "base": "Guadeloupe",
+      "chinese": "瓜德罗普",
+      "fullName": "Guadeloupe"
+  },
+  {
+      "shorter": "GT",
+      "base": "Guatemala",
+      "chinese": "危地马拉",
+      "fullName": "Guatemala"
+  },
+  {
+      "shorter": "GN",
+      "base": "Guinea",
+      "chinese": "几内亚",
+      "fullName": "Guinea"
+  },
+  {
+      "shorter": "GW",
+      "base": "GuineaBissau",
+      "chinese": "几内亚比绍",
+      "fullName": "Guinea Bissau"
+  },
+  {
+      "shorter": "GY",
+      "base": "Guyana",
+      "chinese": "圭亚那",
+      "fullName": "Guyana"
+  },
+  {
+      "shorter": "HT",
+      "base": "Haiti",
+      "chinese": "海地",
+      "fullName": "Haiti"
+  },
+  {
+      "shorter": "HN",
+      "base": "Honduras",
+      "chinese": "洪都拉斯",
+      "fullName": "Honduras"
+  },
+  {
+      "shorter": "HK",
+      "base": "HongKong",
+      "chinese": "香港",
+      "fullName": "Hong Kong"
+  },
+  {
+      "shorter": "HU",
+      "base": "Hungary",
+      "chinese": "匈牙利",
+      "fullName": "Hungary"
+  },
+  {
+      "shorter": "IS",
+      "base": "Iceland",
+      "chinese": "冰岛",
+      "fullName": "Iceland"
+  },
+  {
+      "shorter": "IN",
+      "base": "India",
+      "chinese": "印度",
+      "fullName": "India"
+  },
+  {
+      "shorter": "ID",
+      "base": "Indonesia",
+      "chinese": "印尼",
+      "fullName": "Indonesia"
+  },
+  {
+      "shorter": "IR",
+      "base": "Iran",
+      "chinese": "伊朗",
+      "fullName": "Iran"
+  },
+  {
+      "shorter": "IQ",
+      "base": "Iraq",
+      "chinese": "伊拉克",
+      "fullName": "Iraq"
+  },
+  {
+      "shorter": "Iraq-SaudiArabiaNeutralZone",
+      "base": "Iraq-SaudiArabiaNeutralZone",
+      "chinese": "伊拉克阿拉伯中立区",
+      "fullName": "Iraq-Saudi Arabia Neutral Zone"
+  },
+  {
+      "shorter": "IE",
+      "base": "Ireland",
+      "chinese": "爱尔兰",
+      "fullName": "Ireland"
+  },
+  {
+      "shorter": "IsleOfMan",
+      "base": "IsleOfMan",
+      "chinese": "马恩岛",
+      "fullName": "Isle of Man"
+  },
+  {
+      "shorter": "IL",
+      "base": "Israel",
+      "chinese": "以色列",
+      "fullName": "Israel"
+  },
+  {
+      "shorter": "IT",
+      "base": "Italy",
+      "chinese": "意大利",
+      "fullName": "Italy"
+  },
+  {
+      "shorter": "CI",
+      "base": "IvoryCoast",
+      "chinese": "科特迪瓦",
+      "fullName": "Ivory Coast"
+  },
+  {
+      "shorter": "JM",
+      "base": "Jamaica",
+      "chinese": "牙买加",
+      "fullName": "Jamaica"
+  },
+  {
+      "shorter": "SJ",
+      "base": "JanMayen",
+      "chinese": "扬马延岛",
+      "fullName": "Jan Mayen"
+  },
+  {
+      "shorter": "JP",
+      "base": "Japan",
+      "chinese": "日本",
+      "fullName": "Japan"
+  },
+  {
+      "shorter": "JO",
+      "base": "Jordan",
+      "chinese": "约旦",
+      "fullName": "Jordan"
+  },
+  {
+      "shorter": "KZ",
+      "base": "Kazakhstan",
+      "chinese": "哈萨克斯坦",
+      "fullName": "Kazakhstan"
+  },
+  {
+      "shorter": "KE",
+      "base": "Kenya",
+      "chinese": "肯尼亚",
+      "fullName": "Kenya"
+  },
+  {
+      "shorter": "Kerguelen",
+      "base": "Kerguelen",
+      "chinese": "凯尔盖朗群岛",
+      "fullName": "Kerguelen"
+  },
+  {
+      "shorter": "KI",
+      "base": "Kiribati",
+      "chinese": "基里巴斯",
+      "fullName": "Kiribati"
+  },
+  {
+      "shorter": "KP",
+      "base": "NorthKorea",
+      "chinese": "北朝鲜",
+      "fullName": "North Korea"
+  },
+  {
+      "shorter": "KR",
+      "base": "SouthKorea",
+      "chinese": "韩国",
+      "fullName": "South Korea"
+  },
+  {
+      "shorter": "KW",
+      "base": "Kuwait",
+      "chinese": "科威特",
+      "fullName": "Kuwait"
+  },
+  {
+      "shorter": "KG",
+      "base": "Kyrgyzstan",
+      "chinese": "吉尔吉斯斯坦",
+      "fullName": "Kyrgyzstan"
+  },
+  {
+      "shorter": "LA",
+      "base": "LaoPDR",
+      "chinese": "老挝",
+      "fullName": "Lao PDR"
+  },
+  {
+      "shorter": "LV",
+      "base": "Latvia",
+      "chinese": "拉脱维亚",
+      "fullName": "Latvia"
+  },
+  {
+      "shorter": "LB",
+      "base": "Lebanon",
+      "chinese": "黎巴嫩",
+      "fullName": "Lebanon"
+  },
+  {
+      "shorter": "LS",
+      "base": "Lesotho",
+      "chinese": "莱索托",
+      "fullName": "Lesotho"
+  },
+  {
+      "shorter": "LR",
+      "base": "Liberia",
+      "chinese": "利比里亚",
+      "fullName": "Liberia"
+  },
+  {
+      "shorter": "LY",
+      "base": "Libya",
+      "chinese": "利比亚",
+      "fullName": "Libya"
+  },
+  {
+      "shorter": "LI",
+      "base": "Liechtenstein",
+      "chinese": "列支敦士登",
+      "fullName": "Liechtenstein"
+  },
+  {
+      "shorter": "LT",
+      "base": "Lithuania",
+      "chinese": "立陶宛",
+      "fullName": "Lithuania"
+  },
+  {
+      "shorter": "LU",
+      "base": "Luxembourg",
+      "chinese": "卢森堡",
+      "fullName": "Luxembourg"
+  },
+  {
+      "shorter": "MO",
+      "base": "Macau",
+      "chinese": "澳门",
+      "fullName": "Macau"
+  },
+  {
+      "shorter": "MK",
+      "base": "Macedonia",
+      "chinese": "马其顿",
+      "fullName": "Macedonia"
+  },
+  {
+      "shorter": "MG",
+      "base": "Madagascar",
+      "chinese": "马达加斯加",
+      "fullName": "Madagascar"
+  },
+  {
+      "shorter": "MW",
+      "base": "Malawi",
+      "chinese": "马拉维",
+      "fullName": "Malawi"
+  },
+  {
+      "shorter": "MY",
+      "base": "Malaysia",
+      "chinese": "马来西亚",
+      "fullName": "Malaysia"
+  },
+  {
+      "shorter": "MV",
+      "base": "Maldives",
+      "chinese": "马尔代夫",
+      "fullName": "Maldives"
+  },
+  {
+      "shorter": "ML",
+      "base": "Mali",
+      "chinese": "马里",
+      "fullName": "Mali"
+  },
+  {
+      "shorter": "MT",
+      "base": "Malta",
+      "chinese": "马耳他",
+      "fullName": "Malta"
+  },
+  {
+      "shorter": "MQ",
+      "base": "Martinique",
+      "chinese": "马提尼克",
+      "fullName": "Martinique"
+  },
+  {
+      "shorter": "MR",
+      "base": "Mauritania",
+      "chinese": "毛里塔尼亚",
+      "fullName": "Mauritania"
+  },
+  {
+      "shorter": "MU",
+      "base": "Mauritius",
+      "chinese": "毛里求斯",
+      "fullName": "Mauritius"
+  },
+  {
+      "shorter": "MX",
+      "base": "Mexico",
+      "chinese": "墨西哥",
+      "fullName": "Mexico"
+  },
+  {
+      "shorter": "MD",
+      "base": "Moldova",
+      "chinese": "摩尔多瓦",
+      "fullName": "Moldova"
+  },
+  {
+      "shorter": "MC",
+      "base": "Monaco",
+      "chinese": "摩纳哥",
+      "fullName": "Monaco"
+  },
+  {
+      "shorter": "",
+      "base": "Mongolia",
+      "chinese": "蒙古",
+      "fullName": "Mongolia"
+  },
+  {
+      "shorter": "MN",
+      "base": "Morocco",
+      "chinese": "摩洛哥",
+      "fullName": "Morocco"
+  },
+  {
+      "shorter": "MZ",
+      "base": "Mozambique",
+      "chinese": "莫桑比克",
+      "fullName": "Mozambique"
+  },
+  {
+      "shorter": "MM",
+      "base": "Myanmar",
+      "chinese": "缅甸",
+      "fullName": "Myanmar"
+  },
+  {
+      "shorter": "NA",
+      "base": "Namibia",
+      "chinese": "纳米比亚",
+      "fullName": "Namibia"
+  },
+  {
+      "shorter": "NP",
+      "base": "Nepal",
+      "chinese": "尼泊尔",
+      "fullName": "Nepal"
+  },
+  {
+      "shorter": "NL",
+      "base": "Netherlands",
+      "chinese": "荷兰",
+      "fullName": "Netherlands"
+  },
+  {
+      "shorter": "NC",
+      "base": "NewCaledonia",
+      "chinese": "新喀里多尼亚",
+      "fullName": "New Caledonia"
+  },
+  {
+      "shorter": "NZ",
+      "base": "NewZealand",
+      "chinese": "新西兰",
+      "fullName": "New Zealand"
+  },
+  {
+      "shorter": "NI",
+      "base": "Nicaragua",
+      "chinese": "尼加拉瓜",
+      "fullName": "Nicaragua"
+  },
+  {
+      "shorter": "NE",
+      "base": "Niger",
+      "chinese": "尼日尔",
+      "fullName": "Niger"
+  },
+  {
+      "shorter": "NG",
+      "base": "Nigeria",
+      "chinese": "尼日利亚",
+      "fullName": "Nigeria"
+  },
+  {
+      "shorter": "MP",
+      "base": "NorthernMarianaIslands",
+      "chinese": "北马里亚纳群岛",
+      "fullName": "Northern Mariana Islands"
+  },
+  {
+      "shorter": "NO",
+      "base": "Norway",
+      "chinese": "挪威",
+      "fullName": "Norway"
+  },
+  {
+      "shorter": "OM",
+      "base": "Oman",
+      "chinese": "阿曼",
+      "fullName": "Oman"
+  },
+  {
+      "shorter": "PK",
+      "base": "Pakistan",
+      "chinese": "巴基斯坦",
+      "fullName": "Pakistan"
+  },
+  {
+      "shorter": "PA",
+      "base": "Panama",
+      "chinese": "巴拿马",
+      "fullName": "Panama"
+  },
+  {
+      "shorter": "PG",
+      "base": "PapuaNewGuinea",
+      "chinese": "巴布亚新几内亚",
+      "fullName": "Papua New Guinea"
+  },
+  {
+      "shorter": "PY",
+      "base": "Paraguay",
+      "chinese": "巴拉圭",
+      "fullName": "Paraguay"
+  },
+  {
+      "shorter": "PE",
+      "base": "Peru",
+      "chinese": "秘鲁",
+      "fullName": "Peru"
+  },
+  {
+      "shorter": "PH",
+      "base": "Philippines",
+      "chinese": "菲律宾",
+      "fullName": "Philippines"
+  },
+  {
+      "shorter": "PL",
+      "base": "Poland",
+      "chinese": "波兰",
+      "fullName": "Poland"
+  },
+  {
+      "shorter": "PT",
+      "base": "Portugal",
+      "chinese": "葡萄牙",
+      "fullName": "Portugal"
+  },
+  {
+      "shorter": "PR",
+      "base": "PuertoRico",
+      "chinese": "波多黎各",
+      "fullName": "Puerto Rico"
+  },
+  {
+      "shorter": "QA",
+      "base": "Qatar",
+      "chinese": "卡塔尔",
+      "fullName": "Qatar"
+  },
+  {
+      "shorter": "RE",
+      "base": "Reunion",
+      "chinese": "留尼旺岛",
+      "fullName": "Reunion"
+  },
+  {
+      "shorter": "RO",
+      "base": "Romania",
+      "chinese": "罗马尼亚",
+      "fullName": "Romania"
+  },
+  {
+      "shorter": "RU",
+      "base": "Russia",
+      "chinese": "俄罗斯",
+      "fullName": "Russia"
+  },
+  {
+      "shorter": "RW",
+      "base": "Rwanda",
+      "chinese": "卢旺达",
+      "fullName": "Rwanda"
+  },
+  {
+      "shorter": "SM",
+      "base": "SanMarino",
+      "chinese": "圣马力诺",
+      "fullName": "San Marino"
+  },
+  {
+      "shorter": "ST",
+      "base": "SaoTomeAndPrincipe",
+      "chinese": "圣多美和普林西比",
+      "fullName": "Sao Tome and Principe"
+  },
+  {
+      "shorter": "SA",
+      "base": "SaudiArabia",
+      "chinese": "沙特阿拉伯",
+      "fullName": "Saudi Arabia"
+  },
+  {
+      "shorter": "SN",
+      "base": "Senegal",
+      "chinese": "塞内加尔",
+      "fullName": "Senegal"
+  },
+  {
+      "shorter": "SC",
+      "base": "Seychelles",
+      "chinese": "塞舌尔",
+      "fullName": "Seychelles"
+  },
+  {
+      "shorter": "SL",
+      "base": "SierraLeone",
+      "chinese": "塞拉利昂",
+      "fullName": "Sierra Leone"
+  },
+  {
+      "shorter": "SG",
+      "base": "Singapore",
+      "chinese": "新加坡",
+      "fullName": "Singapore"
+  },
+  {
+      "shorter": "SK",
+      "base": "Slovakia",
+      "chinese": "斯洛伐克",
+      "fullName": "Slovakia"
+  },
+  {
+      "shorter": "SI",
+      "base": "Slovenia",
+      "chinese": "斯洛文尼亚",
+      "fullName": "Slovenia"
+  },
+  {
+      "shorter": "SB",
+      "base": "SolomonIslands",
+      "chinese": "所罗门群岛",
+      "fullName": "Solomon Islands"
+  },
+  {
+      "shorter": "SO",
+      "base": "Somalia",
+      "chinese": "索马里",
+      "fullName": "Somalia"
+  },
+  {
+      "shorter": "ZA",
+      "base": "SouthAfrica",
+      "chinese": "南非",
+      "fullName": "South Africa"
+  },
+  {
+      "shorter": "ES",
+      "base": "Spain",
+      "chinese": "西班牙",
+      "fullName": "Spain"
+  },
+  {
+      "shorter": "LK",
+      "base": "SriLanka",
+      "chinese": "斯里兰卡",
+      "fullName": "Sri Lanka"
+  },
+  {
+      "shorter": "St.Christopher-Nevis",
+      "base": "St.Christopher-Nevis",
+      "chinese": "圣",
+      "fullName": "St. Christopher-Nevis"
+  },
+  {
+      "shorter": "St.Lucia",
+      "base": "St.Lucia",
+      "chinese": "圣露西亚",
+      "fullName": "St. Lucia"
+  },
+  {
+      "shorter": "VC",
+      "base": "St.VincentAndTheGrenadines",
+      "chinese": "圣文森特和格林纳丁斯",
+      "fullName": "St. Vincent and the Grenadines"
+  },
+  {
+      "shorter": "SD",
+      "base": "Sudan",
+      "chinese": "苏丹",
+      "fullName": "Sudan"
+  },
+  {
+      "shorter": "SR",
+      "base": "Suriname",
+      "chinese": "苏里南",
+      "fullName": "Suriname"
+  },
+  {
+      "shorter": "SJ",
+      "base": "Svalbard",
+      "chinese": "斯瓦尔巴特群岛",
+      "fullName": "Svalbard"
+  },
+  {
+      "shorter": "SZ",
+      "base": "Swaziland",
+      "chinese": "斯威士兰",
+      "fullName": "Swaziland"
+  },
+  {
+      "shorter": "SE",
+      "base": "Sweden",
+      "chinese": "瑞典",
+      "fullName": "Sweden"
+  },
+  {
+      "shorter": "CH",
+      "base": "Switzerland",
+      "chinese": "瑞士",
+      "fullName": "Switzerland"
+  },
+  {
+      "shorter": "SY",
+      "base": "Syria",
+      "chinese": "叙利亚",
+      "fullName": "Syria"
+  },
+  {
+      "shorter": "TW",
+      "base": "Taiwan",
+      "chinese": "台湾",
+      "fullName": "Taiwan"
+  },
+  {
+      "shorter": "TJ",
+      "base": "Tajikistan",
+      "chinese": "塔吉克斯坦",
+      "fullName": "Tajikistan"
+  },
+  {
+      "shorter": "TZ",
+      "base": "UnitedRepublicOfTanzania",
+      "chinese": "坦桑尼亚",
+      "fullName": "United Republic of Tanzania"
+  },
+  {
+      "shorter": "TH",
+      "base": "Thailand",
+      "chinese": "泰国",
+      "fullName": "Thailand"
+  },
+  {
+      "shorter": "TG",
+      "base": "Togo",
+      "chinese": "多哥",
+      "fullName": "Togo"
+  },
+  {
+      "shorter": "TO",
+      "base": "Tonga",
+      "chinese": "汤加",
+      "fullName": "Tonga"
+  },
+  {
+      "shorter": "TT",
+      "base": "TrinidadAndTobago",
+      "chinese": "特里尼达和多巴哥",
+      "fullName": "Trinidad and Tobago"
+  },
+  {
+      "shorter": "TN",
+      "base": "Tunisia",
+      "chinese": "突尼斯",
+      "fullName": "Tunisia"
+  },
+  {
+      "shorter": "TR",
+      "base": "Turkey",
+      "chinese": "土耳其",
+      "fullName": "Turkey"
+  },
+  {
+      "shorter": "TM",
+      "base": "Turkmenistan",
+      "chinese": "土库曼斯坦",
+      "fullName": "Turkmenistan"
+  },
+  {
+      "shorter": "TZ",
+      "base": "Tanzania",
+      "chinese": "坦桑尼亚",
+      "fullName": "Tanzania"
+  },
+  {
+      "shorter": "TC",
+      "base": "TurksAndCaicosIslands",
+      "chinese": "特克斯和凯科斯群岛",
+      "fullName": "Turks and Caicos Islands"
+  },
+  {
+      "shorter": "UG",
+      "base": "Uganda",
+      "chinese": "乌干达",
+      "fullName": "Uganda"
+  },
+  {
+      "shorter": "UA",
+      "base": "Ukraine",
+      "chinese": "乌克兰",
+      "fullName": "Ukraine"
+  },
+  {
+      "shorter": "AE",
+      "base": "UnitedArabEmirates",
+      "chinese": "阿联酋",
+      "fullName": "United Arab Emirates"
+  },
+  {
+      "shorter": "GB",
+      "base": "UnitedKingdom",
+      "chinese": "英国",
+      "fullName": "United Kingdom"
+  },
+  {
+      "shorter": "US",
+      "base": "UnitedStates",
+      "chinese": "美国",
+      "fullName": "United States"
+  },
+  {
+      "shorter": "UY",
+      "base": "Uruguay",
+      "chinese": "乌拉圭",
+      "fullName": "Uruguay"
+  },
+  {
+      "shorter": "UZ",
+      "base": "Uzbekistan",
+      "chinese": "乌兹别克斯坦",
+      "fullName": "Uzbekistan"
+  },
+  {
+      "shorter": "VU",
+      "base": "Vanuatu",
+      "chinese": "瓦努阿图",
+      "fullName": "Vanuatu"
+  },
+  {
+      "shorter": "VE",
+      "base": "Venezuela",
+      "chinese": "委内瑞拉",
+      "fullName": "Venezuela"
+  },
+  {
+      "shorter": "VN",
+      "base": "Vietnam",
+      "chinese": "越南",
+      "fullName": "Vietnam"
+  },
+  {
+      "shorter": "EH",
+      "base": "WesternSahara",
+      "chinese": "西撒哈拉",
+      "fullName": "Western Sahara"
+  },
+  {
+      "shorter": "WesternSamoa",
+      "base": "WesternSamoa",
+      "chinese": "西萨摩亚",
+      "fullName": "Western Samoa"
+  },
+  {
+      "shorter": "YE",
+      "base": "Yemen",
+      "chinese": "也门",
+      "fullName": "Yemen"
+  },
+  {
+      "shorter": "Yugoslavia",
+      "base": "Yugoslavia",
+      "chinese": "南斯拉夫",
+      "fullName": "Yugoslavia"
+  },
+  {
+      "shorter": "CD",
+      "base": "DemocraticRepublicOfTheCongo",
+      "chinese": "刚果民主共和国",
+      "fullName": "Democratic Republic of the Congo"
+  },
+  {
+      "shorter": "ZM",
+      "base": "Zambia",
+      "chinese": "赞比亚",
+      "fullName": "Zambia"
+  },
+  {
+      "shorter": "ZW",
+      "base": "Zimbabwe",
+      "chinese": "津巴布韦",
+      "fullName": "Zimbabwe"
+  },
+  {
+      "shorter": "SouthSudan",
+      "base": "SouthSudan",
+      "chinese": "南苏丹",
+      "fullName": "South Sudan"
+  },
+  {
+      "shorter": "Somaliland",
+      "base": "Somaliland",
+      "chinese": "索马里兰",
+      "fullName": "Somaliland"
+  },
+  {
+      "shorter": "ME",
+      "base": "Montenegro",
+      "chinese": "黑山",
+      "fullName": "Montenegro"
+  },
+  {
+      "shorter": "Kosovo",
+      "base": "Kosovo",
+      "chinese": "科索沃",
+      "fullName": "Kosovo"
+  },
+  {
+      "shorter": "RS",
+      "base": "RepublicOfSerbia",
+      "chinese": "塞尔维亚",
+      "fullName": "Republic of Serbia"
+  }
+]

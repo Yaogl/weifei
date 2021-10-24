@@ -11,17 +11,18 @@
 				<p class="header-title">Sever IP  {{ serviceInfo.ip }}</p>
 				<el-row>
 					<el-col :span="5" align="center">
-						<p class="big">{{ ((serviceInfo.cpuUsed / serviceInfo.cpuTotal) * 100).toFixed(2) }}%</p>
+						<p class="big">{{ serviceInfo.cpu }}%</p>
 						<p class="small">CPU</p>
 					</el-col>
 					<el-col :span="5" align="center">
-						<p class="big">{{ ((serviceInfo.memoryUsed / serviceInfo.memoryTotal) * 100).toFixed(2) }}%</p>
+						<p class="big">
+							{{ serviceInfo.diskUsed }}<span style="font-size: 16px">/ {{ serviceInfo.diskTotal }}</span>
+						</p>
 						<p class="small">RAM</p>
 					</el-col>
 					<el-col :span="5" align="center">
 						<p class="big">
-							{{ serviceInfo.diskUsed }}
-							<span style="font-size: 16px">/{{ serviceInfo.diskTotal }}</span>
+							{{ serviceInfo.memoryUsed }}<span style="font-size: 16px">/ {{ serviceInfo.memoryTotal }}</span>
 						</p>
 						<p class="small">Memory consumption</p>
 					</el-col>
@@ -87,7 +88,10 @@ export default {
 			this.loading = false
 			if (res) {
 				if (res.processes) {
-					res.processes = JSON.parse(res.processes)
+					try {
+						res.processes = JSON.parse(res.processes)
+					} catch (error) {
+					}
 					Array.isArray(res.processes) ? '' : (res.processes = [])
 				}
 				this.serviceInfo = res

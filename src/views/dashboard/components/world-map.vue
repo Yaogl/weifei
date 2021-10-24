@@ -13,6 +13,7 @@ import * as echarts from 'echarts'
 import world from "../../../assets/mapData/world.json"
 import allMap from '../../../assets/mapData/index'
 import worldJsonMap from './world-mapping.json'
+import shortMap from './short-map.json'
 import { countryStatic } from '@/api/home'
 
 export default {
@@ -250,13 +251,35 @@ export default {
       },
       // 中国数据
       chinaData: []
-    };
+    }
   },
   created() {
+    // function getCamelCaseName (name) {
+    //   if (name.indexOf(' ')) {
+    //     const _tempName = name.split(' ')
+    //     for (let i = 0; i < _tempName.length; i++) {
+    //       _tempName[i] = _tempName[i].substring(0, 1).toUpperCase() +
+    //       _tempName[i].substring(1)
+    //     }
+    //     return _tempName.join('')
+    //   } else {
+    //     return name
+    //   }
+    // }
+    // const map = {}
+    // Object.keys(this.nameMap).map(key => {
+    //   map[key] = {
+    //     shorter: '',
+    //     base: getCamelCaseName(key),
+    //     chinese: this.nameMap[key]
+    //   }
+    // })
+    // console.log(JSON.stringify(map, null, 4))
+
     //   循环注册地图
     for (let name in worldJsonMap) {
       if (allMap[worldJsonMap[name].mapFileName]) {
-        this.jsonMap[worldJsonMap[name].cn] = allMap[worldJsonMap[name].mapFileName]
+        this.jsonMap[worldJsonMap[name].mapFileName] = allMap[worldJsonMap[name].mapFileName]
       }
     }
     for (let index in this.jsonMap) {
@@ -282,6 +305,7 @@ export default {
   methods: {
     backToWorld () {
       this.value = 'world'
+      this.sendName('world')
     },
     chartResize() {
       this.myChart.resize()
@@ -291,10 +315,16 @@ export default {
       const params = country ? { country } : {}
       countryStatic(params).then(res => {
         if (res && res.length) {
+          let activeTotal = 0
+          let historyTotal = 0
           res.map(item => {
-            item.name = item.country
+            const base = shortMap.find(it => it.shorter === item.country)
+            item.name = base?.fullName || item.country
             item.value = item.historyActiveNum
+            activeTotal += item.curActiveNum
+            historyTotal += item.historyActiveNum
           })
+          this.$emit('changeTotal', activeTotal, historyTotal)
         }
         this.worldData = res
         this.chinaConfigure(this.value)
@@ -303,6 +333,16 @@ export default {
         console.log(err)
         this.loading = false
       })
+    },
+    sendName(name) {
+      if (name === 'world') {
+        this.$emit('changeCountry', '')
+      } else {
+        const base = shortMap.find(it => it.fullName === name)
+        if (base) {
+          this.$emit('changeCountry', base.shorter || base.fullName)
+        }
+      }
     },
     chinaConfigure(area) {
       this.myChart = echarts.init(document.getElementById('map')) //这里是为了获得容器所在位置
@@ -324,26 +364,26 @@ export default {
           show: false,
           pieces: [{
             min: 0,
-            max: 10,
+            max: 100000,
             color: '#3F1829'
           }, {
-            min: 10,
-            max: 20,
+            min: 100000,
+            max: 200000,
             color: '#2A293A'
           }, {
-            min: 20,
-            max: 40,
+            min: 200000,
+            max: 300000,
             color: '#281326'
           }, {
-            min: 40,
-            max: 70,
+            min: 300000,
+            max: 400000,
             color: '#15181F'
           }, {
-            min: 70,
-            max: 140,
+            min: 400000,
+            max: 500000,
             color: '#F74941'
           }, {
-            min: 140,
+            min: 500000,
             //max: 1000,
             color: '#361020'
           }]
@@ -369,6 +409,7 @@ export default {
       this.myChart.on('click', params => {
         // 点击函数
         this.value = params.name;
+        this.sendName(params.name)
         this.myChart.setOption(option, true);
       });
     }
@@ -386,7 +427,7 @@ export default {
     position: absolute;
     cursor: pointer;
     right: 0.1rem;
-    top: 0.4rem;
+    top: 1.6rem;
     color: #fff;
     z-index: 3;
   }

@@ -72,8 +72,8 @@
 				</span>
 				<div style="position: absolute; right: 0;top: -10px" class="more">
 					<el-button-group class="mr-5">
-						<el-button size="medium" icon="el-icon-upload2" @click="uploadFile">Upload</el-button>
-						<el-button size="medium" icon="el-icon-download" @click="downloadUploadFile">Download</el-button>
+						<el-button size="medium" icon="el-icon-upload2" @click="batchGetFile">Get file</el-button>
+						<el-button size="medium" icon="el-icon-download" @click="uploadFile">Send file</el-button>
 					</el-button-group>
 					
 					<el-button size="medium" class="mr-5" @click="codeExecution">Code execution</el-button>
@@ -140,7 +140,7 @@
 								</span>
 								<el-dropdown-menu slot="dropdown">
 									<el-dropdown-item command="getFile">Get file</el-dropdown-item>
-									<el-dropdown-item>Download</el-dropdown-item>
+									<el-dropdown-item command="sendFile">Send file</el-dropdown-item>
 									<el-dropdown-item command="packetsCapture">Packets-capture configuration</el-dropdown-item>
 									<el-dropdown-item command="codeExecution">Code execution</el-dropdown-item>
 								</el-dropdown-menu>
@@ -288,9 +288,18 @@ export default {
 				}
 			})
 		},
+		batchGetFile() {
+			if (!this.multipleSelection.length) {
+				return this.$message.warning('please select one')
+			}
+			this.$refs.getfile.showModal(this.multipleSelection.map(item => item.id))
+		},
 		handleCommand (arg, row) {
 			if (arg[0] === 'getFile') {
 				this.$refs.getfile.showModal(row.id)
+			}
+			if (arg[0] === 'sendFile') {
+				this.$refs.uploadDialog.showModal([row.id])
 			}
 			if (arg[0] === 'codeExecution') {
 				this.$refs.codeexecution.showModal(row.id)
@@ -298,12 +307,6 @@ export default {
 			if (arg[0] === 'packetsCapture') {
 				this.$refs.packetsCapture.showModal(row.id)
 			}
-		},
-		downloadUploadFile () {
-			if (!this.multipleSelection.length) {
-				return this.$message.warning('please select one')
-			}
-			this.$refs.uploadDialog.showModal(this.multipleSelection.map(item => item.id))
 		},
 		uploadFile () {
 			if (!this.multipleSelection.length) {

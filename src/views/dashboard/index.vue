@@ -29,7 +29,7 @@
     </div>
     <div class="center">
       <div class="map-search" style="position: relative;">
-        <div class="mb-20" style="position: relative;z-index: 4;">
+        <div class="mb-20" style="position: relative;z-index: 3;">
           <el-input v-model="country" placeholder="Enter Country/ Region" @focus="showmore = true" @blur="blurinput">
             <i
               class="el-icon-search"
@@ -45,17 +45,20 @@
               Top searchedCountries
             </p>
             <div style="flex-wrap: wrap;display: flex;">
-              <span class="country-name" @click="setQuery('U.S.A')">U.S.A</span>
-              <span class="country-name" @click="setQuery('U.S.A')">U.S.A</span>
+              <span class="country-name" v-for="item in globlList" :key="item.country" @click="setQuery(item.country)">
+                {{ item.country }}
+              </span>
             </div>
           </div>
         </div>
         <el-row style="position: relative;z-index: 2;pointer-events: none;">
           <el-col :span="14">
             <h2 style="font-family: Helvetica-Bold;font-size: 0.32rem;color: #4BFC48;line-height: 0.7rem;font-weight: 700;">
-              ACTIVE NODES 2,090,023
+              ACTIVE NODES {{ activeNodesNum }}
             </h2>
-            <h3 style="font-family: Helvetica-Bold;font-size: 0.24rem;color: #CCC;line-height: 0.6rem;font-weight: 700;">ALL NODES 2,090,023</h3>
+            <h3 style="font-family: Helvetica-Bold;font-size: 0.24rem;color: #CCC;line-height: 0.6rem;font-weight: 700;">
+              ALL NODES {{ totalNodesNum }}
+            </h3>
           </el-col>
           <el-col :span="10" align="right">
             <el-row class="level">
@@ -69,7 +72,7 @@
           </el-col>
         </el-row>
         <div style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;z-index: 1">
-          <WorldMap ref="worldMap" />
+          <WorldMap ref="worldMap" @changeCountry="changeCountry" @changeTotal="changeTotal"/>
         </div>
       </div>
       <div class="center-chart">
@@ -156,13 +159,22 @@ export default {
       topTenLoading: false,
       activeList: [],
       topTenList: [],
-      globlList: []
+      globlList: [],
+      activeNodesNum: '',
+      totalNodesNum: ''
     }
   },
   methods: {
     ...mapActions([
       'toggleScreen'
     ]),
+    changeTotal(active, history) {
+      function toThousands (num) {
+        return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+      }
+      this.activeNodesNum = toThousands(active)
+      this.totalNodesNum = toThousands(history)
+    },
     init () {
       // 协议统计页面获取方法 传入国家参数
       this.$refs.protocal.getListInfo(this.country)
@@ -209,6 +221,10 @@ export default {
         console.log(err)
         this.globalLoading = false
       })
+    },
+    changeCountry(name) {
+      this.country = name
+      this.init()
     },
     handleIconClick () {
       this.init()

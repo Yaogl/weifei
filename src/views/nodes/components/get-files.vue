@@ -44,7 +44,7 @@ export default {
 			},
 			loading: false,
 			formData: {
-				filePath: '/deliver/1451545287481933825.png',
+				filePath: '',
 				nodeIds: ''
 			}
     }
@@ -54,16 +54,23 @@ export default {
 			this.$refs.form.resetFields()
 			this.visible = false
     },
-    showModal (ids) {
+    showModal (id) {
+			const ids = Array.isArray(id) ? id : [id]
 			this.formData.nodeIds = ids
 			this.visible = true
+		},
+		getSubPath() {
+			const arr = this.formData.nodeIds.map(item => {
+				return 'nodeIds=' + item
+			})
+			return `filefilePath=${this.formData.filePath}&${arr.join('&')}`
 		},
 		submitFile () {
 			if (!this.formData.filePath) {
 				return this.$message.warning('please enter')
 			}
 			this.loading = true
-			nodeFileGet(this.formData).then(res => {
+			nodeFileGet(this.getSubPath()).then(res => {
 				if (res) {
 					this.loading = false
 					this.$message.success('success')

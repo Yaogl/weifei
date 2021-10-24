@@ -5,27 +5,27 @@
 				<div style="display: flex;">
 					<div class="flex-item">
 						<el-form-item label="Source IP">
-							<el-input v-model.trim="query.sourceIp" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.sourceIp" placeholder="Please Enter" clearable></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="Source Port">
-							<el-input v-model.trim="query.sourcePort" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.sourcePort" placeholder="Please Enter" clearable></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="Destination IP">
-							<el-input v-model.trim="query.toIp" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.toIp" placeholder="Please Enter" clearable></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="端口">
-							<el-input v-model.trim="query.toPort" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.toPort" placeholder="Please Enter" clearable></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="协议">
-							<el-select v-model="query.protocal" placeholder="Please Select" style="width: 100%;">
+							<el-select v-model="query.protocal" clearable placeholder="Please Select" style="width: 100%;" @change="changeProtocal">
 								<el-option label="dns" value="dns"></el-option>
 								<el-option label="telnet" value="telnet"></el-option>
 								<el-option label="dhcp" value="dhcp"></el-option>
@@ -45,29 +45,29 @@
 				<div style="display: flex;">
 					<div class="flex-item">
 						<el-form-item label="Domain Name">
-							<el-input v-model.trim="query.domain" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.domain" :disabled="query.protocal !== 'dns'" clearable placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="MAC Address">
-							<el-input v-model.trim="query.macAddress" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.macAddress" clearable placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 				</div>
 				<div style="display: flex;">
 					<div class="flex-item">
 						<el-form-item label="Keyword">
-							<el-input v-model.trim="query.keyword" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.keyword" clearable placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="e-mail">
-							<el-input v-model.trim="query.email" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.email" :disabled="!['smtp', 'pop3'].includes(query.protocal)" clearable placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
 						<el-form-item label="WAN IP">
-							<el-input v-model.trim="query.wanip" placeholder="Please Enter"></el-input>
+							<el-input v-model.trim="query.wanip" clearable placeholder="Please Enter"></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
@@ -85,7 +85,7 @@
 				<div style="display: flex;">
 					<div class="flex-item">
 						<el-form-item label="自定义">
-							<el-input v-model="query.kql" placeholder="Please Enter">
+							<el-input v-model="query.kql" placeholder="Please Enter" clearable>
 								<template slot="append">KQL</template>
 							</el-input>
 						</el-form-item>
@@ -94,7 +94,7 @@
 						<el-form-item>
 							<div slot="label"><br /></div>
 							<el-button type="primary" icon="el-icon-search" @click="search">Search</el-button>
-							<el-button>Reset</el-button>
+							<el-button @click="clearQuery">Reset</el-button>
 						</el-form-item>
 					</div>
 				</div>
@@ -103,43 +103,52 @@
 
 		<el-card>
 			<div slot="header" style="position: relative;">
-				<p style="font-size: 12px;color: #333;line-height: 20px">1,208hits</p>
+				<p style="font-size: 12px;color: #333;line-height: 20px">{{ total }}hits</p>
 				<p style="font-size: 12px;color: #333;line-height: 18px"> _source</p>
 
 				<div style="position: absolute; right: 0;top: 10px" class="more">
 					<el-button @click="deleteEs">Delete Item</el-button>
 				</div>
 			</div>
-			<div class="source-item">
-				<div class="icon">
-					<i class="el-icon-arrow-right"></i>
-					<!-- <i class="el-icon-arrow-down"></i> -->
-				</div>
+			<div class="source-item" v-for="item in tableList" :key="item.id">
 				<div style="flex: 1">
 					 <el-tag
-						v-for="item in 40"
+					 	v-for="tag in getKeys(item)"
+						 :key="tag.name"
 						class="mb-10 mr-10"
-						:key="item"
 						type="info">
-						  _source _source _source
+						{{ tag.name }}: {{ tag.value }}
 					</el-tag>
 				</div>
 			</div>
-			<div class="source-item">
-				<div class="icon">
-					<i class="el-icon-arrow-right"></i>
-					<!-- <i class="el-icon-arrow-down"></i> -->
-				</div>
-				<div style="flex: 1">
-					 <el-tag
-						v-for="item in 40"
-						class="mb-10 mr-10"
-						:key="item"
-						type="info">
-						  _source _source _source
-					</el-tag>
-				</div>
-			</div>
+			<el-row class="mt-10 mr-10 ml-10 mb-10">
+				<el-col :span="8">
+					{{ total }}
+					<span style="font-size: 12px;color: #999999;" class="mr-20">Items</span>
+					<el-select v-model="query.pageSize" @change="changePages" size="mini" style="width: 130px">
+						<el-option
+							v-for="item in [5, 10, 20, 30, 40]"
+							:key="item"
+							:label="item + ' items/page'"
+							:value="item">
+							{{ item }} items/page
+						</el-option>
+					</el-select>
+				</el-col>
+				<el-col :span="16" align="right">
+					<el-pagination
+						v-if="total > 0"
+						:current-page="query.curPage"
+						:page-sizes="[5, 10, 20, 30, 40]"
+						:page-size="query.pageSize"
+						:total="total"
+						:pager-count="4"
+						layout="prev, pager, next"
+						@size-change="changePages"
+						@current-change="currentChange"
+					/>
+				</el-col>
+			</el-row>
 		</el-card>
 		<DeleteEs ref="deleteEs" />
   </div>
@@ -155,6 +164,20 @@ export default {
 	extends: List,
 	components: {
 		DeleteEs
+	},
+	computed: {
+		getKeys() {
+			return (obj) => {
+				if (!obj.content) return []
+				const arr = []
+				Object.keys(obj.content).map(key => {
+					if (obj.content[key]) {
+						arr.push({ name: key, value: obj.content[key] })
+					}
+				})
+				return arr
+			} 
+		}
 	},
   data() {
     return {
@@ -172,18 +195,44 @@ export default {
 				date: [], // 结构成开始结束时间
 				fromTime:	'', // 开始时间
 				toTime:	'', // 结束时间
-				kql: '' // 结束时间
+				kql: '', // 自定义
+				curPage: 1,
+				pageSize: 10
 			}
     }
   },
   methods: {
 		fetchApi: esSearch,
+		changeProtocal(protocal) {
+			if (protocal !== 'dns') {
+				this.query.domain = ''
+			}
+			if (!['smtp', 'pop3'].includes(protocal)) {
+				this.query.email = ''
+			}
+			console.log(protocal)
+		},
 		formatQuery(query) {
 			const clone = JSON.parse(JSON.stringify(query))
 			clone.fromTime = clone.date[0] || ''
 			clone.toTime = clone.date[1] || ''
 			delete clone.date
       return clone
+    },
+		fetchByPage(curPage = this.query.curPage) {
+      if (this.loading) {
+        this.$message.warning('正在加载，请勿重复操作')
+        return
+      }
+      this.query.curPage = curPage
+      const params = this.formatQuery(this.query)
+
+      this.loading = true
+      return this.fetchApi(params).then(results => {
+        this.loading = false
+        this.tableList = this.formatData(results?.searchHits || [])
+        this.total = Number(results.totalHits) || 0
+      })
     },
 		deleteEs () {
 			this.$refs.deleteEs.showModal()

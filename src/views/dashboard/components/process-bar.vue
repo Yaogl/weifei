@@ -6,7 +6,7 @@
         <el-col :span="6">{{ item.cnt }}</el-col>
         <el-col :span="4" align="right">{{ item.percent }}</el-col>
       </el-row>
-      <div class="bar" :style="{ background: colors[index], width: item.percent }"></div>
+      <div class="bar" :style="{ background: colors[index], width: item.percent + '%' }"></div>
     </div>
   </div>
 </template>
