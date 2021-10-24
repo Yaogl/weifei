@@ -1,5 +1,5 @@
 module.exports = {
-  title: '危废项目',
+  title: 'USA',
 
   /**
    * @type {boolean} true | false

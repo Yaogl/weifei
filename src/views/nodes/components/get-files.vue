@@ -63,7 +63,7 @@ export default {
 			const arr = this.formData.nodeIds.map(item => {
 				return 'nodeIds=' + item
 			})
-			return `filefilePath=${this.formData.filePath}&${arr.join('&')}`
+			return `filePath=${this.formData.filePath}&${arr.join('&')}`
 		},
 		submitFile () {
 			if (!this.formData.filePath) {
