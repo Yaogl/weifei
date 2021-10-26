@@ -75,7 +75,7 @@ export default {
     },
     createChart(option) {
       if (!this.instance) {
-        return Promise.reject('没有实例化')
+        return Promise.reject('error')
       }
       this.instance.setOption(option)
       this.chartResize()

@@ -157,7 +157,7 @@
 							{{ details.cmdData.esAddress }}
 						</el-form-item>
 						<el-form-item label="Enable：">
-							{{ details.cmdData.scrawSwitch ? '是' : '否' }}
+							{{ details.cmdData.scrawSwitch ? 'yes' : 'no' }}
 						</el-form-item>
 					</div>
 				</el-form>

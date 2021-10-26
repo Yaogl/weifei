@@ -119,11 +119,11 @@ export default {
 			const maxSize = 1024 * 1024 * 200
       try {
         if (file.size > maxSize) {
-          return this.$message.warning('文件大小超出限制')
+          return this.$message.warning('File size exceeds limit')
         }
 				this.fileList.splice(0, 1, file)
       } catch (error) {
-        this.$message.error('上传失败，请检查文件格式')
+        this.$message.error('Upload failed, please check the file format')
       }
 		},
 		uploadSuccess(response, file) {

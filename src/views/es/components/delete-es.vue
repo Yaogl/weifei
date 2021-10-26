@@ -74,9 +74,9 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           // 删除列表当前行
-          this.$confirm('删除该时间段内的数据后，将无法恢复，请谨慎操作。', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          this.$confirm('After deleting the data within this time period, it cannot be recovered. Please be careful.', 'tips', {
+            confirmButtonText: 'confirm',
+            cancelButtonText: 'cancel',
             type: 'warning',
             center: true
           })

@@ -252,7 +252,7 @@ export default {
     },
     changeSize() {
       if (!screenfull.isEnabled) {
-        this.$message.info('您的浏览器版本过低，不支持全屏浏览')
+        this.$message.info('can not full screen')
         return false;
       }
       screenfull.toggle()

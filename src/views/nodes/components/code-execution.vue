@@ -18,7 +18,7 @@
 				<el-input
 					type="textarea"
 					:rows="10"
-					placeholder="请输入内容"
+					placeholder="please enter"
 					v-model="formData.cmd">
 				</el-input>
       </div>
