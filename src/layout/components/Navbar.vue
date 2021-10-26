@@ -26,10 +26,10 @@
               <div v-if="userName">
                 {{ userName }}
                 <span style="margin-left: 8px; cursor: pointer" @click="logout"
-                  >退出</span
+                  >Logout</span
                 >
               </div>
-              <span v-else @click="login">登录</span>
+              <span v-else @click="login">Login</span>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="setting"
