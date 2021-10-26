@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { fileListDeliver, uploadFileDel, uploadDownload } from '@/api/machineinspect'
+import { fileListDeliver, uploadFileDel, getUploadUrl } from '@/api/machineinspect'
 import List from '@/components/List'
 
 export default {
@@ -72,15 +72,7 @@ export default {
 		fetchApi: fileListDeliver,
     deleteApi: uploadFileDel,
     downloadRow(row) {
-      row.downloadLoading = true
-      uploadDownload(row.id).then(res => {
-        if (res) {
-          this.downloadAsBuffer(res, row.originFileName)
-        }
-        row.downloadLoading = false
-      }).catch(() => {
-        row.downloadLoading = false
-      })
+      window.location.href = getUploadUrl(row.id)
     },
     formatData(list) {
       return list.map(item => {

@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { fileListGet, uploadFileDel, uploadDownload } from '@/api/machineinspect'
+import { fileListGet, uploadFileDel, getUploadUrl } from '@/api/machineinspect'
 import List from '@/components/List'
 
 export default {
@@ -78,18 +78,10 @@ export default {
       })
     },
     downloadRow(row) {
-      row.downloadLoading = true
-      uploadDownload(row.id).then(res => {
-        if (res) {
-          this.downloadAsBuffer(res, row.originFileName)
-        }
-        row.downloadLoading = false
-      }).catch(() => {
-        row.downloadLoading = false
-      })
+      window.location.href = getUploadUrl(row.id)
     },
     downloadAsBuffer(data, name) {
-      const url = window.URL.createObjectURL(new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }))
+      const url = window.URL.createObjectURL(new Blob([data]))
       const link = document.createElement('a')
       link.style.display = 'none'
       link.href = url
