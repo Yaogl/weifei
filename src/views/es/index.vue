@@ -19,12 +19,12 @@
 						</el-form-item>
 					</div>
 					<div class="flex-item">
-						<el-form-item label="端口">
+						<el-form-item label="Port">
 							<el-input v-model.trim="query.toPort" placeholder="Please Enter" clearable></el-input>
 						</el-form-item>
 					</div>
 					<div class="flex-item">
-						<el-form-item label="协议">
+						<el-form-item label="Protocol">
 							<el-select v-model="query.protocal" clearable placeholder="Please Select" style="width: 100%;" @change="changeProtocal">
 								<el-option label="dns" value="dns"></el-option>
 								<el-option label="telnet" value="telnet"></el-option>
@@ -84,7 +84,7 @@
 				</div>
 				<div style="display: flex;">
 					<div class="flex-item">
-						<el-form-item label="自定义">
+						<el-form-item label="Custom">
 							<el-input v-model="query.kql" placeholder="Please Enter" clearable>
 								<template slot="append">KQL</template>
 							</el-input>
@@ -221,7 +221,7 @@ export default {
     },
 		fetchByPage(curPage = this.query.curPage) {
       if (this.loading) {
-        this.$message.warning('正在加载，请勿重复操作')
+        this.$message.warning('loading.....')
         return
       }
       this.query.curPage = curPage

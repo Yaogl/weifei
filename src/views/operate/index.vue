@@ -13,32 +13,32 @@
 				v-loading="loading"
 				style="width: 100%"
 				@selection-change="handleSelectionChange">
-				<el-table-column label="服务器IP" min-width="160">
+				<el-table-column label="Server IP" min-width="160">
 					<template slot-scope="scope">
 						<span style="color: #00B64B;">{{ scope.row.ip }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column label="CPU占用率" min-width="140">
+				<el-table-column label="CPU" min-width="140">
 					<template slot-scope="scope">
 						<span>{{ scope.row.cpu }}%</span>
 					</template>
 				</el-table-column>
-				<el-table-column label="运行内存占用率" min-width="140">
+				<el-table-column label="Mem" min-width="140">
 					<template slot-scope="scope">
 						<span>{{ scope.row.memoryUsed }} / {{ scope.row.memoryTotal }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column label="存储占用" min-width="140">
+				<el-table-column label="Disk" min-width="140">
 					<template slot-scope="scope">
 						<span>{{ scope.row.diskUsed }} / {{ scope.row.diskTotal }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="processNum" label="进程数量" show-overflow-tooltip  min-width="180"/>
-				<el-table-column prop="brandWidth" label="带宽" show-overflow-tooltip  min-width="180"/>
+				<el-table-column prop="processNum" label="Process" show-overflow-tooltip  min-width="180"/>
+				<el-table-column prop="brandWidth" label="Brandwidth" show-overflow-tooltip  min-width="180"/>
 				<el-table-column label="operation" min-width="120">
 					<template slot-scope="scope">
 						<div>
-							<el-button type="text" @click="toDetail(scope.row.id)">详情</el-button>
+							<el-button type="text" @click="toDetail(scope.row.id)">details</el-button>
 						</div>
 					</template>
 				</el-table-column>

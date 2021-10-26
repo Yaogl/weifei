@@ -213,7 +213,7 @@ export default {
 		fetchApi: nodeOperatelist,
 		fetchByPage(curPage = this.query.curPage) {
       if (this.loading) {
-        this.$message.warning('正在加载，请勿重复操作')
+        this.$message.warning('loading....')
         return
       }
       this.query.curPage = curPage

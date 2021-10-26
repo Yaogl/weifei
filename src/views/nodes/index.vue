@@ -46,7 +46,7 @@
 					<el-col :span="3">
 						<el-form-item label="Status">
 							<el-select v-model="query.status" placeholder="Please Select" style="width: 100%;">
-								<el-option label="全部" :value="0"></el-option>
+								<el-option label="All" :value="0"></el-option>
 								<el-option label="Active" :value="1"></el-option>
 								<el-option label="Offline" :value="2"></el-option>
 							</el-select>
