@@ -8,29 +8,6 @@ import * as echarts from 'echarts'
 import { brandTop } from '@/api/home'
 
 export default {
-  // props: {
-  //   chartData: {
-  //     type: Array,
-  //     default: () => [
-  //       { name: '张三1', value: 18 },
-  //       { name: '张三2', value: 21 },
-  //       { name: '张三3', value: 18 },
-  //       { name: '张三4', value: 18 },
-  //       { name: '张三5', value: 18 },
-  //       { name: '张三6', value: 18 },
-  //       { name: '张三7', value: 18 },
-  //       { name: '张三8', value: 18 },
-  //       { name: '张三9', value: 18 },
-  //       { name: '张三10', value: 18 },
-  //       { name: '张三11', value: 18 },
-  //       { name: '张三12', value: 18 },
-  //       { name: '张三14', value: 18 },
-  //       { name: '张三15', value: 18 },
-  //       { name: '张三16', value: 18 },
-  //       { name: '张三17', value: 18 }
-  //     ]
-  //   }
-  // },
   data() {
     return {
       instance: '',
@@ -54,7 +31,9 @@ export default {
         this.total = 0
         if (res && res.length) {
           res.map(item => {
-            this.total += item.count
+            if (item.count) {
+              this.total++
+            }
             item.name = item.brandName
             item.value = item.count
           })
