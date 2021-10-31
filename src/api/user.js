@@ -2,11 +2,12 @@ import request from '@/utils/request'
 // { uname, pwd }  登录
 export function login (params) {
   return request({
-    url: '/home/login',
+    url: '/home/loginNew',
     method: 'get',
     params
   })
 }
+
 // 修改密码
 // uname		NO	
 // pwd		NO	

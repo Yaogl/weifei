@@ -83,7 +83,7 @@ export default {
     return {
       loginForm: {
         uname: 'admin',
-        pwd: '123457'
+        pwd: '123456'
       },
       loginRules: {
         uname: [

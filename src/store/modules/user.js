@@ -1,7 +1,5 @@
-import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
-import router from '@/router'
+import { login } from '@/api/user'
+import { setToken, removeToken } from '@/utils/auth'
 import Cookies from 'js-cookie'
 
 const getDefaultState = () => {
@@ -27,10 +25,12 @@ const actions = {
     return new Promise((resolve) => {
       login(userInfo)
         .then(res => {
-          commit('SET_USER_INFO', userInfo.uname)
-          Cookies.set('loginUser', 'true')
-          Cookies.set('userName', userInfo.uname)
-          resolve()
+          if (res) {
+            setToken(res)
+            Cookies.set('userName', userInfo.uname)
+            commit('SET_USER_INFO', userInfo.uname)
+            resolve()
+          }
         })
         .catch(error => {
           reject(error)
@@ -41,7 +41,7 @@ const actions = {
   logout({ commit }) {
     return new Promise((resolve) => {
       commit('SET_USER_INFO', '')
-      Cookies.remove('loginUser')
+      removeToken()
       Cookies.remove('userName')
       resolve()
     })
