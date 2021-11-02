@@ -51,18 +51,18 @@
 							<th>COMMAND</th>
 						</tr>
 						<tr class="tbody" v-for="(item, index) in serviceInfo.processes" :key="index">
-							<td>{{ item.pID }}</td>
-							<td>{{ item.uSER }}</td>
-							<td>{{ item.pR }}</td>
-							<td>{{ item.nI }}</td>
-							<td>{{ item.uSER }}</td>
-							<td>{{ item.rES }}</td>
-							<td>{{ item.sHR }}</td>
+							<td>{{ item.pid }}</td>
+							<td>{{ item.user }}</td>
+							<td>{{ item.pr }}</td>
+							<td>{{ item.ni }}</td>
+							<td>{{ item.virt }}</td>
+							<td>{{ item.res }}</td>
+							<td>{{ item.shr }}</td>
 							<td>{{ item.s }}</td>
-							<td>{{ item.cPU }}</td>
-							<td>{{ item.mEM }}</td>
-							<td>{{ item.tIME }}</td>
-							<td>{{ item.cOMMAND }}</td>
+							<td>{{ item.cpu }}</td>
+							<td>{{ item.mem }}</td>
+							<td>{{ item.time }}</td>
+							<td>{{ item.command }}</td>
 						</tr>
 					</table>
 				</div>
