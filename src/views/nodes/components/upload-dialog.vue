@@ -19,6 +19,7 @@
 						:action="uploadDeliverUrl"
             drag
 						:on-success="uploadSuccess"
+						:on-error="uploadError"
 						:before-upload="beforeUpload"
           >
             <!-- :http-request="uploadJson" -->
@@ -115,6 +116,9 @@ export default {
 				}
 			})
 		},
+		uploadError() {
+			this.$message.error('Upload failed')
+		},
 		beforeUpload(file) {
 			const maxSize = 1024 * 1024 * 200
       try {
@@ -127,6 +131,7 @@ export default {
       }
 		},
 		uploadSuccess(response, file) {
+			file.percentage = 100
 			file.date = dayjs().format('MMM DD, YYYY')
 			this.fileList.splice(0, 1, file)
 		},
