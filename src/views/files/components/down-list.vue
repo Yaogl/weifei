@@ -6,11 +6,6 @@
       v-loading="loading"
       style="width: 100%"
       @selection-change="handleSelectionChange">
-      <el-table-column label="WAN IP" min-width="160">
-        <template slot-scope="scope">
-          <span style="color: #00B64B;">{{ scope.row.originIp }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="FileName" min-width="140">
         <template slot-scope="scope">
           <span>{{ scope.row.originFileName }}</span>
