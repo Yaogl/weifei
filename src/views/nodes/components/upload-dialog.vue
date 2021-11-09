@@ -18,6 +18,7 @@
 						:file-list="fileList"
 						:action="uploadDeliverUrl"
             drag
+						:on-progress="upProgress"
 						:on-success="uploadSuccess"
 						:on-error="uploadError"
 						:before-upload="beforeUpload"
@@ -48,7 +49,7 @@
 								</p>
 							</div>
 							<div>
-								<el-progress type="circle" color="#00B64B" :percentage="item.percentage" :width="40" stroke-width="4"></el-progress>
+								<el-progress type="circle" color="#00B64B" :percentage="percentage" :width="40" stroke-width="4"></el-progress>
 							</div>
 						</div>
 						<!-- <p class="list-top">IN PROGRESS</p> -->
@@ -72,7 +73,7 @@
       </div>
 			<div slot="footer" class="dialog-footer">
 				<el-button size="medium" @click="handleClose">Cancel</el-button>
-				<el-button size="medium" type="primary" :loading="loading" @click="submitFile">Submit</el-button>
+				<el-button size="medium" type="primary" :loading="loading" :disabled="percentage < 100" @click="submitFile">Submit</el-button>
 			</div>
     </el-dialog>
   </div>
@@ -90,7 +91,8 @@ export default {
 			uploadDeliverUrl,
 			fileList: [],
       visible: false,
-			nodeIds: []
+			nodeIds: [],
+			percentage: 0 // 文件上传进度 直接上file上页面不更新
     }
   },
   methods: {
@@ -118,6 +120,7 @@ export default {
 		},
 		uploadError() {
 			this.$message.error('Upload failed')
+			this.percentage = 0
 		},
 		beforeUpload(file) {
 			const maxSize = 1024 * 1024 * 200
@@ -130,8 +133,11 @@ export default {
         this.$message.error('Upload failed, please check the file format')
       }
 		},
+		upProgress(percent) {
+			this.percentage = percent.percent ? percent.percent.toFixed(0) : 0
+		},
 		uploadSuccess(response, file) {
-			file.percentage = 100
+			this.percentage = 100
 			file.date = dayjs().format('MMM DD, YYYY')
 			this.fileList.splice(0, 1, file)
 		},
