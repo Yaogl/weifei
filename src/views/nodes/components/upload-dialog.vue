@@ -135,6 +135,7 @@ export default {
 		},
 		upProgress(percent) {
 			this.percentage = percent.percent ? percent.percent.toFixed(0) : 0
+			console.log(this.percentage)
 		},
 		uploadSuccess(response, file) {
 			this.percentage = 100

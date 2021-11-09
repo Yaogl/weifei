@@ -35,10 +35,10 @@ Vue.prototype.$axios = service
 Vue.component('bread', Bread)
 // Vue.component('trawtext', TrawText)
 
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+// if (process.env.NODE_ENV === 'production') {
+//   const { mockXHR } = require('../mock')
+//   mockXHR()
+// }
 
 Vue.config.productionTip = false
 
