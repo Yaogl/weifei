@@ -112,13 +112,18 @@
 			</div>
 			<div class="source-item" v-for="item in tableList" :key="item.id">
 				<div style="flex: 1">
-					 <el-tag
-					 	v-for="tag in getKeys(item)"
-						 :key="tag.name"
-						class="mb-10 mr-10"
-						type="info">
-						{{ tag.name }}: {{ tag.value }}
-					</el-tag>
+					<span
+						v-for="tag in getKeys(item)"
+						:key="tag.name"
+						class="tag-item mr-10"
+					>
+						<span class="tag-name">
+							{{ tag.name }}: 
+						</span>
+						<span>
+							{{ tag.value }}
+						</span>
+					</span>
 				</div>
 			</div>
 			<el-row class="mt-10 mr-10 ml-10 mb-10">
@@ -270,6 +275,18 @@ export default {
 		margin-bottom: 10px;
 		.icon{
 			padding-right: 10px;
+		}
+		.tag-item{
+			color: #343741;
+			font-size: 12px;
+			padding-bottom: 8px;
+			display: inline-block;
+			.tag-name{
+				display: inline-block;
+				background: #E5EEF4;
+				border-radius: 4px;
+				padding: 5px 6px;
+			}
 		}
 	}
 }
