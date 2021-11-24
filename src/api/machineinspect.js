@@ -67,5 +67,5 @@ export function fileListDeliver (params) {
 export const uploadGetUrl = process.env.VUE_APP_BASE_API + '/file/upload/get'
 export const uploadDeliverUrl = process.env.VUE_APP_BASE_API + '/file/upload/deliver'
 export const getUploadUrl = (id) => {
-  return process.env.VUE_APP_DOWNLOAD_URL + 'file/download?id=' + id
+  return window.location.origin + '/dev-api/file/download?id=' + id
 }
