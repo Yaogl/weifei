@@ -101,60 +101,83 @@
 			</el-form>
 		</el-card>
 
-		<el-card>
-			<div slot="header" style="position: relative;">
-				<p style="font-size: 12px;color: #333;line-height: 20px">{{ total }}hits</p>
-				<p style="font-size: 12px;color: #333;line-height: 18px"> _source</p>
+		<el-row :gutter="20">
+			<el-col :span="6">
+				<el-card header="fields">
+					<h4 class="field-title">Selected fields</h4>
+					<el-row :gutter="20" class="field-item" v-for="(item, index) in selectedFields" :key="item">
+						<el-col :span="20">{{ item }}</el-col>
+						<el-col :span="4" align="right">
+							<i @click="deleteItem(index)" class="el-icon-remove-outline"></i>
+						</el-col>
+					</el-row>
+					<h4 class="field-title">Available fields</h4>
+					<el-row :gutter="20" v-for="item in computedFields" class="field-item" :key="item">
+						<el-col :span="20">{{ item }}</el-col>
+						<el-col :span="4" align="right">
+							<i @click="addFields(item)" class="el-icon-circle-plus-outline"></i>
+						</el-col>
+					</el-row>
+				</el-card>
+			</el-col>
+			<el-col :span="18">
+				<el-card>
+					<div slot="header" style="position: relative;">
+						<p style="font-size: 12px;color: #333;line-height: 20px">{{ total }}hits</p>
+						<p style="font-size: 12px;color: #333;line-height: 18px"> _source</p>
 
-				<div style="position: absolute; right: 0;top: 10px" class="more">
-					<el-button @click="deleteEs">Delete Item</el-button>
-				</div>
-			</div>
-			<div class="source-item" v-for="item in tableList" :key="item.id">
-				<div style="flex: 1">
-					<span
-						v-for="tag in getKeys(item)"
-						:key="tag.name"
-						class="tag-item mr-10"
-					>
-						<span class="tag-name">
-							{{ tag.name }}: 
-						</span>
-						<span>
-							{{ tag.value }}
-						</span>
-					</span>
-				</div>
-			</div>
-			<el-row class="mt-10 mr-10 ml-10 mb-10">
-				<el-col :span="8">
-					{{ total }}
-					<span style="font-size: 12px;color: #999999;" class="mr-20">Items</span>
-					<el-select v-model="query.pageSize" @change="changePages" size="mini" style="width: 130px">
-						<el-option
-							v-for="item in [5, 10, 20, 30, 40]"
-							:key="item"
-							:label="item + ' items/page'"
-							:value="item">
-							{{ item }} items/page
-						</el-option>
-					</el-select>
-				</el-col>
-				<el-col :span="16" align="right">
-					<el-pagination
-						v-if="total > 0"
-						:current-page="query.curPage"
-						:page-sizes="[5, 10, 20, 30, 40]"
-						:page-size="query.pageSize"
-						:total="total"
-						:pager-count="4"
-						layout="prev, pager, next"
-						@size-change="changePages"
-						@current-change="currentChange"
-					/>
-				</el-col>
-			</el-row>
-		</el-card>
+						<div style="position: absolute; right: 0;top: 10px" class="more">
+							<el-button @click="deleteEs">Delete Item</el-button>
+						</div>
+					</div>
+					<div class="source-item" v-for="item in tableList" :key="item.id">
+						<div style="flex: 1">
+							<span
+								v-for="tag in getKeys(item)"
+								:key="tag.name"
+								class="tag-item mr-10"
+							>
+								<span class="tag-name">
+									{{ tag.name }}: 
+								</span>
+								<span>
+									{{ tag.value }}
+								</span>
+							</span>
+						</div>
+					</div>
+					<el-row class="mt-10 mr-10 ml-10 mb-10">
+						<el-col :span="8">
+							{{ total }}
+							<span style="font-size: 12px;color: #999999;" class="mr-20">Items</span>
+							<el-select v-model="query.pageSize" @change="changePages" size="mini" style="width: 130px">
+								<el-option
+									v-for="item in [5, 10, 20, 30, 40]"
+									:key="item"
+									:label="item + ' items/page'"
+									:value="item">
+									{{ item }} items/page
+								</el-option>
+							</el-select>
+						</el-col>
+						<el-col :span="16" align="right">
+							<el-pagination
+								v-if="total > 0"
+								:current-page="query.curPage"
+								:page-sizes="[5, 10, 20, 30, 40]"
+								:page-size="query.pageSize"
+								:total="total"
+								:pager-count="4"
+								layout="prev, pager, next"
+								@size-change="changePages"
+								@current-change="currentChange"
+							/>
+						</el-col>
+					</el-row>
+				</el-card>
+			</el-col>
+		</el-row>
+		
 		<DeleteEs ref="deleteEs" />
   </div>
 </template>
@@ -182,6 +205,11 @@ export default {
 				})
 				return arr
 			} 
+		},
+		computedFields() {
+			return this.hightLightFields.filter(item => {
+				return !this.selectedFields.includes(item)
+			})
 		}
 	},
   data() {
@@ -203,7 +231,17 @@ export default {
 				kql: '', // 自定义
 				curPage: 1,
 				pageSize: 10
-			}
+			},
+			selectedFields: [],
+			hightLightFields: [
+				'id', 'timestamp', 'date', 'protocol', 'ethSrc', 'ethDst',
+        'ipSrc', 'ipDst', 'udpSrcport', 'udpDstport', 'tcpSrcport',
+        'tcpDstport', 'wanIp', 'dnsRespName', 'dnsRespA', 'telnetData',
+        'dhcpHostname', 'smtpUsername', 'smtpPassword', 'popRequestCommand',
+        'popRequestParameter', 'httpsCeDNS', 'httpsCeCN', 'httpsCeCOUNTRY',
+				'httpsCeLOCALITY', 'httpsCeSTATE', 'httpsCeORG', 'httpsCeUNIT',
+        'ftpRequestCommand', 'ftpRequestArg', 'httpHost', 'httpUa', 'httpMethod', 'httpUri'
+			]
     }
   },
   methods: {
@@ -216,6 +254,12 @@ export default {
 				this.query.email = ''
 			}
 			console.log(protocal)
+		},
+		addFields(key) {
+			this.selectedFields.push(key)
+		},
+		deleteItem(index) {
+			this.selectedFields.splice(index, 1)
 		},
 		formatQuery(query) {
 			const clone = JSON.parse(JSON.stringify(query))
@@ -268,6 +312,16 @@ export default {
 	.flex-item{
 		flex: 1;
 		padding: 0 5px;
+	}
+	.field-item{
+		font-size: 12px;
+		color: #777;
+		line-height: 20px;
+	}
+	.field-title{
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 30px;
 	}
 	.source-item{
 		display: flex;
