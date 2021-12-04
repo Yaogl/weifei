@@ -102,18 +102,24 @@
 		</el-card>
 
 		<el-row :gutter="20">
-			<el-col :span="6">
+			<el-col :span="5">
 				<el-card header="fields">
 					<h4 class="field-title">Selected fields</h4>
 					<el-row :gutter="20" class="field-item" v-for="(item, index) in selectedFields" :key="item">
-						<el-col :span="20">{{ item }}</el-col>
+						<el-col :span="20">
+							<i style="display: inline-block;padding:0 2px;border: 1px solid #e9e9e3;border-radius: 2px;background: rgb(241, 251, 252);">{{ item[0] }}</i>
+							{{ item }}
+						</el-col>
 						<el-col :span="4" align="right" class="icon-add">
 							<i @click="deleteItem(index)" class="el-icon-remove-outline"></i>
 						</el-col>
 					</el-row>
 					<h4 class="field-title">Available fields</h4>
 					<el-row :gutter="20" v-for="item in computedFields" class="field-item" :key="item">
-						<el-col :span="20">{{ item }}</el-col>
+						<el-col :span="20">
+							<i style="display: inline-block; padding:0 2px;border: 1px solid #e9e9e3;border-radius: 2px;background: rgb(241, 251, 252);">{{ item[0] }}</i>
+							{{ item }}
+						</el-col>
 						<el-col :span="4" align="right" class="icon-add">
 							<i @click="addFields(item)" class="el-icon-circle-plus-outline"></i>
 						</el-col>
@@ -122,7 +128,7 @@
 			</el-col>
 
 
-			<el-col :span="18">
+			<el-col :span="19">
 				<el-card>
 					<div slot="header" style="position: relative;">
 						<p style="font-size: 12px;color: #333;line-height: 20px">{{ total }}hits</p>
@@ -284,7 +290,11 @@ export default {
 				const arr = []
 				Object.keys(obj.content).map(key => {
 					if (obj.content[key]) {
-						arr.push({ name: key, value: obj.content[key] })
+						if (obj.highlightFields[key]) {
+							arr.push({ name: key, value: obj.highlightFields[key].join('') })
+						} else {
+							arr.push({ name: key, value: obj.content[key] })
+						}
 					}
 				})
 				return arr
@@ -325,7 +335,7 @@ export default {
         'popRequestParameter', 'httpsCeDNS', 'httpsCeCN', 'httpsCeCOUNTRY',
 				'httpsCeLOCALITY', 'httpsCeSTATE', 'httpsCeORG', 'httpsCeUNIT',
         'ftpRequestCommand', 'ftpRequestArg', 'httpHost', 'httpUa', 'httpMethod', 'httpUri'
-			]
+			].sort(function(a, b) { return a[0].charCodeAt()-b[0].charCodeAt() })
     }
   },
   methods: {
@@ -365,7 +375,9 @@ export default {
         this.loading = false
         this.tableList = this.formatData(results?.searchHits || [])
         this.total = Number(results.totalHits) || 0
-      })
+      }).catch(() => {
+				this.loading = false
+			})
     },
 		formatData(list) {
 			list.map(item => {
@@ -421,9 +433,9 @@ export default {
 		cursor: pointer;
 	}
 	.field-item{
+		padding: 4px 0;
 		font-size: 12px;
 		color: #777;
-		line-height: 20px;
 		.icon-add{
 			display: none;
 			color: #409eff;
