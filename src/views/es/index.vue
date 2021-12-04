@@ -152,9 +152,7 @@
 										<span class="tag-name">
 											{{ tag.name }}: 
 										</span>
-										<span>
-											{{ tag.value }}
-										</span>
+										<span v-html="tag.value"></span>
 									</span>
 								</div>
 							</div>
@@ -173,8 +171,7 @@
 											<p  style="width: 150px;">
 												{{ tag.name }}: 
 											</p>
-											<p style="flex: 1;">
-												{{ tag.value }}
+											<p style="flex: 1;" v-html="tag.value">
 											</p>
 										</div>
 									</el-tab-pane>
@@ -209,8 +206,7 @@
 											<p  style="width: 150px;">
 												{{ tag.name }}: 
 											</p>
-											<p style="flex: 1;">
-												{{ tag.value }}
+											<p style="flex: 1;" v-html="tag.value">
 											</p>
 										</div>
 									</el-tab-pane>
@@ -412,6 +408,9 @@ export default {
 	.el-table th{
 		background: #fff!important;
 		font-weight: 600;
+	}
+	.keyword{
+		color: rgb(207, 49, 62);
 	}
 }
 </style>
