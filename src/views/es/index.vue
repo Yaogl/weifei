@@ -107,19 +107,21 @@
 					<h4 class="field-title">Selected fields</h4>
 					<el-row :gutter="20" class="field-item" v-for="(item, index) in selectedFields" :key="item">
 						<el-col :span="20">{{ item }}</el-col>
-						<el-col :span="4" align="right">
+						<el-col :span="4" align="right" class="icon-add">
 							<i @click="deleteItem(index)" class="el-icon-remove-outline"></i>
 						</el-col>
 					</el-row>
 					<h4 class="field-title">Available fields</h4>
 					<el-row :gutter="20" v-for="item in computedFields" class="field-item" :key="item">
 						<el-col :span="20">{{ item }}</el-col>
-						<el-col :span="4" align="right">
+						<el-col :span="4" align="right" class="icon-add">
 							<i @click="addFields(item)" class="el-icon-circle-plus-outline"></i>
 						</el-col>
 					</el-row>
 				</el-card>
 			</el-col>
+
+
 			<el-col :span="18">
 				<el-card>
 					<div slot="header" style="position: relative;">
@@ -130,22 +132,101 @@
 							<el-button @click="deleteEs">Delete Item</el-button>
 						</div>
 					</div>
-					<div class="source-item" v-for="item in tableList" :key="item.id">
-						<div style="flex: 1">
-							<span
-								v-for="tag in getKeys(item)"
-								:key="tag.name"
-								class="tag-item mr-10"
-							>
-								<span class="tag-name">
-									{{ tag.name }}: 
-								</span>
-								<span>
-									{{ tag.value }}
-								</span>
-							</span>
+					<div v-if="!selectedFields.length">
+						<div class="source-item" v-for="item in tableList" :key="item.id">
+							<div class="source-item-header">
+								<i class="el-icon-arrow-right item-icon" v-show="!item.open" @click="item.open = !item.open"></i>
+								<i class="el-icon-arrow-down item-icon" v-show="item.open" @click="item.open = !item.open"></i>
+								<div style="flex: 1">
+									<span
+										v-for="tag in getKeys(item)"
+										:key="tag.name"
+										class="tag-item mr-10"
+									>
+										<span class="tag-name">
+											{{ tag.name }}: 
+										</span>
+										<span>
+											{{ tag.value }}
+										</span>
+									</span>
+								</div>
+							</div>
+							<div v-show="item.open" style="padding: 5px 10px">
+								<p style="font-size: 12px;">
+									<i class="el-icon-folder"></i>
+									<span style="padding-left: 5px;font-weight: 600;">Expanded document</span>
+								</p>
+								<el-tabs>
+									<el-tab-pane label="Table">
+										<div
+											v-for="tag in getKeys(item)"
+											:key="tag.name"
+											style="display: flex;font-size: 12px;color: #666;padding: 5px 10px;line-height: 18px;"
+										>
+											<p  style="width: 150px;">
+												{{ tag.name }}: 
+											</p>
+											<p style="flex: 1;">
+												{{ tag.value }}
+											</p>
+										</div>
+									</el-tab-pane>
+									<el-tab-pane label="JSON">
+										<div style="padding: 5px 20px;">
+											<vue-json-pretty :data="item.content"></vue-json-pretty>
+										</div>
+									</el-tab-pane>
+								</el-tabs>
+							</div>
 						</div>
 					</div>
+
+					<el-table
+						:data="tableList"
+						size="mini"
+						v-else
+					>
+						<el-table-column type="expand">
+							<template slot-scope="props">
+								<p style="font-size: 12px;">
+									<i class="el-icon-folder"></i>
+									<span style="padding-left: 5px;font-weight: 600;">Expanded document</span>
+								</p>
+								<el-tabs>
+									<el-tab-pane label="Table">
+										<div
+											v-for="tag in getKeys(props.row)"
+											:key="tag.name"
+											style="display: flex;font-size: 12px;color: #666;padding: 5px 10px;line-height: 18px;"
+										>
+											<p  style="width: 150px;">
+												{{ tag.name }}: 
+											</p>
+											<p style="flex: 1;">
+												{{ tag.value }}
+											</p>
+										</div>
+									</el-tab-pane>
+									<el-tab-pane label="JSON">
+										<div style="padding: 5px 20px;">
+											<vue-json-pretty :data="props.row.content"></vue-json-pretty>
+										</div>
+									</el-tab-pane>
+								</el-tabs>
+							</template>
+						</el-table-column>
+						<el-table-column
+							v-for="(item, index) in selectedFields" :key="index"
+							:label="item"
+							:prop="item"
+							min-width="180"
+						>
+							<template slot-scope="scope">
+								{{ scope.row.content[item] }}
+							</template>
+						</el-table-column>
+					</el-table>
 					<el-row class="mt-10 mr-10 ml-10 mb-10">
 						<el-col :span="8">
 							{{ total }}
@@ -186,12 +267,15 @@
 import List from '@/components/List'
 import DeleteEs from './components/delete-es.vue'
 import { esSearch } from '@/api/es'
+import VueJsonPretty from 'vue-json-pretty'
+import 'vue-json-pretty/lib/styles.css'
 
 export default {
   name: 'Es',
 	extends: List,
 	components: {
-		DeleteEs
+		DeleteEs,
+		VueJsonPretty
 	},
 	computed: {
 		getKeys() {
@@ -283,6 +367,12 @@ export default {
         this.total = Number(results.totalHits) || 0
       })
     },
+		formatData(list) {
+			list.map(item => {
+				item.open = false
+			})
+			return list
+		},
 		deleteEs () {
 			this.$refs.deleteEs.showModal()
 		}
@@ -301,6 +391,16 @@ export default {
 	.mb-20 .el-form-item{
 		margin-bottom: 10px;
 	}
+	.vjs-value__string{
+		color: rgb(173, 10, 10);
+	}
+	.el-tabs__item{
+		font-size: 12px;
+	}
+	.el-table th{
+		background: #fff!important;
+		font-weight: 600;
+	}
 }
 </style>
 <style lang="scss" scoped>
@@ -313,10 +413,27 @@ export default {
 		flex: 1;
 		padding: 0 5px;
 	}
+	.item-icon{
+		font-size: 14px;
+		color: #999;
+		line-height: 24px;
+		margin-right: 6px;
+		cursor: pointer;
+	}
 	.field-item{
 		font-size: 12px;
 		color: #777;
 		line-height: 20px;
+		.icon-add{
+			display: none;
+			color: #409eff;
+		}
+	}
+	.field-item:hover{
+		background: rgb(233, 247, 248);
+		.icon-add{
+			display: block;
+		}
 	}
 	.field-title{
 		font-size: 14px;
@@ -324,9 +441,11 @@ export default {
 		line-height: 30px;
 	}
 	.source-item{
-		display: flex;
 		border-bottom: 2px solid #EEEEEE;
 		margin-bottom: 10px;
+		&-header{
+			display: flex;
+		}
 		.icon{
 			padding-right: 10px;
 		}
