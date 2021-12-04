@@ -128,7 +128,7 @@
 			</el-col>
 
 
-			<el-col :span="19">
+			<el-col :span="19" v-loading="loading">
 				<el-card>
 					<div slot="header" style="position: relative;">
 						<p style="font-size: 12px;color: #333;line-height: 20px">{{ total }}hits</p>
@@ -225,7 +225,8 @@
 							min-width="180"
 						>
 							<template slot-scope="scope">
-								{{ scope.row.content[item] }}
+								<span v-if="scope.row.highlightFields[item]" v-html="scope.row.highlightFields[item].join('')"></span>
+								<span v-else>{{ scope.row.content[item] }}</span>
 							</template>
 						</el-table-column>
 					</el-table>
