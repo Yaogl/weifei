@@ -369,27 +369,10 @@ export default {
           pieces: [{
             min: 0,
             max: 100000,
-            color: '#3F1829'
+            color: '#972830'
           }, {
             min: 100000,
-            max: 200000,
-            color: '#2A293A'
-          }, {
-            min: 200000,
-            max: 300000,
-            color: '#281326'
-          }, {
-            min: 300000,
-            max: 400000,
-            color: '#15181F'
-          }, {
-            min: 400000,
-            max: 500000,
-            color: '#F74941'
-          }, {
-            min: 500000,
-            //max: 1000,
-            color: '#361020'
+            color: '#FB4541'
           }]
         },
         series: [
@@ -397,6 +380,12 @@ export default {
             type: 'map',
             map: area,
             roam: true,
+            itemStyle: {
+              normal: {
+                areaColor: '#2A293A',
+                borderColor: '#404a59'
+              }
+            },
             data:
               area == 'world'
                 ? this.worldData

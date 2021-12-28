@@ -62,10 +62,10 @@
           </el-col>
           <el-col :span="10" align="right">
             <el-row class="level">
-              <el-col :span="12" class="circle-before high" align="center" style="color: #DC3939">
+              <el-col :span="12" class="circle-before high" align="center" style="color: #fb4541">
                 High density
               </el-col>
-              <el-col :span="12" class="circle-before low" align="center" style="color: #DC3939;">
+              <el-col :span="12" class="circle-before low" align="center" style="color: #972830;">
                 Low density
               </el-col>
             </el-row>
@@ -383,12 +383,12 @@ export default {
         }
         &.high {
           &:before {
-            background: #FF4141;
+            background: #FB4541;
           }
         }
         &.low {
           &:before {
-            background: #4F1718;
+            background: #972830;
           }
         }
       }
