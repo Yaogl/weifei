@@ -86,11 +86,14 @@ export default {
 			const ids = Array.isArray(id) ? id : [id]
 			this.formData.nodeIds = ids
 			this.configLoading = true
-			nodeScrawconfigDefault().then(res => {
+			const nodeIds = ids.map(item => {
+				return 'nodeId=' + item
+			}).join('&')
+			nodeScrawconfigDefault(nodeIds).then(res => {
 				if (res) {
-					Object.keys(res).map(key => {
-						this.formData['scrawConfig.' + key] = res[key]
-					})
+					// Object.keys(res).map(key => {
+					// 	this.formData['scrawConfig.' + key] = res[key]
+					// })
 				}
 				this.configLoading = false
 			}).catch(() => {

@@ -30,6 +30,14 @@
             </div>
           </el-upload>
         </div>
+				<el-form ref="form" :model="formData" style="margin-top: 10px">
+					<el-form-item label="IP" prop="ip" label-width="60px">
+						<el-input
+							placeholder="Please Enter IP"
+							v-model.trim="formData.ip">
+						</el-input>
+					</el-form-item>
+				</el-form>
 				<el-card class="mt-20" style="width: 380px">
 					<div slot="header">
 						Uploading
@@ -92,6 +100,9 @@ export default {
 			fileList: [],
       visible: false,
 			nodeIds: [],
+			formData: {
+				ip: ''
+			},
 			percentage: 0 // 文件上传进度 直接上file上页面不更新
     }
   },
@@ -106,7 +117,11 @@ export default {
 			}
 			const form = new FormData()
 			const file = this.fileList[0]
-			form.append('fileDeliverConfig.ip', file.response?.server)
+			if (this.formData.ip) {
+				form.append('fileDeliverConfig.ip', this.formData.ip)
+			} else {
+				form.append('fileDeliverConfig.ip', file.response?.server)
+			}
 			form.append('fileDeliverConfig.filePath', file.response?.filePath)
 			form.append('nodeIds', this.nodeIds)
 			nodeFiledeliver(form).then(res => {

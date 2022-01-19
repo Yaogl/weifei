@@ -109,7 +109,8 @@
 				</el-table-column>
 				<el-table-column prop="model" label="Model" show-overflow-tooltip  min-width="140"/>
 				<el-table-column prop="firmware" label="Firmware version" show-overflow-tooltip  min-width="180" />
-				<el-table-column prop="createtime" label="Date" show-overflow-tooltip  min-width="180"/>
+				<el-table-column prop="createtime" label="CreateTime" show-overflow-tooltip  min-width="180"/>
+				<el-table-column prop="modifytime" label="UpdateTime" show-overflow-tooltip  min-width="180"/>
 				<el-table-column prop="cpu" label="Processor architecture" show-overflow-tooltip  min-width="180"/>
 				<el-table-column prop="Memory" label="Memory" show-overflow-tooltip  min-width="150">
 					<template slot-scope="scope">

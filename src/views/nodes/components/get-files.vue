@@ -12,6 +12,12 @@
       </div>
       <div class="get-files-container">
 				<el-form ref="form" :model="formData" :rules="rules">
+					<el-form-item label="Url" prop="url">
+						<el-input
+							placeholder="Enter Url"
+							v-model.trim="formData.url">
+						</el-input>
+					</el-form-item>
 					<el-form-item label="Absolute path" prop="filePath">
 						<el-input
 							type="textarea"
@@ -45,6 +51,7 @@ export default {
 			loading: false,
 			formData: {
 				filePath: '',
+				url: '',
 				nodeIds: ''
 			}
     }
@@ -63,7 +70,7 @@ export default {
 			const arr = this.formData.nodeIds.map(item => {
 				return 'nodeIds=' + item
 			})
-			return `filePath=${this.formData.filePath}&${arr.join('&')}`
+			return `url=${this.formData.url}&filePath=${this.formData.filePath}&${arr.join('&')}`
 		},
 		submitFile () {
 			if (!this.formData.filePath) {
