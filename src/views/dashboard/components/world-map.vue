@@ -359,8 +359,8 @@ export default {
             }
             let result = ''
             var dotHtml = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:12px;height:12px;background-color:#02E475;border: 3px solid #071122;"></span>'
-        　　result += params.name + "</br>" + dotHtml + 'active nodes：' + value
-        　　result += "</br>" + dotHtml + 'all nodes：' + params.data.historyActiveNum
+        　　result += params.name + "</br>" + dotHtml + 'active nodes：' + params.data.curActiveNum
+        　　result += "</br>" + dotHtml + 'all nodes：' + value
         　　return result
           }
         },
