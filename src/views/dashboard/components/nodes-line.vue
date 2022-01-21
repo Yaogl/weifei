@@ -52,9 +52,9 @@ export default {
       
       const max = Math.max.apply(null, chartData.map(item => item.num))
       let unit = ''
-      if (max > 1000 * 100 && max < 1000 * 1000) {
+      if (max > 1000 * 10 && max < 1000 * 100) {
         unit = 'Volume (K)'
-      } else if (max >= 1000 * 1000){
+      } else if (max >= 1000 * 100){
         unit = 'Volume (10K)'
       } else {
         unit = 'Volumn'
