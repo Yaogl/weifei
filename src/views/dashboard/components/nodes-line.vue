@@ -48,9 +48,24 @@ export default {
     getChartOption(chartData) {
       const xAxis = []
       const data = []
+      // 获取数据最大值
+      
+      const max = Math.max.apply(null, chartData.map(item => item.num))
+      let unit = ''
+      if (max > 1000 * 100 && max < 1000 * 1000) {
+        unit = 'Volume (K)'
+      } else if (max >= 1000 * 1000){
+        unit = 'Volume (10K)'
+      } else {
+        unit = 'Volumn'
+      }
       chartData.forEach(it => {
         xAxis.push(it.date)
-        data.push(it.num)
+        data.push({
+          name: it.date,
+          value: unit === 'Volumn' ? it.num : unit === 'Volume (K)' ? it.num / 1000 : it.num / 10000,
+          realValue: it.num
+        })
       })
       return {
         tooltip: {
@@ -71,16 +86,17 @@ export default {
         　　var result = ''
         　　var dotHtml = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:12px;height:12px;background-color:#02E475;border: 3px solid #071122;"></span>'
         　　params.forEach(function (item) {
-        　　　result += item.axisValue + "</br>" + dotHtml + item.data
+        　　　result += item.axisValue + "</br>" + dotHtml + item.data.realValue
         　　})
         　　return result
           }
         },
         grid: {
           top: '18%',
-          bottom: '20%',
-          left: '5%',
-          right: '5%'
+          bottom: '14%',
+          left: '2%',
+          right: '3%',
+          containLabel: true
         },
         xAxis: {
           type: 'category',
@@ -94,7 +110,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: 'Volume (10K)',
+          name: unit,
           nameTextStyle: {
             color: '#fff',
             padding: [0, 0, 0, 15]

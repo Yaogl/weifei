@@ -91,9 +91,12 @@ export default {
 			}).join('&')
 			nodeScrawconfigDefault(nodeIds).then(res => {
 				if (res) {
-					// Object.keys(res).map(key => {
-					// 	this.formData['scrawConfig.' + key] = res[key]
-					// })
+					const formKeys = Object.keys(this.formData)
+					Object.keys(res).map(key => {
+						if (formKeys.includes('scrawConfig.' + key)) {
+							this.formData['scrawConfig.' + key] = res[key]
+						}
+					})
 				}
 				this.configLoading = false
 			}).catch(() => {

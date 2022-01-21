@@ -33,16 +33,6 @@ const port = process.env.port || process.env.npm_config_port || 9528 // dev port
 module.exports = {
   publicPath: '/',
   runtimeCompiler: true,
-  pages: {
-    index: {
-      entry: 'src/main.js',
-      template: 'public/index.html',
-      filename: 'index.html',
-      title: 'index',
-      chunks: ['chunk-vendors', 'chunk-common', 'index'],
-      minify
-    }
-  },
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: false,
