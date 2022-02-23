@@ -10,11 +10,11 @@
 // 如需扩张更多省市,在此处引入对应的地图JSON数据
 //
 import * as echarts from 'echarts'
-import world from "../../../assets/mapData/world.json"
-import allMap from '../../../assets/mapData/index'
+import world from "../../../../public/static/mapData/world.json"
 import worldJsonMap from './world-mapping.json'
 import shortMap from './short-map.json'
 import { countryStatic } from '@/api/home'
+import axios from 'axios'
 
 export default {
   data() {
@@ -277,14 +277,12 @@ export default {
     // console.log(JSON.stringify(map, null, 4))
 
     //   循环注册地图
-    for (let name in worldJsonMap) {
-      if (allMap[worldJsonMap[name].mapFileName]) {
-        this.jsonMap[worldJsonMap[name].mapFileName] = allMap[worldJsonMap[name].mapFileName]
-      }
-    }
-    for (let index in this.jsonMap) {
-      echarts.registerMap(index, this.jsonMap[index]);
-    }
+    // for (let name in worldJsonMap) {
+    //   if (allMap[worldJsonMap[name].mapFileName]) {
+    //     this.jsonMap[worldJsonMap[name].mapFileName] = allMap[worldJsonMap[name].mapFileName]
+    //   }
+    // }
+    echarts.registerMap('world', world);
   },
   // 更新数据
   watch: {
@@ -389,7 +387,7 @@ export default {
             data:
               area == 'world'
                 ? this.worldData
-                : area == '中国'
+                : area == 'China'
                 ? this.chinaData
                 : [],
             // nameMap: area == 'world' ? this.nameMap : {}
@@ -400,11 +398,16 @@ export default {
       this.chartResize()
       window.addEventListener('resize', this.chartResize)
       this.myChart.on('click', params => {
-        // 点击函数
-        this.value = params.name;
-        this.sendName(params.name)
-        this.myChart.setOption(option, true);
-      });
+        const mapName = params.name
+        if (worldJsonMap[mapName] && worldJsonMap[mapName].mapFileName) {
+          axios.get(window.location.origin + '/static/mapData/' + worldJsonMap[mapName].mapFileName + '.json').then(res => {
+            echarts.registerMap(worldJsonMap[mapName].mapFileName, res.data)
+            this.value = worldJsonMap[mapName].mapFileName;
+            this.sendName(params.name)
+            this.myChart.setOption(option, true);
+          })
+        }
+      })
     }
   }
 };

@@ -7,12 +7,12 @@ Vue.use(Router)
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import(/* webpackChunkName: "login" */ '@/views/login/index'),
     hidden: true
   },
   {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import(/* webpackChunkName: "404" */ '@/views/404'),
     hidden: true
   },
   {
@@ -23,7 +23,7 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index'),
         meta: { title: 'Dashboard', icon: 'dashboard' }
       }
     ]
@@ -36,37 +36,37 @@ export const constantRoutes = [
       {
         path: 'nodes',
         name: 'nodes',
-        component: () => import('@/views/nodes/index'),
+        component: () => import(/* webpackChunkName: "nodes" */ '@/views/nodes/index'),
         meta: { title: 'nodes mangement' }
       },
       {
         path: '/operation-record',
         name: 'OperationRecord',
-        component: () => import('@/views/nodes/operation-record'),
+        component: () => import(/* webpackChunkName: "record" */ '@/views/nodes/operation-record'),
         meta: { title: '/operation-record' }
       },
       {
         path: '/es',
         name: 'es',
-        component: () => import('@/views/es/index'),
+        component: () => import(/* webpackChunkName: "es" */ '@/views/es/index'),
         meta: { title: 'es mangement' }
       },
       {
         path: '/operate',
         name: 'operate',
-        component: () => import('@/views/operate/index'),
+        component: () => import(/* webpackChunkName: "operate" */ '@/views/operate/index'),
         meta: { title: 'operate mangement' }
       },
       {
         path: '/operate-info',
         name: 'operate',
-        component: () => import('@/views/operate/info'),
+        component: () => import(/* webpackChunkName: "operate info" */ '@/views/operate/info'),
         meta: { title: 'operate mangement' }
       },
       {
         path: '/files',
         name: 'files',
-        component: () => import('@/views/files/index'),
+        component: () => import(/* webpackChunkName: "files" */ '@/views/files/index'),
         meta: { title: 'files mangement' }
       }
     ]
